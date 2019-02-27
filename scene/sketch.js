@@ -13,7 +13,7 @@ let radius;
 let x;
 
 function setup() {
-  backgroundImage = loadImage("bckimg.png")
+  backgroundImage = loadImage("assets/bckimg.png")
   createCanvas(500, 500);
   noStroke();
   x = width / 2;
