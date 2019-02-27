@@ -6,6 +6,7 @@
 // - describe what you did to take this project "above and beyond"
 
 
+let backgroundImage;
 let y;
 let dy;
 let radius;
@@ -47,7 +48,7 @@ function draw() {
     dy = -1 * dy;
   }
 
-   
+  
   // player ball
   fill(5, 0, 0)
   ellipse(x, height / 1.5, 60);
