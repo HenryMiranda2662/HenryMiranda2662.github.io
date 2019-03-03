@@ -19,8 +19,8 @@ let gameOn;
 // the browser can't find one of them. It also changes the name of the sound as it looks
 //for it in assets
 function preload() {
-  soundFormats('mp3', 'ogg');
-  mySound = loadSound('assets/sound.mp3');
+  soundFormats("mp3", "ogg");
+  mySound = loadSound("assets/sound.mp3");
 }
 
 //Set up creates the canvas, loads the background image, plays the sound
