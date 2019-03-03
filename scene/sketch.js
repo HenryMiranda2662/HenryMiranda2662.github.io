@@ -41,7 +41,7 @@ function setup(){
   y2 = height / 2;
   x3 = width / 2;
   x4 = 400;
-  dy = 5.5;
+  dy = 4.7;
   r1 = 30;
   r2 = 25;
 }
