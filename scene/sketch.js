@@ -64,7 +64,10 @@ function draw() {
     enemyBalls();
 		playerBall ();
     itHit();
-    if ((x1 + r1) >= 490){
+
+    //When the ball hits the rigth side of the screen, the game just resets
+    // that way there are no winner or losers
+    if ((x1 + r1) >= 492){
       gameOn = false;
       }
   }
