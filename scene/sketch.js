@@ -30,7 +30,7 @@ function setup(){
 	createCanvas(500, 500);
   backgroundImage = loadImage("assets/bckimg.png");
   
-  buttonImage = loadImage("assets/button.png")
+  buttonImage = loadImage("assets/button.png");
 
   mySound.setVolume(0.1); // volume of the sound
   mySound.play(); // plays the sound
