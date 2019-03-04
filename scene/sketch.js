@@ -47,15 +47,15 @@ function setup(){
 }
  
 // function which checks if the game has started or not when the button is pressed
-function startGame(){
-  gameOn = true
-}
+// function startGame(){
+//   gameOn = true
+// }
 
 
 //Function which will set the game in motion as it draws the objects needed
 function draw() {
 
-//Checks if the game has started, if so, the game screen wil be displayed
+ //Checks if the game has started, if so, the game screen wil be displayed
   if (gameOn === true){
     background(backgroundImage);
     enemyBalls();
@@ -66,14 +66,14 @@ function draw() {
 // If the game has not started, draws a button which allows for the game to start
   if (gameOn === false){
     background(160);  
-  	button = createButton("Start Game");
-		button.position((width/2) -75, (height/2)-25);
-  	button.size (150, 50)
-    button.mousePressed(startGame); // if the button is pressed, it would set 
-                                    //in motion the fuction which will start the game
+    fill (250);
+    rect(200, 225, 100 , 50);
     x1 = width / 13; //Makes the ball start at the same x-value from the beginnig
-    
+    if (mouseIsPressed && mouseX > 200 && mouseX < 300 && mouseY > 225 && mouseY < 275){
+      gameOn = true
+    }
   }
+  
 }
 
 // Function which checks the distance between two balls, if close, it would count as a collition
@@ -97,9 +97,10 @@ function playerBall () {
   fill(5, 0, 0)
   ellipse(x1, y1, 60);
   
-  // Moves the ball by chnaging x value of ball according to whihc arrow key is pressed
+  // Moves the ball by chnaging x value of ball according to which arrow key is pressed
   if (keyIsDown(RIGHT_ARROW)) {
     x1 += 4;
+    console.log (x1);
   }
   
   if (keyIsDown(LEFT_ARROW)) {
