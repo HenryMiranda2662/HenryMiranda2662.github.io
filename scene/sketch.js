@@ -35,7 +35,7 @@ function setup(){
   gameOn = false // variable which allows me to check whether I am on the strat screen or gae screen
   
   //Variables used for the ball mechanis of the game such as coordinates and sizes
-  x1 = width/3;
+  x1 = width/13;
   y1 = height / 1.5;
   x2 = 100;
   y2 = height / 2;
@@ -50,7 +50,8 @@ function setup(){
 function startGame(){
   
   if (gameOn === false){
-    gameOn = true }
+    gameOn = true 
+  }
 }
 
 
@@ -73,6 +74,7 @@ function draw() {
   	button.size (150, 50)
     button.mousePressed(startGame); // if the button is pressed, it would set 
                                     //in motion the fuction which will start the game
+    x1 = width / 13; //Makes the ball start at the same x-value from the beginnig
   }
 }
 
