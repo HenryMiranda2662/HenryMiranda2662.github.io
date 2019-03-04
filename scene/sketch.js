@@ -31,6 +31,7 @@ function setup(){
   backgroundImage = loadImage("assets/bckimg.png");
   
   buttonImage = loadImage("assets/button.png")
+
   mySound.setVolume(0.1); // volume of the sound
   mySound.play(); // plays the sound
 
@@ -67,7 +68,7 @@ function draw() {
 
 // If the game has not started, draws a button which allows for the game to start
   if (gameOn === false){
-    background(160);  
+    background(66, 244, 119);  
     fill (250);
     rect(200, 225, 100 , 50);
     x1 = width / 13; //Makes the ball start at the same x-value from the beginnig
