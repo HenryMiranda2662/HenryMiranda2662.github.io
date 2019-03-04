@@ -48,10 +48,7 @@ function setup(){
  
 // function which checks if the game has started or not when the button is pressed
 function startGame(){
-  
-  if (gameOn === false){
-    gameOn = true 
-  }
+  gameOn = true
 }
 
 
@@ -66,7 +63,7 @@ function draw() {
   	itHit();
   }
 
-//If the game has not started, draws a button which allows for the game to start
+// If the game has not started, draws a button which allows for the game to start
   if (gameOn === false){
     background(160);  
   	button = createButton("Start Game");
@@ -75,6 +72,7 @@ function draw() {
     button.mousePressed(startGame); // if the button is pressed, it would set 
                                     //in motion the fuction which will start the game
     x1 = width / 13; //Makes the ball start at the same x-value from the beginnig
+    
   }
 }
 
@@ -90,7 +88,7 @@ function itHit() {
   
   //if the distance between the centers of the balls is less than the radii added together, it is a collition
   if (distanceAway  <= collition ||distanceAway2 <= collition || distanceAway3  <= collition)  {
-    gameOn = false 
+    gameOn = false
   }
 }
 
