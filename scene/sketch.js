@@ -63,7 +63,10 @@ function draw() {
     background(backgroundImage);
     enemyBalls();
 		playerBall ();
-  	itHit();
+    itHit();
+    if ((x1 + r1) >= 490){
+      gameOn = false;
+      }
   }
 
 // If the game has not started, draws a button which allows for the game to start
