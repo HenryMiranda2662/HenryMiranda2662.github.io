@@ -12,7 +12,8 @@ let x2, y2, r2;
 let x3;
 let x4;
 let dy;             
-let gameOn;         
+let gameOn;
+let button;
 
 // Make a function which pre-loads a sound, it also allows the 
 //program to find this song on two formats, mp3 or ogg, just in case
@@ -21,7 +22,7 @@ let gameOn;
 function preload() {
   soundFormats("mp3", "ogg", );
   mySound = loadSound("assets/sound.mp3");
-}
+  }
 
 //Set up creates the canvas, loads the background image, plays the sound
 // and sets values for some variables
@@ -29,6 +30,7 @@ function setup(){
 	createCanvas(500, 500);
   backgroundImage = loadImage("assets/bckimg.png");
   
+  buttonImage = loadImage("assets/button.png")
   mySound.setVolume(0.1); // volume of the sound
   mySound.play(); // plays the sound
 
@@ -41,7 +43,7 @@ function setup(){
   y2 = height / 2;
   x3 = width / 2;
   x4 = 400;
-  dy = 4.7;
+  dy = 6;
   r1 = 30;
   r2 = 25;
 }
@@ -72,6 +74,7 @@ function draw() {
     if (mouseIsPressed && mouseX > 200 && mouseX < 300 && mouseY > 225 && mouseY < 275){
       gameOn = true
     }
+    image(buttonImage, 200, 225, 100, 50)
   }
   
 }
@@ -100,7 +103,6 @@ function playerBall () {
   // Moves the ball by chnaging x value of ball according to which arrow key is pressed
   if (keyIsDown(RIGHT_ARROW)) {
     x1 += 4;
-    console.log (x1);
   }
   
   if (keyIsDown(LEFT_ARROW)) {
@@ -124,7 +126,7 @@ function enemyBalls() {
   
   ellipse(x2, y2, r2 * 2);               // Creates the enemy ball
   y2 += dy                               //Makes the ball move thoughout the y-axis
-  if (y2 + r2 >= width || y2 - r2 <= 0) {// checkc if the ball has crossed the screen boundary
+  if (y2 + r2 >= width || y2 - r2 <= 0) {// check if the ball has crossed the screen boundary
     dy = -1 * dy;                        //if so it changes its direction
   }
   
