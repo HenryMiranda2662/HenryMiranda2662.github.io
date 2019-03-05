@@ -22,7 +22,7 @@ module.exports = {
         "no-var": ["warn"],
 
         // override default options for rules from base configurations
-        //"comma-dangle": ["warn", "always"],
+        "comma-dangle": ["warn", "always"],
         "no-cond-assign": ["error", "always"],
 
         // disable rules from base configurations
