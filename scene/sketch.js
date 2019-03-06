@@ -124,6 +124,10 @@ function createPlayerBall(){
   ellipse(x1, y1, 60);
 }
 
+function movePlayerBall(){
+  
+}
+
 
 
 
