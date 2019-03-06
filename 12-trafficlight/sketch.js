@@ -7,20 +7,26 @@
 // function at https://p5js.org/reference/
 
 let states;
-let timer;
+let greenLightDuration;
+let yellowLightDuration;
+let redLightDuration;
+let timeOfLastTimeSwitch;
 
 function setup() {
   createCanvas(600, 600);
   state = 1;
-  
+  greenLightDuration = 500;
+  yellowLightDuration = 4500;
+  redLightDuration = 7000;
+  timeOfLastTimeSwitch = 0;
 }
 
 function draw() {
-  timer = millis() % 9000;
+  
   background(255);
   drawOutlineOfLights();
   determineState();
-  statesOfLights();
+  coloursOfLights();
 }
 
 function drawOutlineOfLights() {
@@ -37,55 +43,38 @@ function drawOutlineOfLights() {
 }
 
 function determineState () {
-  if (state === 1 && timer >= 3000){
+  if (state === 1 && millis() > timeOfLastTimeSwitch + greenLightDuration){
   state = 2
-  console.log(millis)
+  timeOfLastTimeSwitch = millis();
   }
   
-  if (state === 2 && timer >= 6000){
+  if (state === 2 && millis() > timeOfLastTimeSwitch + yellowLightDuration){
     state = 3
+    timeOfLastTimeSwitch = millis();
   }
   
-  if (state === 2 && timer <= 9000){
+  if (state === 3 && millis() > timeOfLastTimeSwitch + redLightDuration){
     state = 1
+    timeOfLastTimeSwitch = millis();
   }
 
 }
 
 
-function statesOfLights() {
+function coloursOfLights() {
+
   if (state === 1){
-    fill(232, 20, 20);
-    ellipse(width/2, height/2 - 65, 50, 50); //top
-
-    fill (255);
-    ellipse(width/2, height/2, 50, 50); //middle
+    fill (97, 204, 40);
     ellipse(width/2, height/2 + 65, 50, 50); //bottom
-
   }
 
   if (state === 2){
-    fill(255);
-    ellipse(width/2, height/2 - 65, 50, 50); //top
-
-    fill (198, 147, 27);
+    fill (255, 147, 27);
     ellipse(width/2, height/2, 50, 50); //middle
-
-    fill (255);
-    ellipse(width/2, height/2 + 65, 50, 50); //bottom
-
   }
 
   if (state === 3){
-    fill(255);
+    fill(232, 20, 20);
     ellipse(width/2, height/2 - 65, 50, 50); //top
-
-    fill (255);
-    ellipse(width/2, height/2, 50, 50); //middle
-
-    fill (97, 204, 40);
-    ellipse(width/2, height/2 + 65, 50, 50); //bottom
-
   }
-  
 }

@@ -24,8 +24,7 @@ function preload() {
   mySound = loadSound("assets/sound.mp3");
   }
 
-//Set up creates the canvas, loads the background image, plays the sound
-// and sets values for some variables
+//Set up creates the canvas, loads the background image, plays the sound and sets values for some variables
 function setup(){
 	createCanvas(500, 500);
   backgroundImage = loadImage("assets/bckimg.png");
@@ -49,11 +48,6 @@ function setup(){
   r2 = 25;
 }
  
-// function which checks if the game has started or not when the button is pressed
-// function startGame(){
-//   gameOn = true
-// }
-
 
 //Function which will set the game in motion as it draws the objects needed
 function draw() {
@@ -104,8 +98,7 @@ function itHit() {
 
 // Creates player ball, and its movement
 function playerBall () {
-  fill(5, 0, 0)
-  ellipse(x1, y1, 60);
+  createPlayerBall();
   
   // Moves the ball by chnaging x value of ball according to which arrow key is pressed
   if (keyIsDown(RIGHT_ARROW)) {
@@ -125,6 +118,14 @@ function playerBall () {
     x1 = x1 - r1 / 4
   }
 }
+
+function createPlayerBall(){
+  fill(5, 0, 0)
+  ellipse(x1, y1, 60);
+}
+
+
+
 
 // Creates the enemy balls and their movement 
 function enemyBalls() {
