@@ -99,8 +99,17 @@ function itHit() {
 // Creates player ball, and its movement
 function playerBall () {
   createPlayerBall();
-  
-  // Moves the ball by chnaging x value of ball according to which arrow key is pressed
+  movePlayerBall();
+  checkWindowBoundary();
+}
+
+function createPlayerBall(){
+  fill(5, 0, 0)
+  ellipse(x1, y1, 60);
+}
+
+// Moves the ball by chnaging x value of ball according to which arrow key is pressed
+function movePlayerBall(){
   if (keyIsDown(RIGHT_ARROW)) {
     x1 += 4;
   }
@@ -108,8 +117,10 @@ function playerBall () {
   if (keyIsDown(LEFT_ARROW)) {
     x1 -= 4;
   }
-  
-  //Checks if the ball is within the window boundary, if yes, the ball doesn't leave
+}
+
+ //Checks if the ball is within the window boundary, if yes, the ball doesn't leave
+function checkWindowBoundary() {
   if ((x1 - r1) < 0) {
     x1 = x1 + r1 / 3
   }
@@ -118,17 +129,6 @@ function playerBall () {
     x1 = x1 - r1 / 4
   }
 }
-
-function createPlayerBall(){
-  fill(5, 0, 0)
-  ellipse(x1, y1, 60);
-}
-
-function movePlayerBall(){
-  
-}
-
-
 
 
 // Creates the enemy balls and their movement 
