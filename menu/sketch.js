@@ -41,21 +41,18 @@ function draw() {
   if (state === "chooseLevel") {
     chooseLevel();
   }
-  // if (state === "menu") {
-  //   displayMenu();
-  // }
 }
 
 function chooseLevel() {
   rectMode(CENTER);
   rect(leve1ButtonX, leve1ButtonY, leve1ButtonWidth, leve1ButtonHeight);
 	imageMode(CENTER);
-  image(level1Button, leve1ButtonY, leve1ButtonWidth, leve1ButtonHeight);
+  image(level1Button, leve1ButtonX, leve1ButtonY, leve1ButtonWidth, leve1ButtonHeight);
   
   rectMode(CENTER);
   rect(leve2ButtonX, leve2ButtonY, leve2ButtonWidth, leve2ButtonHeight);
   imageMode(CENTER)
-  image(level2Button, leve2ButtonY, leve2ButtonWidth, leve2ButtonHeight);
+  image(level2Button, leve2ButtonX, leve2ButtonY, leve2ButtonWidth, leve2ButtonHeight);
 }
 
 function displayMenu() {
@@ -73,7 +70,7 @@ function mousePressed() {
   }
   
   if (state === "chooseLevel") {
-    if (clickedOnButtonLevel(mouseX, mouseY)) {
+    if (clickedOnButtonLeve1(mouseX, mouseY) || clickedOnButtonLeve2(mouseX, mouseY) ) {
       state = "menu";
     }
   }
@@ -86,10 +83,16 @@ function clickedOnButton(x, y) {
          y <= buttonY + buttonHeight/2;
 }
 
-function clickedOnButtonLevel(x, y) {
+function clickedOnButtonLeve1(x, y) {
   return x >= leve1ButtonX - leve1ButtonWidth/2 &&
          x <= leve1ButtonX + leve1ButtonWidth/2 &&
          y >= leve1ButtonY - leve1ButtonHeight/2 &&
          y <= leve1ButtonY + leve1ButtonHeight/2;
 }
 
+function clickedOnButtonLeve2(x, y) {
+  return x >= leve2ButtonX - leve2ButtonWidth/2 &&
+         x <= leve2ButtonX + leve2ButtonWidth/2 &&
+         y >= leve2ButtonY - leve2ButtonHeight/2 &&
+         y <= leve2ButtonY + leve2ButtonHeight/2;
+}
