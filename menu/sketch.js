@@ -5,55 +5,91 @@
 // Extra for Experts:
 // - describe what you did to take this project "above and beyond"
 
-let x,y;
-let squareSize;
 let state;
-let speed;
+let playButtonX, playButtonY, playButtonWidth, playButtonHeight;
+let leve1ButtonX, leve1ButtonY, leve1ButtonWidth, leve1ButtonHeight;
+let leve2ButtonX, leve2ButtonY, leve2ButtonWidth, leve2ButtonHeight;
 
 function setup() {
-  createCanvas(windowWidth, windowHeight);
-  x = 0;
-  y = 0;
-  squareSize = 30;
-  state = 1;
-  speed = 1;
+  createCanvas(500, 500);
+  state = "menu";
+  buttonX = width/2;
+  buttonY = height/2;
+  buttonWidth = 240;
+  buttonHeight = 75;
+  playButtonImage = loadImage("assets/playbutton.png");
+  
+  leve1ButtonX = width/3;
+  leve1ButtonY = height/2;
+  leve1ButtonWidth = 150;
+  leve1ButtonHeight = 80;
+  level1Button = loadImage("assets/level1.png");
+    
+  leve2ButtonX = width/1.5;
+  leve2ButtonY = height/2
+  leve2ButtonWidth = 150;
+  leve2ButtonHeight = 80;
+  level2Button = loadImage("assets/level2.png");
+
 }
 
 function draw() {
-  background(220);
-  determineState ();
-  moveAccordingToState ();
-  displaySquare();
+  background(66, 244, 182);
+  if (state === "menu") {
+    displayMenu();
+  }
+  if (state === "chooseLevel") {
+    chooseLevel();
+  }
+  // if (state === "menu") {
+  //   displayMenu();
+  // }
 }
 
-funtion displaySquare() {
-  fill(0);
-  rect (x, y, squareSize, squareSize);
+function chooseLevel() {
+  rectMode(CENTER);
+  rect(leve1ButtonX, leve1ButtonY, leve1ButtonWidth, leve1ButtonHeight);
+	imageMode(CENTER);
+  image(level1Button, leve1ButtonY, leve1ButtonWidth, leve1ButtonHeight);
+  
+  rectMode(CENTER);
+  rect(leve2ButtonX, leve2ButtonY, leve2ButtonWidth, leve2ButtonHeight);
+  imageMode(CENTER)
+  image(level2Button, leve2ButtonY, leve2ButtonWidth, leve2ButtonHeight);
 }
 
-funtion determineState() {
-  if (state === 1 && x >= width - squareSize) {
-    state = 2;
-    x = width - squareSize; //hug edge of wall
-  }
-  else if (state === 12 && y >= height - squareSize) 
-  state = 3;
-  y = height - squareSize
-  }
-  else if (state === 3 && x <= 0) {
-    state = 4;
-    x = 0; //hug edge of wall
-  }
+function displayMenu() {
+  rectMode(CENTER);
+  rect(buttonX, buttonY, buttonWidth, buttonHeight);
+  imageMode(CENTER)
+  image(playButtonImage, buttonX, buttonY, buttonWidth, buttonHeight);
+}
 
+function mousePressed() {
+  if (state === "menu") {
+    if (clickedOnButton(mouseX, mouseY)) {
+      state = "chooseLevel";
+    }
+  }
+  
+  if (state === "chooseLevel") {
+    if (clickedOnButtonLevel(mouseX, mouseY)) {
+      state = "menu";
+    }
+  }
 }
-funtion moveAccordingToState () {
-  if (state === 1){
-    x+= speed;
-  }
-  else if (state === 2){
-    y += speed;
-  }
-  else if (state === 3){
-    x -= speed;
-  }
+
+function clickedOnButton(x, y) {
+  return x >= buttonX - buttonWidth/2 &&
+         x <= buttonX + buttonWidth/2 &&
+         y >= buttonY - buttonHeight/2 &&
+         y <= buttonY + buttonHeight/2;
 }
+
+function clickedOnButtonLevel(x, y) {
+  return x >= leve1ButtonX - leve1ButtonWidth/2 &&
+         x <= leve1ButtonX + leve1ButtonWidth/2 &&
+         y >= leve1ButtonY - leve1ButtonHeight/2 &&
+         y <= leve1ButtonY + leve1ButtonHeight/2;
+}
+
