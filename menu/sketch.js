@@ -9,7 +9,7 @@ let state;
 let playButtonX, playButtonY, playButtonWidth, playButtonHeight;
 let leve1ButtonX, leve1ButtonY, leve1ButtonWidth, leve1ButtonHeight;
 let leve2ButtonX, leve2ButtonY, leve2ButtonWidth, leve2ButtonHeight;
-let backgroundImage;
+let backgroundIge;
 let playerX, playerY, playerRadius;     
 let enemyX, enemyY, enemyRadius;     
 let enemyX2;
@@ -23,13 +23,13 @@ function preload() {
 
 function setup() {
   createCanvas(500, 500);
-  backgroundImage = loadImage("assets/bckimg.png");
+  backgroundImage = loadImage("assets/bckimgng");
   mySound.setVolume(0.1); 
   mySound.play(); 
 
   state = "menu";
   buttonX = width/2;
-  buttonY = height/2;
+  buttonY = height/1.5;
   buttonWidth = 240;
   buttonHeight = 75;
   playButtonImage = loadImage("assets/playbutton.png");
@@ -59,21 +59,23 @@ function setup() {
 }
 
 function draw() {
-  background(66, 244, 182);
+  
   if (state === "menu") {
-    //console.log("menu")
+    background(66, 244, 182);
+    //background(backgroundImage);
     displayMenu();
     playerX = width / 13;
     
   }
   if (state === "chooseLevel") {
-    //console.log("levels selection")
+    background(69, 24, 182);
     chooseLevel();
     
   }
   if (state === "level1"){
-    //console.log("level 1")
-  	background(backgroundImage, 25, 25);
+    
+    //background(backgroundImage);  why is the image centered??
+    background(255);
     enemyBalls();
 		playerBall ();
     itHit();
@@ -216,4 +218,4 @@ function clickedOnButtonLeve2(x, y) {
          x <= leve2ButtonX + leve2ButtonWidth/2 &&
          y >= leve2ButtonY - leve2ButtonHeight/2 &&
          y <= leve2ButtonY + leve2ButtonHeight/2;
-}
+}  //how to avoid the double click problem
