@@ -9,9 +9,24 @@ let state;
 let playButtonX, playButtonY, playButtonWidth, playButtonHeight;
 let leve1ButtonX, leve1ButtonY, leve1ButtonWidth, leve1ButtonHeight;
 let leve2ButtonX, leve2ButtonY, leve2ButtonWidth, leve2ButtonHeight;
+let backgroundImage;
+let playerX, playerY, playerRadius;     
+let enemyX, enemyY, enemyRadius;     
+let enemyX2;
+let enemyX3;
+let dy;
+
+function preload() {
+  soundFormats("mp3");
+  mySound = loadSound("assets/sound.mp3");
+}
 
 function setup() {
   createCanvas(500, 500);
+  backgroundImage = loadImage("assets/bckimg.png");
+  mySound.setVolume(0.1); 
+  mySound.play(); 
+
   state = "menu";
   buttonX = width/2;
   buttonY = height/2;
@@ -30,16 +45,38 @@ function setup() {
   leve2ButtonWidth = 150;
   leve2ButtonHeight = 80;
   level2Button = loadImage("assets/level2.png");
+  
+  playerX = width/13;
+  playerY = height / 1.5;
+  enemyX = 100;
+  enemyY = height / 2;
+  enemyX2 = width / 2;
+  enemyX3 = 400;
+  dy = 2;
+  playerRadius = 30;
+  enemyRadius = 25;
 
 }
 
 function draw() {
   background(66, 244, 182);
   if (state === "menu") {
+    //console.log("menu")
     displayMenu();
+    playerX = width / 13;
+    
   }
   if (state === "chooseLevel") {
+    //console.log("levels selection")
     chooseLevel();
+    
+  }
+  if (state === "level1"){
+    //console.log("level 1")
+  	background(backgroundImage, 25, 25);
+    enemyBalls();
+		playerBall ();
+    itHit();
   }
 }
 
@@ -70,11 +107,95 @@ function mousePressed() {
   }
   
   if (state === "chooseLevel") {
-    if (clickedOnButtonLeve1(mouseX, mouseY) || clickedOnButtonLeve2(mouseX, mouseY) ) {
-      state = "menu";
+    if (clickedOnButtonLeve1(mouseX, mouseY) ) {
+      state = "level1";
+    }
+  }
+  if (state === "chooseLevel") {
+    if (clickedOnButtonLeve2(mouseX, mouseY) ) {
+      state = "level2";
     }
   }
 }
+
+function itHit() {
+
+  distanceAwayFromCenter = int(dist(playerX, playerY, enemyX, enemyY));//checks distance of center of player ball and enemy ball
+  collitionDistance = (playerRadius + enemyRadius);                   // Adds radii of balls 
+  distanceAwayFromCenter2 = int(dist(playerX, playerY, enemyX2, enemyY));
+  collitionDistance = (playerRadius + enemyRadius);
+  distanceAwayFromCenter3 = int(dist(playerX, playerY, enemyX3, enemyY));
+  collitionDistance = (playerRadius + enemyRadius);
+  
+  //if the distance between the centers of the balls is less than the radii added together, it is a collition
+  if (distanceAwayFromCenter  <= collitionDistance ||distanceAwayFromCenter2 <= collitionDistance || distanceAwayFromCenter3  <= collitionDistance)  {
+    state = "menu"
+  }
+}
+
+function playerBall () {
+  createPlayerBall();
+  movePlayerBall();
+  checkWindowBoundary();
+}
+
+function createPlayerBall(){
+  fill(5, 255, 57)
+  ellipse(playerX, playerY, 60);
+}
+
+
+function movePlayerBall(){
+  if (keyIsDown(RIGHT_ARROW)) {
+    playerX += 4;
+  }
+  
+  if (keyIsDown(LEFT_ARROW)) {
+    playerX -= 4;
+  }
+}
+
+function checkWindowBoundary() {
+  if ((playerX - playerRadius) < 0) {
+    playerX = playerX + playerRadius / 3
+  }
+  
+  if ((playerX + playerRadius) > 495) {
+    playerX = playerX - playerRadius / 4
+  }
+}
+ 
+function enemyBalls() {
+  fill(9, 150, 250)
+  enemyBall1();
+  enemyBall2();
+  enemyBall3();
+}
+
+function enemyBall1(){
+  ellipse(enemyX, enemyY, enemyRadius * 2);
+  enemyY += dy                             
+  if (enemyY + enemyRadius >= width || enemyY - enemyRadius <= 0) {
+    dy = -1 * dy;                        
+  }
+}
+
+function enemyBall2(){
+  ellipse(enemyX2, enemyY, enemyRadius * 2);
+  enemyY += dy
+  if (enemyY + enemyRadius >= width || enemyY - enemyRadius <= 0) {
+    dy = -1 * dy;
+  }
+}
+
+function enemyBall3(){
+  ellipse(enemyX3, enemyY, enemyRadius * 2);
+  enemyY += dy
+  if (enemyY + enemyRadius >= width || enemyY - enemyRadius <= 0) {
+    dy = -1 * dy;
+  }
+}
+
 
 function clickedOnButton(x, y) {
   return x >= buttonX - buttonWidth/2 &&
