@@ -198,7 +198,6 @@ function enemyBall3(){
   }
 }
 
-
 function clickedOnButton(x, y) {
   return x >= buttonX - buttonWidth/2 &&
          x <= buttonX + buttonWidth/2 &&
