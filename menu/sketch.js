@@ -74,7 +74,7 @@ function draw() {
   }
   if (state === "level1"){
     
-    //background(backgroundImage);  why is the image centered??
+    //background(backgroundImage);  //why is the image centered??
     background(255);
     enemyBalls();
 		playerBall ();
