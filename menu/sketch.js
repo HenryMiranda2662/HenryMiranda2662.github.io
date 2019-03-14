@@ -53,7 +53,7 @@ function setup() {
   enemyX2 = width / 2;
   enemyX3 = 400;
   enemyY = height / 2;
-  enemyLevel1dy = 2;
+  enemyLevel1dy = 6;
   enemyLevel2dx = random(1,3); 
   enemyLevel2dy = random(1,3);
   playerRadius = 30;
@@ -82,7 +82,7 @@ function draw() {
     
   }
   if (state === "level1"){
-    //background(backgroundImage);  //why is the image centered??
+    background(backgroundImage);  //why is the image centered??
     background(255);
     playerBall ();
     itHitLevel1();
@@ -90,7 +90,7 @@ function draw() {
     
   }
   if (state === "level2"){
-    //background(backgroundImage);  //why is the image centered??
+    background(backgroundImage);  //why is the image centered??
     background(255);
     playerBall ();
     itHitLevel2();
