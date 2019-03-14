@@ -54,10 +54,13 @@ function setup() {
   enemyX3 = 400;
   enemyY = height / 2;
   enemyLevel1dy = 6;
-  enemyLevel2dx = random(1,3); 
-  enemyLevel2dy = random(1,3);
   playerRadius = 30;
   enemyRadius = 25;
+
+
+  enemyLevel2dx = random(1,3); 
+  enemyLevel2dy = random(1,3);
+  
 
   enemyXLevel2 = 100;
   enemyX2Level2 = width / 2;
@@ -82,19 +85,20 @@ function draw() {
     
   }
   if (state === "level1"){
-    background(backgroundImage);  //why is the image centered??
-    background(255);
+    //background(backgroundImage);  //why is the image centered??
+    background(26);
     playerBall ();
     itHitLevel1();
     enemyBallsLevel1();
     
   }
   if (state === "level2"){
-    background(backgroundImage);  //why is the image centered??
-    background(255);
+    //background(backgroundImage);  //why is the image centered??
+    background(26);
     playerBall ();
     itHitLevel2();
     enemyBallsLevel2();
+    console.log(enemyX2Level2)
   }
 }
 
@@ -215,7 +219,7 @@ function enemyBall3Level1(){
 function enemyBallsLevel2() {
   fill(9, 150, 250)
   enemyBall1Level2();
-  //enemyBall2Level2();
+  enemyBall2Level2();
   enemyBall3Level2();
 }
 
@@ -231,17 +235,17 @@ function enemyBall1Level2(){
   }
 }
 
-// function enemyBall2Level2(){
-//   ellipse(enemyX2, enemyY, enemyRadius * 2);
-//   enemyX2Level2 += enemyLevel2dx
-//   enemyYLevel2 += enemyLevel2dy
-//   if (enemyX2Level2 + enemyRadius >= width || enemyX2Level2 - enemyRadius <= 0) {
-//     enemyLevel2dx = -1 * enemyLevel2dx; 
-//   }                        
-//   if (enemyYLevel2 + enemyRadius >= height || enemyYLevel2 - enemyRadius <= 0) {
-//     enemyLevel2dy = -1 * enemyLevel2dy;                        
-//   }
-// }
+function enemyBall2Level2(){
+  ellipse(enemyX2, enemyY, enemyRadius * 2);
+  enemyX2Level2 += enemyLevel2dx
+  enemyYLevel2 += enemyLevel2dy
+  if (enemyX2Level2 + enemyRadius >= width || enemyX2Level2 - enemyRadius <= 0) {
+    enemyLevel2dx = -1 * enemyLevel2dx; 
+  }                        
+  if (enemyYLevel2 + enemyRadius >= height || enemyYLevel2 - enemyRadius <= 0) {
+    enemyLevel2dy = -1 * enemyLevel2dy;                        
+  }
+}
 
 function enemyBall3Level2(){
   ellipse(enemyX3Level2, enemyYLevel2, enemyRadius * 2);
@@ -268,9 +272,12 @@ function itHitLevel2() {
   //   state = "menu"
   // }
 
-  if (distanceAwayFromCenter  <= collitionDistance || distanceAwayFromCenter3  <= collitionDistance)  {
-    state = "menu"
-}
+   if (distanceAwayFromCenter  <= collitionDistance || distanceAwayFromCenter3  <= collitionDistance)  {
+     state = "menu"
+  }
+  // if (distanceAwayFromCenter3  <= collitionDistance)  {
+  //   state = "menu"
+  // }
 }
 
 function clickedOnButton(x, y) {
