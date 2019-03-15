@@ -9,7 +9,7 @@ let state;
 let playButtonX, playButtonY, playButtonWidth, playButtonHeight;
 let leve1ButtonX, leve1ButtonY, leve1ButtonWidth, leve1ButtonHeight;
 let leve2ButtonX, leve2ButtonY, leve2ButtonWidth, leve2ButtonHeight;
-let backgroundIge;
+let backgroundImage;
 let playerX, playerY, playerRadius;     
 let enemyX, enemyY, enemyRadius;     
 let enemyX2;
@@ -23,7 +23,7 @@ function preload() {
 
 function setup() {
   createCanvas(500, 500);
-  backgroundImage = loadImage("assets/bckimgng");
+  backgroundImage = loadImage("assets/bckimg.png");
   mySound.setVolume(0.1); 
   mySound.play(); 
 
@@ -58,8 +58,8 @@ function setup() {
   enemyRadius = 25;
 
 
-  enemyLevel2dx = random(1,3); 
-  enemyLevel2dy = random(1,3);
+  enemyLevel2dx = random(1,4); 
+  enemyLevel2dy = random(1,4);
   
 
   enemyXLevel2 = 100;
@@ -73,32 +73,33 @@ function draw() {
   
   if (state === "menu") {
     background(66, 244, 182);
-    //background(backgroundImage);
     displayMenu();
     playerX = width / 13;
     enemyYLevel2 = height / 6;
-    
+    enemyXLevel2 = 100;
+    enemyX2Level2 = width / 2;
+    enemyX3Level2 = 400;
   }
+
   if (state === "chooseLevel") {
     background(69, 24, 182);
-    chooseLevel();
-    
+    chooseLevel();  
   }
+
   if (state === "level1"){
-    //background(backgroundImage);  //why is the image centered??
-    background(26);
+    imageMode(CORNERS)
+    background(backgroundImage);  
     playerBall ();
     itHitLevel1();
-    enemyBallsLevel1();
-    
+    enemyBallsLevel1();  
   }
+
   if (state === "level2"){
-    //background(backgroundImage);  //why is the image centered??
-    background(26);
+    imageMode(CORNERS)
+    background(backgroundImage);  
     playerBall ();
-    itHitLevel2();
+    //itHitLevel2();
     enemyBallsLevel2();
-    console.log(enemyX2Level2)
   }
 }
 
@@ -192,7 +193,7 @@ function enemyBallsLevel1() {
   enemyBall3Level1();
 }
 
-function enemyBall1Level1(){
+function enemyBall1Level1() {
   ellipse(enemyX, enemyY, enemyRadius * 2);
   enemyY += enemyLevel1dy                             
   if (enemyY + enemyRadius >= height || enemyY - enemyRadius <= 0) {
@@ -200,7 +201,7 @@ function enemyBall1Level1(){
   }
 }
 
-function enemyBall2Level1(){
+function enemyBall2Level1() {
   ellipse(enemyX2, enemyY, enemyRadius * 2);
   enemyY += enemyLevel1dy
   if (enemyY + enemyRadius >= height || enemyY - enemyRadius <= 0) {
@@ -208,7 +209,7 @@ function enemyBall2Level1(){
   }
 }
 
-function enemyBall3Level1(){
+function enemyBall3Level1() {
   ellipse(enemyX3, enemyY, enemyRadius * 2);
   enemyY += enemyLevel1dy
   if (enemyY + enemyRadius >= height || enemyY - enemyRadius <= 0) {
@@ -223,7 +224,7 @@ function enemyBallsLevel2() {
   enemyBall3Level2();
 }
 
-function enemyBall1Level2(){
+function enemyBall1Level2() {
   ellipse(enemyXLevel2, enemyYLevel2, enemyRadius * 2);
   enemyXLevel2 += enemyLevel2dx
   enemyYLevel2 += enemyLevel2dy     
@@ -235,8 +236,8 @@ function enemyBall1Level2(){
   }
 }
 
-function enemyBall2Level2(){
-  ellipse(enemyX2, enemyY, enemyRadius * 2);
+function enemyBall2Level2() {
+  ellipse(enemyX2Level2, enemyYLevel2, enemyRadius * 2);
   enemyX2Level2 += enemyLevel2dx
   enemyYLevel2 += enemyLevel2dy
   if (enemyX2Level2 + enemyRadius >= width || enemyX2Level2 - enemyRadius <= 0) {
@@ -247,7 +248,7 @@ function enemyBall2Level2(){
   }
 }
 
-function enemyBall3Level2(){
+function enemyBall3Level2() {
   ellipse(enemyX3Level2, enemyYLevel2, enemyRadius * 2);
   enemyX3Level2 += enemyLevel2dx
   enemyYLevel2 += enemyLevel2dy
@@ -263,21 +264,14 @@ function itHitLevel2() {
 
   distanceAwayFromCenter = int(dist(playerX, playerY, enemyXLevel2, enemyYLevel2));
   collitionDistance = (playerRadius + enemyRadius);                   
-  //distanceAwayFromCenter2 = int(dist(playerX, playerY, enemyX2Level2, enemyYLevel2));
-  //collitionDistance = (playerRadius + enemyRadius);
+  distanceAwayFromCenter2 = int(dist(playerX, playerY, enemyX2Level2, enemyYLevel2));
+  collitionDistance = (playerRadius + enemyRadius);
   distanceAwayFromCenter3 = int(dist(playerX, playerY, enemyX3Level2, enemyYLevel2));
   collitionDistance = (playerRadius + enemyRadius);
   
-  // if (distanceAwayFromCenter  <= collitionDistance || distanceAwayFromCenter2  <= collitionDistance || distanceAwayFromCenter3  <= collitionDistance)  {
-  //   state = "menu"
-  // }
-
-   if (distanceAwayFromCenter  <= collitionDistance || distanceAwayFromCenter3  <= collitionDistance)  {
-     state = "menu"
+  if (distanceAwayFromCenter  <= collitionDistance || distanceAwayFromCenter2  <= collitionDistance || distanceAwayFromCenter3  <= collitionDistance)  {
+    state = "menu"
   }
-  // if (distanceAwayFromCenter3  <= collitionDistance)  {
-  //   state = "menu"
-  // }
 }
 
 function clickedOnButton(x, y) {
