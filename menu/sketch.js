@@ -98,7 +98,7 @@ function draw() {
     imageMode(CORNERS)
     background(backgroundImage);  
     playerBall ();
-    itHitLevel2();
+    //itHitLevel2();
     enemyBallsLevel2();
   }
 }
