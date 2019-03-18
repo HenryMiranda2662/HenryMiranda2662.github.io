@@ -18,7 +18,7 @@ let enemyLevel1dy;
 
 function preload() {
   soundFormats("mp3");
-  mySound = loadSound("assets/sound.mp3");
+  mySound = loadSound("sound.mp3");
 }
 
 function setup() {
@@ -46,27 +46,56 @@ function setup() {
   leve2ButtonHeight = 80;
   level2Button = loadImage("assets/level2.png");
   
-  playerX = width/13;
-  playerY = height / 1.5;
+  player = {
+  x : width/13,
+  y : height / 1.5,
+  radius : 30,
+  }
 
-  enemyX = 100;
-  enemyX2 = width / 2;
-  enemyX3 = 400;
-  enemyY = height / 2;
-  enemyLevel1dy = 6;
-  playerRadius = 30;
-  enemyRadius = 25;
-
-
-  enemyLevel2dx = random(1,4); 
-  enemyLevel2dy = random(1,4);
+  enemy1Level1 = {
+  x : 100,
+  y : height / 2,
+  dy : 6,
+  radius : 25,
+  }
   
-
-  enemyXLevel2 = 100;
-  enemyX2Level2 = width / 2;
-  enemyX3Level2 = 400;
-  enemyYLevel2 = height / 6;
-
+  enemy2Level1 = {
+  x : width/2 ,
+  y : height / 2,
+  dy : 6,
+  radius : 25,
+  }
+  
+  enemy3Level1 = {
+  x : 400,
+  y : height / 2,
+  dy : 6,
+  radius : 25,
+  }
+  
+  enemy1Level2 = {
+  x : 100,
+  y : height / 6,
+	dx : random(4,5),
+  dy : random(4,5),
+  radius : 25,
+  }
+  
+  enemy2Level2 = {
+  x : width/2 ,
+  y : height / 6,
+  dx : random(4,5),
+  dy : random(4,5),
+  radius : 25,
+  }
+  
+  enemy3Level2 = {
+  x : 400,
+  y : height / 6,
+  dx : random(4,5),  
+  dy : random(4,5),
+  radius : 25,
+  }
 }
 
 function draw() {
@@ -74,11 +103,16 @@ function draw() {
   if (state === "menu") {
     background(66, 244, 182);
     displayMenu();
-    playerX = width / 13;
-    enemyYLevel2 = height / 6;
-    enemyXLevel2 = 100;
-    enemyX2Level2 = width / 2;
-    enemyX3Level2 = 400;
+    
+    player.x = width / 13;
+    
+    enemy1Level2.x = 100;
+    enemy2Level2.x = width / 2;
+    enemy3Level2.x = 400;
+    
+    enemy1Level2.y = height / 6;
+    enemy2Level2.y = height / 6;
+    enemy3Level2.y = height / 6;
   }
 
   if (state === "chooseLevel") {
@@ -98,7 +132,7 @@ function draw() {
     imageMode(CORNERS)
     background(backgroundImage);  
     playerBall ();
-    //itHitLevel2();
+    itHitLevel2();
     enemyBallsLevel2();
   }
 }
@@ -143,14 +177,21 @@ function mousePressed() {
 
 function itHitLevel1() {
 
-  distanceAwayFromCenter = int(dist(playerX, playerY, enemyX, enemyY));
-  collitionDistance = (playerRadius + enemyRadius);                   
-  distanceAwayFromCenter2 = int(dist(playerX, playerY, enemyX2, enemyY));
-  collitionDistance = (playerRadius + enemyRadius);
-  distanceAwayFromCenter3 = int(dist(playerX, playerY, enemyX3, enemyY));
-  collitionDistance = (playerRadius + enemyRadius);
+  distanceAwayFromCenter1 = int(dist(player.x, player.y, enemy1Level1.x, enemy1Level1.y));                   
+  distanceAwayFromCenter2 = int(dist(player.x, player.y, enemy2Level1.x, enemy2Level1.y));
+  distanceAwayFromCenter3 = int(dist(player.x, player.y, enemy3Level1.x, enemy3Level1.y));
   
-  if (distanceAwayFromCenter  <= collitionDistance ||distanceAwayFromCenter2 <= collitionDistance || distanceAwayFromCenter3  <= collitionDistance)  {
+  collitionDistance1 = (player.radius + enemy1Level1.radius);
+  collitionDistance2 = (player.radius + enemy2Level1.radius);
+  collitionDistance3 = (player.radius + enemy3Level1.radius);
+  
+  if (distanceAwayFromCenter1  <= collitionDistance1 ||distanceAwayFromCenter2 <= collitionDistance1 || distanceAwayFromCenter3  <= collitionDistance1)  {
+    state = "menu"
+  }
+  if (distanceAwayFromCenter1  <= collitionDistance2 ||distanceAwayFromCenter2 <= collitionDistance2 || distanceAwayFromCenter3  <= collitionDistance2)  {
+    state = "menu"
+  }
+  if (distanceAwayFromCenter1  <= collitionDistance3 ||distanceAwayFromCenter2 <= collitionDistance3 || distanceAwayFromCenter3  <= collitionDistance3)  {
     state = "menu"
   }
 }
@@ -163,26 +204,26 @@ function playerBall () {
 
 function createPlayerBall(){
   fill(5, 255, 57)
-  ellipse(playerX, playerY, 60);
+  ellipse(player.x, player.y, player.radius*2)
 }
 
 function movePlayerBall(){
   if (keyIsDown(RIGHT_ARROW)) {
-    playerX += 4;
+    player.x += 4;
   }
   
   if (keyIsDown(LEFT_ARROW)) {
-    playerX -= 4;
+    player.x -= 4;
   }
 }
 
 function checkWindowBoundary() {
-  if ((playerX - playerRadius) < 0) {
-    playerX = playerX + playerRadius / 3
+  if ((player.x - player.radius) < 0) {
+    player.x = player.x + player.radius / 3
   }
   
-  if ((playerX + playerRadius) > 495) {
-    playerX = playerX - playerRadius / 4
+  if ((player.x + player.radius) > 495) {
+    player.x = player.x - player.radius / 4
   }
 }
  
@@ -194,26 +235,27 @@ function enemyBallsLevel1() {
 }
 
 function enemyBall1Level1() {
-  ellipse(enemyX, enemyY, enemyRadius * 2);
-  enemyY += enemyLevel1dy                             
-  if (enemyY + enemyRadius >= height || enemyY - enemyRadius <= 0) {
-    enemyLevel1dy = -1 * enemyLevel1dy;                        
+  ellipse(enemy1Level1.x, enemy1Level1.y, enemy1Level1.radius * 2);
+  enemy1Level1.y += enemy1Level1.dy                             
+  
+  if (enemy1Level1.y + enemy1Level1.radius >= height || enemy1Level1.y - enemy1Level1.radius <= 0) {
+    enemy1Level1.dy = -1 * enemy1Level1.dy;                        
   }
 }
 
 function enemyBall2Level1() {
-  ellipse(enemyX2, enemyY, enemyRadius * 2);
-  enemyY += enemyLevel1dy
-  if (enemyY + enemyRadius >= height || enemyY - enemyRadius <= 0) {
-    enemyLevel1dy = -1 * enemyLevel1dy;
+  ellipse(enemy2Level1.x, enemy2Level1.y, enemy2Level1.radius * 2);
+  enemy2Level1.y += enemy2Level1.dy
+  if (enemy2Level1.y + enemy2Level1.radius >= height || enemy2Level1.y - enemy2Level1.radius <= 0) {
+    enemy2Level1.dy = -1 * enemy2Level1.dy;
   }
 }
 
 function enemyBall3Level1() {
-  ellipse(enemyX3, enemyY, enemyRadius * 2);
-  enemyY += enemyLevel1dy
-  if (enemyY + enemyRadius >= height || enemyY - enemyRadius <= 0) {
-    enemyLevel1dy = -1 * enemyLevel1dy;
+  ellipse(enemy3Level1.x, enemy3Level1.y, enemy3Level1.radius * 2);
+  enemy3Level1.y += enemy3Level1.dy
+  if (enemy3Level1.y + enemy3Level1.radius >= height || enemy3Level1.y - enemy3Level1.radius <= 0) {
+    enemy3Level1.dy = -1 * enemy3Level1.dy;
   }
 }
 
@@ -225,53 +267,61 @@ function enemyBallsLevel2() {
 }
 
 function enemyBall1Level2() {
-  ellipse(enemyXLevel2, enemyYLevel2, enemyRadius * 2);
-  enemyXLevel2 += enemyLevel2dx
-  enemyYLevel2 += enemyLevel2dy     
-  if (enemyXLevel2 + enemyRadius >= width || enemyXLevel2 - enemyRadius <= 0) {
-    enemyLevel2dx = -1 * enemyLevel2dx; 
+  ellipse(enemy1Level2.x, enemy1Level2.y, enemy1Level2.radius * 2);
+  enemy1Level2.x += enemy1Level2.dx
+  enemy1Level2.y += enemy1Level2.dy    
+  if (enemy1Level2.x + enemy1Level2.radius >= width || enemy1Level2.x - enemy1Level2.radius <= 0) {
+    enemy1Level2.dx = -1 * enemy1Level2.dx; 
   }                        
-  if (enemyYLevel2 + enemyRadius >= height || enemyYLevel2 - enemyRadius <= 0) {
-    enemyLevel2dy = -1 * enemyLevel2dy;                        
+  if (enemy1Level2.y + enemy1Level2.radius >= height || enemy1Level2.y - enemy1Level2.radius <= 0) {
+    enemy1Level2.dy = -1 * enemy1Level2.dy;                        
   }
 }
 
 function enemyBall2Level2() {
-  ellipse(enemyX2Level2, enemyYLevel2, enemyRadius * 2);
-  enemyX2Level2 += enemyLevel2dx
-  enemyYLevel2 += enemyLevel2dy
-  if (enemyX2Level2 + enemyRadius >= width || enemyX2Level2 - enemyRadius <= 0) {
-    enemyLevel2dx = -1 * enemyLevel2dx; 
+   ellipse(enemy2Level2.x, enemy2Level2.y, enemy2Level2.radius * 2);
+  enemy2Level2.x += enemy2Level2.dx
+  enemy2Level2.y += enemy2Level2.dy    
+  if (enemy2Level2.x + enemy2Level2.radius >= width || enemy2Level2.x - enemy2Level2.radius <= 0) {
+    enemy2Level2.dx = -1 * enemy2Level2.dx; 
   }                        
-  if (enemyYLevel2 + enemyRadius >= height || enemyYLevel2 - enemyRadius <= 0) {
-    enemyLevel2dy = -1 * enemyLevel2dy;                        
+  if (enemy2Level2.y + enemy2Level2.radius >= height || enemy2Level2.y - enemy2Level2.radius <= 0) {
+    enemy2Level2.dy = -1 * enemy2Level2.dy;                        
   }
 }
 
 function enemyBall3Level2() {
-  ellipse(enemyX3Level2, enemyYLevel2, enemyRadius * 2);
-  enemyX3Level2 += enemyLevel2dx
-  enemyYLevel2 += enemyLevel2dy
-  if (enemyX3Level2 + enemyRadius >= width || enemyX3Level2 - enemyRadius <= 0) {
-    enemyLevel2dx = -1 * enemyLevel2dx; 
+   ellipse(enemy3Level2.x, enemy3Level2.y, enemy3Level2.radius * 2);
+  enemy3Level2.x += enemy3Level2.dx
+  enemy3Level2.y += enemy3Level2.dy    
+  if (enemy3Level2.x + enemy3Level2.radius >= width || enemy3Level2.x - enemy3Level2.radius <= 0) {
+    enemy3Level2.dx = -1 * enemy3Level2.dx; 
   }                        
-  if (enemyYLevel2 + enemyRadius >= height || enemyYLevel2 - enemyRadius <= 0) {
-    enemyLevel2dy = -1 * enemyLevel2dy;                        
+  if (enemy3Level2.y + enemy3Level2.radius >= height || enemy3Level2.y - enemy3Level2.radius <= 0) {
+    enemy3Level2.dy = -1 * enemy3Level2.dy;                        
   }
 }
 
 function itHitLevel2() {
-
-  distanceAwayFromCenter = int(dist(playerX, playerY, enemyXLevel2, enemyYLevel2));
-  collitionDistance = (playerRadius + enemyRadius);                   
-  distanceAwayFromCenter2 = int(dist(playerX, playerY, enemyX2Level2, enemyYLevel2));
-  collitionDistance = (playerRadius + enemyRadius);
-  distanceAwayFromCenter3 = int(dist(playerX, playerY, enemyX3Level2, enemyYLevel2));
-  collitionDistance = (playerRadius + enemyRadius);
   
-  if (distanceAwayFromCenter  <= collitionDistance || distanceAwayFromCenter2  <= collitionDistance || distanceAwayFromCenter3  <= collitionDistance)  {
+  distanceAwayFromCenter1 = int(dist(player.x, player.y, enemy1Level2.x, enemy1Level2.y));                   
+  distanceAwayFromCenter2 = int(dist(player.x, player.y, enemy2Level2.x, enemy2Level2.y));
+  distanceAwayFromCenter3 = int(dist(player.x, player.y, enemy3Level2.x, enemy3Level2.y));
+  
+  collitionDistance1 = (player.radius + enemy1Level2.radius);
+  collitionDistance2 = (player.radius + enemy2Level2.radius);
+  collitionDistance3 = (player.radius + enemy3Level2.radius);
+  
+  if (distanceAwayFromCenter1  <= collitionDistance1 ||distanceAwayFromCenter2 <= collitionDistance1 || distanceAwayFromCenter3  <= collitionDistance1)  {
     state = "menu"
   }
+  if (distanceAwayFromCenter1  <= collitionDistance2 ||distanceAwayFromCenter2 <= collitionDistance2 || distanceAwayFromCenter3  <= collitionDistance2)  {
+    state = "menu"
+  }
+  if (distanceAwayFromCenter1  <= collitionDistance3 ||distanceAwayFromCenter2 <= collitionDistance3 || distanceAwayFromCenter3  <= collitionDistance3)  {
+    state = "menu"
+  }
+  
 }
 
 function clickedOnButton(x, y) {
