@@ -5,20 +5,22 @@
 // Extra for Experts:
 // - describe what you did to take this project "above and beyond"
 
+let backgroundImage
 let state;
-let playButtonX, playButtonY, playButtonWidth, playButtonHeight;
-let leve1ButtonX, leve1ButtonY, leve1ButtonWidth, leve1ButtonHeight;
-let leve2ButtonX, leve2ButtonY, leve2ButtonWidth, leve2ButtonHeight;
-let backgroundImage;
-let playerX, playerY, playerRadius;     
-let enemyX, enemyY, enemyRadius;     
-let enemyX2;
-let enemyX3;
-let enemyLevel1dy;
+let playButton;
+let level1Button;
+let level2Button;
+let player;
+let enemy1Level1;
+let enemy2Level1;
+let enemy3Level1;
+let enemy1Level2;
+let enemy2Level2;
+let enemy3Level2;
 
 function preload() {
   soundFormats("mp3");
-  mySound = loadSound("sound.mp3");
+  mySound = loadSound("assets/sound.mp3");
 }
 
 function setup() {
@@ -28,24 +30,31 @@ function setup() {
   mySound.play(); 
 
   state = "menu";
-  buttonX = width/2;
-  buttonY = height/1.5;
-  buttonWidth = 240;
-  buttonHeight = 75;
-  playButtonImage = loadImage("assets/playbutton.png");
-  
-  leve1ButtonX = width/3;
-  leve1ButtonY = height/2;
-  leve1ButtonWidth = 150;
-  leve1ButtonHeight = 80;
-  level1Button = loadImage("assets/level1.png");
-    
-  leve2ButtonX = width/1.5;
-  leve2ButtonY = height/2
-  leve2ButtonWidth = 150;
-  leve2ButtonHeight = 80;
-  level2Button = loadImage("assets/level2.png");
-  
+
+  playButton = {
+  x : width/2,
+  y : height/1.5,
+  width : 240,
+  height : 75,
+  image : loadImage("assets/playbutton.png"),
+  }
+
+  level1Button = {
+  x : width/3,
+  y : height/2,
+  width : 150,
+  height : 80,
+  image : loadImage("assets/level1.png"),
+  }
+
+  level2Button = {
+  x : width/1.5,
+  y : height/2,
+  width : 150,
+  height : 80,
+  image : loadImage("assets/level2.png"),
+  }
+
   player = {
   x : width/13,
   y : height / 1.5,
@@ -55,21 +64,21 @@ function setup() {
   enemy1Level1 = {
   x : 100,
   y : height / 2,
-  dy : 6,
+  dy : 14,
   radius : 25,
   }
   
   enemy2Level1 = {
   x : width/2 ,
   y : height / 2,
-  dy : 6,
+  dy : 14,
   radius : 25,
   }
   
   enemy3Level1 = {
   x : 400,
   y : height / 2,
-  dy : 6,
+  dy : 14,
   radius : 25,
   }
   
@@ -103,16 +112,8 @@ function draw() {
   if (state === "menu") {
     background(66, 244, 182);
     displayMenu();
-    
-    player.x = width / 13;
-    
-    enemy1Level2.x = 100;
-    enemy2Level2.x = width / 2;
-    enemy3Level2.x = 400;
-    
-    enemy1Level2.y = height / 6;
-    enemy2Level2.y = height / 6;
-    enemy3Level2.y = height / 6;
+    resetPositions();
+
   }
 
   if (state === "chooseLevel") {
@@ -137,23 +138,44 @@ function draw() {
   }
 }
 
+function resetPositions() {
+
+  player.x = width / 13;
+    
+  // enemy1Level2.x = 100;
+  // enemy2Level2.x = width / 2;
+  // enemy3Level2.x = 400;
+
+  // enemy1Level2.y = height / 2;
+  // enemy2Level2.y = height / 2;
+  // enemy3Level2.y = height / 2;
+  
+  enemy1Level2.x = 100;
+  enemy2Level2.x = width / 2;
+  enemy3Level2.x = 400;
+
+  enemy1Level2.y = height / 6;
+  enemy2Level2.y = height / 6;
+  enemy3Level2.y = height / 6;
+}
+
 function chooseLevel() {
   rectMode(CENTER);
-  rect(leve1ButtonX, leve1ButtonY, leve1ButtonWidth, leve1ButtonHeight);
+  rect(level1Button.x, level1Button.y, level1Button.width, level1Button.height);
 	imageMode(CENTER);
-  image(level1Button, leve1ButtonX, leve1ButtonY, leve1ButtonWidth, leve1ButtonHeight);
+  image(level1Button.image, level1Button.x, level1Button.y, level1Button.width, level1Button.height);
   
   rectMode(CENTER);
-  rect(leve2ButtonX, leve2ButtonY, leve2ButtonWidth, leve2ButtonHeight);
-  imageMode(CENTER)
-  image(level2Button, leve2ButtonX, leve2ButtonY, leve2ButtonWidth, leve2ButtonHeight);
+  rect(level2Button.x, level2Button.y, level2Button.width, level2Button.height);
+	imageMode(CENTER);
+  image(level2Button.image, level2Button.x, level2Button.y, level2Button.width, level2Button.height);
 }
 
 function displayMenu() {
   rectMode(CENTER);
-  rect(buttonX, buttonY, buttonWidth, buttonHeight);
+  rect(playButton.x, playButton.y, playButton.width, playButton.height);
   imageMode(CENTER)
-  image(playButtonImage, buttonX, buttonY, buttonWidth, buttonHeight);
+  image(playButton.image, playButton.x, playButton.y, playButton.width, playButton.height);
 }
 
 function mousePressed() {
@@ -325,22 +347,22 @@ function itHitLevel2() {
 }
 
 function clickedOnButton(x, y) {
-  return x >= buttonX - buttonWidth/2 &&
-         x <= buttonX + buttonWidth/2 &&
-         y >= buttonY - buttonHeight/2 &&
-         y <= buttonY + buttonHeight/2;
+  return x >= playButton.x - playButton.width/2 &&
+         x <= playButton.x + playButton.width/2 &&
+         y >= playButton.y - playButton.height/2 &&
+         y <= playButton.y + playButton.height/2;
 }
 
 function clickedOnButtonLeve1(x, y) {
-  return x >= leve1ButtonX - leve1ButtonWidth/2 &&
-         x <= leve1ButtonX + leve1ButtonWidth/2 &&
-         y >= leve1ButtonY - leve1ButtonHeight/2 &&
-         y <= leve1ButtonY + leve1ButtonHeight/2;
+  return x >= level1Button.x - level1Button.width/2 &&
+         x <= level1Button.x + level1Button.width/2 &&
+         y >= level1Button.y - level1Button.height/2 &&
+         y <= level1Button.y + level1Button.height/2;
 }
 
 function clickedOnButtonLeve2(x, y) {
-  return x >= leve2ButtonX - leve2ButtonWidth/2 &&
-         x <= leve2ButtonX + leve2ButtonWidth/2 &&
-         y >= leve2ButtonY - leve2ButtonHeight/2 &&
-         y <= leve2ButtonY + leve2ButtonHeight/2;
+  return x >= level2Button.x - level2Button.width/2 &&
+         x <= level2Button.x + level2Button.width/2 &&
+         y >= level2Button.y - level2Button.height/2 &&
+         y <= level2Button.y + level2Button.height/2;
 }  
