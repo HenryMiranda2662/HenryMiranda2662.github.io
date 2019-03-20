@@ -5,158 +5,345 @@
 // Extra for Experts:
 // Added music on the background
 
-// Set the variables that I am going to use for this project
-let backgroundImage;
-let playerX, playerY, playerRadius;     
-let enemyX, enemyY, enemyRadius;     
-let enemyX2;
-let enemyX3;
-let dy;             
-let gameOn;
-let button;
+let backgroundImage
+let state;
+let playButton;
+let level1Button;
+let level2Button;
+let player;
+let enemy1Level1;
+let enemy2Level1;
+let enemy3Level1;
+let enemy1Level2;
+let enemy2Level2;
+let enemy3Level2;
 
-// Make a function which pre-loads a sound, it also allows the 
-//program to find this song on two formats, mp3 or ogg, just in case
-// the browser can't find one of them. It also changes the name of the sound as it looks
-//for it in assets
 function preload() {
-  soundFormats("mp3", "ogg", );
+  soundFormats("mp3");
   mySound = loadSound("assets/sound.mp3");
-  }
+}
 
-//Set up creates the canvas, loads the background image, plays the sound and sets values for some variables
-function setup(){
-	createCanvas(500, 500);
+function setup() {
+  createCanvas(500, 500);
   backgroundImage = loadImage("assets/bckimg.png");
-  
-  buttonImage = loadImage("assets/button.png");
+  mySound.setVolume(0.1); 
+  mySound.play(); 
 
-  mySound.setVolume(0.1); // volume of the sound
-  mySound.play(); // plays the sound
+  state = "menu";
 
-  gameOn = false // variable which allows me to check whether I am on the strat screen or gae screen
+  playButton = {
+  x : width/2,
+  y : height/1.5,
+  width : 240,
+  height : 75,
+  image : loadImage("assets/playbutton.png"),
+  }
+
+  level1Button = {
+  x : width/3,
+  y : height/2,
+  width : 150,
+  height : 80,
+  image : loadImage("assets/level1.png"),
+  }
   
-  //Variables used for the ball mechanis of the game such as coordinates and sizes
-  playerX = width/13;
-  playerY = height / 1.5;
-  enemyX = 100;
-  enemyY = height / 2;
-  enemyX2 = width / 2;
-  enemyX3 = 400;
-  dy = 2;
-  playerRadius = 30;
-  enemyRadius = 25;
+  level2Button = {
+  x : width/1.5,
+  y : height/2,
+  width : 150,
+  height : 80,
+  image : loadImage("assets/level2.png"),
+  }
+
+  player = {
+  x : width/13,
+  y : height / 1.5,
+  radius : 30,
+  }
+
+  enemy1Level1 = {
+  x : 100,
+  y : height / 2,
+  dy : 14,
+  radius : 25,
+  }
+  
+  enemy2Level1 = {
+  x : width/2 ,
+  y : height / 2,
+  dy : 14,
+  radius : 25,
+  }
+  
+  enemy3Level1 = {
+  x : 400,
+  y : height / 2,
+  dy : 14,
+  radius : 25,
+  }
+  
+  enemy1Level2 = {
+  x : 100,
+  y : height / 6,
+	dx : random(4,5),
+  dy : random(4,5),
+  radius : 25,
+  }
+  
+  enemy2Level2 = {
+  x : width/2 ,
+  y : height / 6,
+  dx : random(4,5),
+  dy : random(4,5),
+  radius : 25,
+  }
+  
+  enemy3Level2 = {
+  x : 400,
+  y : height / 6,
+  dx : random(4,5),  
+  dy : random(4,5),
+  radius : 25,
+  }
 }
- 
 
-//Function which will set the game in motion as it draws the objects needed
 function draw() {
-
- //Checks if the game has started, if so, the game screen wil be displayed
-  if (gameOn === true){
-    background(backgroundImage);
-    enemyBalls();
-		playerBall ();
-    itHit();
-
-    //When the ball hits the rigth side of the screen, the game just resets
-    // that way there are no winner or losers
-    if ((playerX + playerRadius) >= 492){
-      gameOn = false;
-    }
-  }
-
-// If the game has not started, draws a button which allows for the game to start
-  if (gameOn === false){
-    background(66, 244, 119);  
-    fill (250);
-    rect(200, 225, 100 , 50);
-    playerX = width / 13; //Makes the ball start at the same x-value from the beginnig
-    if (mouseIsPressed && mouseX > 200 && mouseX < 300 && mouseY > 225 && mouseY < 275){
-      gameOn = true
-    }
-    image(buttonImage, 200, 225, 100, 50)
-  } 
-}
-
-// Function which checks the distance between two balls, if close, it would count as a collition
-function itHit() {
-
-  distanceAwayFromCenter = int(dist(playerX, playerY, enemyX, enemyY));//checks distance of center of player ball and enemy ball
-  collitionDistance = (playerRadius + enemyRadius);                   // Adds radii of balls 
-  distanceAwayFromCenter2 = int(dist(playerX, playerY, enemyX2, enemyY));
-  collitionDistance = (playerRadius + enemyRadius);
-  distanceAwayFromCenter3 = int(dist(playerX, playerY, enemyX3, enemyY));
-  collitionDistance = (playerRadius + enemyRadius);
   
-  //if the distance between the centers of the balls is less than the radii added together, it is a collition
-  if (distanceAwayFromCenter  <= collitionDistance ||distanceAwayFromCenter2 <= collitionDistance || distanceAwayFromCenter3  <= collitionDistance)  {
-    gameOn = false
+  if (state === "menu") {
+    background(66, 244, 182);
+    displayMenu();
+    resetPositions();
+
+  }
+
+  if (state === "chooseLevel") {
+    background(69, 24, 182);
+    chooseLevel();  
+  }
+
+  if (state === "level1"){
+    imageMode(CORNERS)
+    background(backgroundImage);  
+    playerBall ();
+    itHitLevel1();
+    enemyBallsLevel1();  
+  }
+
+  if (state === "level2"){
+    imageMode(CORNERS)
+    background(backgroundImage);  
+    playerBall ();
+    itHitLevel2();
+    enemyBallsLevel2();
   }
 }
 
-// Creates player ball, and its movement
+function resetPositions() {
+
+  player.x = width / 13;
+
+  enemy1Level2.x = 100;
+  enemy2Level2.x = width / 2;
+  enemy3Level2.x = 400;
+
+  enemy1Level2.y = height / 6;
+  enemy2Level2.y = height / 6;
+  enemy3Level2.y = height / 6;
+}
+
+function chooseLevel() {
+  rectMode(CENTER);
+  rect(level1Button.x, level1Button.y, level1Button.width, level1Button.height);
+	imageMode(CENTER);
+  image(level1Button.image, level1Button.x, level1Button.y, level1Button.width, level1Button.height);
+  
+  rectMode(CENTER);
+  rect(level2Button.x, level2Button.y, level2Button.width, level2Button.height);
+	imageMode(CENTER);
+  image(level2Button.image, level2Button.x, level2Button.y, level2Button.width, level2Button.height);
+}
+
+function displayMenu() {
+  rectMode(CENTER);
+  rect(playButton.x, playButton.y, playButton.width, playButton.height);
+  imageMode(CENTER)
+  image(playButton.image, playButton.x, playButton.y, playButton.width, playButton.height);
+}
+
+function mousePressed() {
+  if (state === "menu") {
+    if (clickedOnButton(mouseX, mouseY)) {
+      state = "chooseLevel";
+    }
+  }
+  
+  if (state === "chooseLevel") {
+    if (clickedOnButtonLeve1(mouseX, mouseY) ) {
+      state = "level1";
+    }
+  }
+  if (state === "chooseLevel") {
+    if (clickedOnButtonLeve2(mouseX, mouseY) ) {
+      state = "level2";
+    }
+  }
+}
+
+function itHitLevel1() {
+
+  distanceAwayFromCenter1 = int(dist(player.x, player.y, enemy1Level1.x, enemy1Level1.y));                   
+  distanceAwayFromCenter2 = int(dist(player.x, player.y, enemy2Level1.x, enemy2Level1.y));
+  distanceAwayFromCenter3 = int(dist(player.x, player.y, enemy3Level1.x, enemy3Level1.y));
+  
+  collitionDistance1 = (player.radius + enemy1Level1.radius);
+  collitionDistance2 = (player.radius + enemy2Level1.radius);
+  collitionDistance3 = (player.radius + enemy3Level1.radius);
+  
+  if (distanceAwayFromCenter1  <= collitionDistance1 ||distanceAwayFromCenter2 <= collitionDistance1 || distanceAwayFromCenter3  <= collitionDistance1)  {
+    state = "menu"
+  }
+  if (distanceAwayFromCenter1  <= collitionDistance2 ||distanceAwayFromCenter2 <= collitionDistance2 || distanceAwayFromCenter3  <= collitionDistance2)  {
+    state = "menu"
+  }
+  if (distanceAwayFromCenter1  <= collitionDistance3 ||distanceAwayFromCenter2 <= collitionDistance3 || distanceAwayFromCenter3  <= collitionDistance3)  {
+    state = "menu"
+  }
+}
+
 function playerBall () {
   createPlayerBall();
   movePlayerBall();
-  checkWindowBoundary();
 }
 
 function createPlayerBall(){
   fill(5, 255, 57)
-  ellipse(playerX, playerY, 60);
+  ellipse(player.x, player.y, player.radius*2)
 }
 
-// Moves the ball by chnaging x value of ball according to which arrow key is pressed
 function movePlayerBall(){
-  if (keyIsDown(RIGHT_ARROW)) {
-    playerX += 4;
+  if (keyIsDown(RIGHT_ARROW) && (player.x + player.radius <= width)) {
+    player.x += 4;
   }
   
-  if (keyIsDown(LEFT_ARROW)) {
-    playerX -= 4;
+  if (keyIsDown(LEFT_ARROW) && (player.x - player.radius > 0)) {
+    player.x -= 4;
   }
 }
-
-//Checks if the ball is within the window boundary, if yes, the ball doesn't leave
-function checkWindowBoundary() {
-  if ((playerX - playerRadius) < 0) {
-    playerX = playerX + playerRadius / 3
-  }
-  
-  if ((playerX + playerRadius) > 495) {
-    playerX = playerX - playerRadius / 4
-  }
-}
-
-// Creates the enemy balls and their movement 
-function enemyBalls() {
+ 
+function enemyBallsLevel1() {
   fill(9, 150, 250)
-  enemyBall1();
-  enemyBall2();
-  enemyBall3();
+  enemyBall1Level1();
+  enemyBall2Level1();
+  enemyBall3Level1();
 }
 
-function enemyBall1(){
-  ellipse(enemyX, enemyY, enemyRadius * 2);               // Creates the enemy ball
-  enemyY += dy                               //Makes the ball move thoughout the y-axis
-  if (enemyY + enemyRadius >= width || enemyY - enemyRadius <= 0) {// check if the ball has crossed the screen boundary
-    dy = -1 * dy;                        //if so it changes its direction
+function enemyBall1Level1() {
+  ellipse(enemy1Level1.x, enemy1Level1.y, enemy1Level1.radius * 2);
+  enemy1Level1.y += enemy1Level1.dy                             
+  
+  if (enemy1Level1.y + enemy1Level1.radius >= height || enemy1Level1.y - enemy1Level1.radius <= 0) {
+    enemy1Level1.dy = -1 * enemy1Level1.dy;                        
   }
 }
 
-function enemyBall2(){
-  ellipse(enemyX2, enemyY, enemyRadius * 2);
-  enemyY += dy
-  if (enemyY + enemyRadius >= width || enemyY - enemyRadius <= 0) {
-    dy = -1 * dy;
+function enemyBall2Level1() {
+  ellipse(enemy2Level1.x, enemy2Level1.y, enemy2Level1.radius * 2);
+  enemy2Level1.y += enemy2Level1.dy
+  if (enemy2Level1.y + enemy2Level1.radius >= height || enemy2Level1.y - enemy2Level1.radius <= 0) {
+    enemy2Level1.dy = -1 * enemy2Level1.dy;
   }
 }
 
-function enemyBall3(){
-  ellipse(enemyX3, enemyY, enemyRadius * 2);
-  enemyY += dy
-  if (enemyY + enemyRadius >= width || enemyY - enemyRadius <= 0) {
-    dy = -1 * dy;
+function enemyBall3Level1() {
+  ellipse(enemy3Level1.x, enemy3Level1.y, enemy3Level1.radius * 2);
+  enemy3Level1.y += enemy3Level1.dy
+  if (enemy3Level1.y + enemy3Level1.radius >= height || enemy3Level1.y - enemy3Level1.radius <= 0) {
+    enemy3Level1.dy = -1 * enemy3Level1.dy;
   }
 }
+
+function enemyBallsLevel2() {
+  fill(9, 150, 250)
+  enemyBall1Level2();
+  enemyBall2Level2();
+  enemyBall3Level2();
+}
+
+function enemyBall1Level2() {
+  ellipse(enemy1Level2.x, enemy1Level2.y, enemy1Level2.radius * 2);
+  enemy1Level2.x += enemy1Level2.dx
+  enemy1Level2.y += enemy1Level2.dy    
+  if (enemy1Level2.x + enemy1Level2.radius >= width || enemy1Level2.x - enemy1Level2.radius <= 0) {
+    enemy1Level2.dx = -1 * enemy1Level2.dx; 
+  }                        
+  if (enemy1Level2.y + enemy1Level2.radius >= height || enemy1Level2.y - enemy1Level2.radius <= 0) {
+    enemy1Level2.dy = -1 * enemy1Level2.dy;                        
+  }
+}
+
+function enemyBall2Level2() {
+   ellipse(enemy2Level2.x, enemy2Level2.y, enemy2Level2.radius * 2);
+  enemy2Level2.x += enemy2Level2.dx
+  enemy2Level2.y += enemy2Level2.dy    
+  if (enemy2Level2.x + enemy2Level2.radius >= width || enemy2Level2.x - enemy2Level2.radius <= 0) {
+    enemy2Level2.dx = -1 * enemy2Level2.dx; 
+  }                        
+  if (enemy2Level2.y + enemy2Level2.radius >= height || enemy2Level2.y - enemy2Level2.radius <= 0) {
+    enemy2Level2.dy = -1 * enemy2Level2.dy;                        
+  }
+}
+
+function enemyBall3Level2() {
+   ellipse(enemy3Level2.x, enemy3Level2.y, enemy3Level2.radius * 2);
+  enemy3Level2.x += enemy3Level2.dx
+  enemy3Level2.y += enemy3Level2.dy    
+  if (enemy3Level2.x + enemy3Level2.radius >= width || enemy3Level2.x - enemy3Level2.radius <= 0) {
+    enemy3Level2.dx = -1 * enemy3Level2.dx; 
+  }                        
+  if (enemy3Level2.y + enemy3Level2.radius >= height || enemy3Level2.y - enemy3Level2.radius <= 0) {
+    enemy3Level2.dy = -1 * enemy3Level2.dy;                        
+  }
+}
+
+function itHitLevel2() {
+  
+  distanceAwayFromCenter1 = int(dist(player.x, player.y, enemy1Level2.x, enemy1Level2.y));                   
+  distanceAwayFromCenter2 = int(dist(player.x, player.y, enemy2Level2.x, enemy2Level2.y));
+  distanceAwayFromCenter3 = int(dist(player.x, player.y, enemy3Level2.x, enemy3Level2.y));
+  
+  collitionDistance1 = (player.radius + enemy1Level2.radius);
+  collitionDistance2 = (player.radius + enemy2Level2.radius);
+  collitionDistance3 = (player.radius + enemy3Level2.radius);
+  
+  if (distanceAwayFromCenter1  <= collitionDistance1 ||distanceAwayFromCenter2 <= collitionDistance1 || distanceAwayFromCenter3  <= collitionDistance1)  {
+    state = "menu"
+  }
+  if (distanceAwayFromCenter1  <= collitionDistance2 ||distanceAwayFromCenter2 <= collitionDistance2 || distanceAwayFromCenter3  <= collitionDistance2)  {
+    state = "menu"
+  }
+  if (distanceAwayFromCenter1  <= collitionDistance3 ||distanceAwayFromCenter2 <= collitionDistance3 || distanceAwayFromCenter3  <= collitionDistance3)  {
+    state = "menu"
+  }
+  
+}
+
+function clickedOnButton(x, y) {
+  return x >= playButton.x - playButton.width/2 &&
+         x <= playButton.x + playButton.width/2 &&
+         y >= playButton.y - playButton.height/2 &&
+         y <= playButton.y + playButton.height/2;
+}
+
+function clickedOnButtonLeve1(x, y) {
+  return x >= level1Button.x - level1Button.width/2 &&
+         x <= level1Button.x + level1Button.width/2 &&
+         y >= level1Button.y - level1Button.height/2 &&
+         y <= level1Button.y + level1Button.height/2;
+}
+
+function clickedOnButtonLeve2(x, y) {
+  return x >= level2Button.x - level2Button.width/2 &&
+         x <= level2Button.x + level2Button.width/2 &&
+         y >= level2Button.y - level2Button.height/2 &&
+         y <= level2Button.y + level2Button.height/2;
+}  

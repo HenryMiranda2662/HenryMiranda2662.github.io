@@ -221,7 +221,6 @@ function itHitLevel1() {
 function playerBall () {
   createPlayerBall();
   movePlayerBall();
-  checkWindowBoundary();
 }
 
 function createPlayerBall(){
@@ -230,22 +229,12 @@ function createPlayerBall(){
 }
 
 function movePlayerBall(){
-  if (keyIsDown(RIGHT_ARROW)) {
+  if (keyIsDown(RIGHT_ARROW) && (player.x + player.radius <= width)) {
     player.x += 4;
   }
   
-  if (keyIsDown(LEFT_ARROW)) {
+  if (keyIsDown(LEFT_ARROW) && (player.x - player.radius > 0)) {
     player.x -= 4;
-  }
-}
-
-function checkWindowBoundary() {
-  if ((player.x - player.radius) < 0) {
-    player.x = player.x + player.radius / 3
-  }
-  
-  if ((player.x + player.radius) > 495) {
-    player.x = player.x - player.radius / 4
   }
 }
  
