@@ -58,8 +58,14 @@ function setup() {
   enemyRadius = 25;
 
 
-  enemyLevel2dx = random(1,4); 
-  enemyLevel2dy = random(1,4);
+  enemyLevel2dx1 = random(4, 5);
+  enemyLevel2dy1 = random(4, 5);
+
+  enemyLevel2dx2 = random(4, 5);
+  enemyLevel2dy2 = random(4, 5);
+
+  enemyLevel2dx3 = random(4, 5);
+  enemyLevel2dy3 = random(4, 5);
   
 
   enemyXLevel2 = 100;
@@ -98,7 +104,7 @@ function draw() {
     imageMode(CORNERS)
     background(backgroundImage);  
     playerBall ();
-    //itHitLevel2();
+    itHitLevel2();
     enemyBallsLevel2();
   }
 }
@@ -143,11 +149,10 @@ function mousePressed() {
 
 function itHitLevel1() {
 
-  distanceAwayFromCenter = int(dist(playerX, playerY, enemyX, enemyY));
-  collitionDistance = (playerRadius + enemyRadius);                   
+  distanceAwayFromCenter = int(dist(playerX, playerY, enemyX, enemyY));                   
   distanceAwayFromCenter2 = int(dist(playerX, playerY, enemyX2, enemyY));
-  collitionDistance = (playerRadius + enemyRadius);
   distanceAwayFromCenter3 = int(dist(playerX, playerY, enemyX3, enemyY));
+  
   collitionDistance = (playerRadius + enemyRadius);
   
   if (distanceAwayFromCenter  <= collitionDistance ||distanceAwayFromCenter2 <= collitionDistance || distanceAwayFromCenter3  <= collitionDistance)  {
@@ -226,47 +231,46 @@ function enemyBallsLevel2() {
 
 function enemyBall1Level2() {
   ellipse(enemyXLevel2, enemyYLevel2, enemyRadius * 2);
-  enemyXLevel2 += enemyLevel2dx
-  enemyYLevel2 += enemyLevel2dy     
+  enemyXLevel2 += enemyLevel2dx1
+  enemyYLevel2 += enemyLevel2dy1    
   if (enemyXLevel2 + enemyRadius >= width || enemyXLevel2 - enemyRadius <= 0) {
-    enemyLevel2dx = -1 * enemyLevel2dx; 
+    enemyLevel2dx1 = -1 * enemyLevel2dx1; 
   }                        
   if (enemyYLevel2 + enemyRadius >= height || enemyYLevel2 - enemyRadius <= 0) {
-    enemyLevel2dy = -1 * enemyLevel2dy;                        
+    enemyLevel2dy1 = -1 * enemyLevel2dy1;                        
   }
 }
 
 function enemyBall2Level2() {
   ellipse(enemyX2Level2, enemyYLevel2, enemyRadius * 2);
-  enemyX2Level2 += enemyLevel2dx
-  enemyYLevel2 += enemyLevel2dy
+  enemyX2Level2 += enemyLevel2dx2
+  enemyYLevel2 += enemyLevel2dy2
   if (enemyX2Level2 + enemyRadius >= width || enemyX2Level2 - enemyRadius <= 0) {
-    enemyLevel2dx = -1 * enemyLevel2dx; 
+    enemyLevel2dx2 = -1 * enemyLevel2dx2; 
   }                        
   if (enemyYLevel2 + enemyRadius >= height || enemyYLevel2 - enemyRadius <= 0) {
-    enemyLevel2dy = -1 * enemyLevel2dy;                        
+    enemyLevel2dy2 = -1 * enemyLevel2dy2;                        
   }
 }
 
 function enemyBall3Level2() {
   ellipse(enemyX3Level2, enemyYLevel2, enemyRadius * 2);
-  enemyX3Level2 += enemyLevel2dx
-  enemyYLevel2 += enemyLevel2dy
+  enemyX3Level2 += enemyLevel2dx3
+  enemyYLevel2 += enemyLevel2dy3
   if (enemyX3Level2 + enemyRadius >= width || enemyX3Level2 - enemyRadius <= 0) {
-    enemyLevel2dx = -1 * enemyLevel2dx; 
+    enemyLevel2dx3 = -1 * enemyLevel2dx3; 
   }                        
   if (enemyYLevel2 + enemyRadius >= height || enemyYLevel2 - enemyRadius <= 0) {
-    enemyLevel2dy = -1 * enemyLevel2dy;                        
+    enemyLevel2dy3 = -1 * enemyLevel2dy3;                        
   }
 }
 
 function itHitLevel2() {
 
-  distanceAwayFromCenter = int(dist(playerX, playerY, enemyXLevel2, enemyYLevel2));
-  collitionDistance = (playerRadius + enemyRadius);                   
+  distanceAwayFromCenter = int(dist(playerX, playerY, enemyXLevel2, enemyYLevel2));                   
   distanceAwayFromCenter2 = int(dist(playerX, playerY, enemyX2Level2, enemyYLevel2));
-  collitionDistance = (playerRadius + enemyRadius);
   distanceAwayFromCenter3 = int(dist(playerX, playerY, enemyX3Level2, enemyYLevel2));
+  
   collitionDistance = (playerRadius + enemyRadius);
   
   if (distanceAwayFromCenter  <= collitionDistance || distanceAwayFromCenter2  <= collitionDistance || distanceAwayFromCenter3  <= collitionDistance)  {
