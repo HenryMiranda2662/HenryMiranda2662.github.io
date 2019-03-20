@@ -46,15 +46,6 @@ function setup() {
   height : 80,
   image : loadImage("assets/level1.png"),
   }
-
-  enemyLevel2dx1 = random(4, 5);
-  enemyLevel2dy1 = random(4, 5);
-
-  enemyLevel2dx2 = random(4, 5);
-  enemyLevel2dy2 = random(4, 5);
-
-  enemyLevel2dx3 = random(4, 5);
-  enemyLevel2dy3 = random(4, 5);
   
   level2Button = {
   x : width/1.5,
