@@ -26,6 +26,8 @@ function preload() {
 function setup() {
   createCanvas(500, 500);
   backgroundImage = loadImage("assets/bckimg.png");
+  beachImage = loadImage ("assets/beach.png")
+  nightImage = loadImage ("assets/nightcity.png")
   mySound.setVolume(0.1); 
   mySound.play(); 
 
@@ -109,7 +111,8 @@ function setup() {
 
 function draw() {
   if (state === "menu") {
-    background(66, 244, 182);
+    imageMode(CORNERS)
+    background(backgroundImage);
     displayMenu();
     resetPositions();
     checkCursorMenu();
@@ -123,21 +126,21 @@ function draw() {
 
   if (state === "level1"){
     imageMode(CORNERS)
-    background(backgroundImage);  
+    background(beachImage);  
     playerBall ();
     itHitLevel1();
     enemyBallsLevel1();  
-    cursor(ARROW);
+    noCursor();
     endLevel();
   }
 
   if (state === "level2"){
     imageMode(CORNERS)
-    background(backgroundImage);  
+    background(nightImage);  
     playerBall ();
     itHitLevel2();
     enemyBallsLevel2();
-    cursor(ARROW);
+    noCursor();
     endLevel();
   }
 }
