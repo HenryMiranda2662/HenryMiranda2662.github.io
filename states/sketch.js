@@ -25,10 +25,12 @@ function preload() {
 
 function setup() {
   createCanvas(500, 500);
+
   backgroundImage = loadImage("assets/bckimg.png");
   beachImage = loadImage ("assets/beach.png");
   nightImage = loadImage ("assets/nightcity.png");
   titleImage = loadImage ("assets/title.png")
+  
   mySound.setVolume(0.1); 
   mySound.play(); 
 
