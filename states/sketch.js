@@ -113,7 +113,6 @@ function draw() {
     background(66, 244, 182);
     displayMenu();
     resetPositions();
-
   }
 
   if (state === "chooseLevel") {
@@ -328,22 +327,13 @@ function itHitLevel2() {
 }
 
 function clickedOnButton(x, y) {
-  return x >= playButton.x - playButton.width/2 &&
-         x <= playButton.x + playButton.width/2 &&
-         y >= playButton.y - playButton.height/2 &&
-         y <= playButton.y + playButton.height/2;
+  return x >= playButton.x - playButton.width/2 && x <= playButton.x + playButton.width/2 && y >= playButton.y - playButton.height/2 && y <= playButton.y + playButton.height/2;
 }
 
 function clickedOnButtonLeve1(x, y) {
-  return x >= level1Button.x - level1Button.width/2 &&
-         x <= level1Button.x + level1Button.width/2 &&
-         y >= level1Button.y - level1Button.height/2 &&
-         y <= level1Button.y + level1Button.height/2;
+  return x >= level1Button.x - level1Button.width/2 && x <= level1Button.x + level1Button.width/2 && y >= level1Button.y - level1Button.height/2 && y <= level1Button.y + level1Button.height/2;
 }
 
 function clickedOnButtonLeve2(x, y) {
-  return x >= level2Button.x - level2Button.width/2 &&
-         x <= level2Button.x + level2Button.width/2 &&
-         y >= level2Button.y - level2Button.height/2 &&
-         y <= level2Button.y + level2Button.height/2;
+  return x >= level2Button.x - level2Button.width/2 && x <= level2Button.x + level2Button.width/2 && y >= level2Button.y - level2Button.height/2 && y <= level2Button.y + level2Button.height/2;
 }  
