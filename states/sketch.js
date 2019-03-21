@@ -28,7 +28,7 @@ function setup() {
   backgroundImage = loadImage("assets/bckimg.png");
   beachImage = loadImage ("assets/beach.png");
   nightImage = loadImage ("assets/nightcity.png");
-  tittleImage = loadImage ("assets/tittle.png")
+  titleImage = loadImage ("assets/title.png")
   mySound.setVolume(0.1); 
   mySound.play(); 
 
@@ -115,7 +115,7 @@ function draw() {
     imageMode(CORNERS)
     background(backgroundImage);
     imageMode(CENTER)
-    image(tittleImage, 250, 100, 438, 86)
+    image(titleImage, 250, 100, 438, 86)
     displayMenu();
     resetPositions();
     checkCursorMenu();
