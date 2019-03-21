@@ -1,6 +1,6 @@
 // States
 // Henry Miranda Bastidas
-// March th, 2019
+// March 25th, 2019
 //
 // Extra for Experts:
 // Added music on the background
@@ -113,12 +113,14 @@ function draw() {
     background(66, 244, 182);
     displayMenu();
     resetPositions();
+    checkCursorMenu();
 
   }
 
   if (state === "chooseLevel") {
-    background(69, 24, 182);
+    background(187, 164, 234);
     chooseLevel();  
+    checkCursorLevels();
   }
 
   if (state === "level1"){
@@ -149,6 +151,27 @@ function resetPositions() {
   enemy1Level2.y = height / 6;
   enemy2Level2.y = height / 6;
   enemy3Level2.y = height / 6;
+}
+
+function checkCursorMenu(){
+	if ((mouseX > playButton.x - (playButton.width/2)) && (mouseX < playButton.x + (playButton.width/2)) && (mouseY > playButton.y - (playButton.height/2)) && (mouseY < playButton.y + (playButton.height/2))){
+    cursor("pointer");
+  }
+  else {
+    cursor(ARROW);
+  }
+}
+
+function checkCursorLevels(){
+	if ((mouseX > level1Button.x - (level1Button.width/2)) && (mouseX < level1Button.x + (level1Button.width/2)) && (mouseY > level1Button.y - (level1Button.height/2)) && (mouseY < level1Button.y + (level1Button.height/2))){
+    cursor("pointer");
+  }
+  else if ((mouseX > level2Button.x - (level2Button.width/2)) && (mouseX < level2Button.x + (level2Button.width/2)) && (mouseY > level2Button.y - (level2Button.height/2)) && (mouseY < level2Button.y + (level2Button.height/2))){
+  	cursor("pointer");
+  }
+  else {
+    cursor(ARROW);
+	}
 }
 
 function chooseLevel() {
