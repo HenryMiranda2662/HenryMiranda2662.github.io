@@ -26,8 +26,9 @@ function preload() {
 function setup() {
   createCanvas(500, 500);
   backgroundImage = loadImage("assets/bckimg.png");
-  beachImage = loadImage ("assets/beach.png")
-  nightImage = loadImage ("assets/nightcity.png")
+  beachImage = loadImage ("assets/beach.png");
+  nightImage = loadImage ("assets/nightcity.png");
+  tittleImage = loadImage ("assets/tittle.png")
   mySound.setVolume(0.1); 
   mySound.play(); 
 
@@ -113,6 +114,8 @@ function draw() {
   if (state === "menu") {
     imageMode(CORNERS)
     background(backgroundImage);
+    imageMode(CENTER)
+    image(tittleImage, 250, 100, 438, 86)
     displayMenu();
     resetPositions();
     checkCursorMenu();
