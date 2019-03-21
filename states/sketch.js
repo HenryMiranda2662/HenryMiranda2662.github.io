@@ -127,6 +127,8 @@ function draw() {
     playerBall ();
     itHitLevel1();
     enemyBallsLevel1();  
+    cursor(ARROW);
+    endLevel();
   }
 
   if (state === "level2"){
@@ -135,6 +137,8 @@ function draw() {
     playerBall ();
     itHitLevel2();
     enemyBallsLevel2();
+    cursor(ARROW);
+    endLevel();
   }
 }
 
@@ -148,6 +152,12 @@ function resetPositions() {
   enemy1Level2.y = height / 6;
   enemy2Level2.y = height / 6;
   enemy3Level2.y = height / 6;
+}
+
+function endLevel (){
+  if (player.x === 496){
+    state = "menu"
+  }
 }
 
 function checkCursorMenu(){
@@ -201,13 +211,13 @@ function mousePressed() {
   }
   
   if (state === "chooseLevel") {
-    if (clickedOnButtonLeve1(mouseX, mouseY) ) {
+    if (clickedOnButtonLevel1 (mouseX, mouseY) ) {
       state = "level1";
     }
   }
 
   if (state === "chooseLevel") {
-    if (clickedOnButtonLeve2(mouseX, mouseY) ) {
+    if (clickedOnButtonLevel2 (mouseX, mouseY) ) {
       state = "level2";
     }
   }
@@ -361,10 +371,10 @@ function clickedOnButton(x, y) {
   return x >= playButton.x - playButton.width/2 && x <= playButton.x + playButton.width/2 && y >= playButton.y - playButton.height/2 && y <= playButton.y + playButton.height/2;
 }
 
-function clickedOnButtonLeve1(x, y) {
+function clickedOnButtonLevel1 (x, y) {
   return x >= level1Button.x - level1Button.width/2 && x <= level1Button.x + level1Button.width/2 && y >= level1Button.y - level1Button.height/2 && y <= level1Button.y + level1Button.height/2;
 }
 
-function clickedOnButtonLeve2(x, y) {
+function clickedOnButtonLevel2(x, y) {
   return x >= level2Button.x - level2Button.width/2 && x <= level2Button.x + level2Button.width/2 && y >= level2Button.y - level2Button.height/2 && y <= level2Button.y + level2Button.height/2;
 }  
