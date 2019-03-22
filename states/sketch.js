@@ -5,7 +5,11 @@
 // Extra for Experts:
 // Added music on the background
 
-let backgroundImage
+let backgroundImage;
+let mySound;
+let beachImage;
+let nightImage;
+let titleImage;
 let state;
 let playButton;
 let level1Button;
