@@ -42,6 +42,7 @@ function setup() {
   width : 240,
   height : 75,
   image : loadImage("assets/playbutton.png"),
+  image2 : loadImage ("assets/playbutton2.png"),
   }
 
   level1Button = {
@@ -50,6 +51,7 @@ function setup() {
   width : 150,
   height : 80,
   image : loadImage("assets/level1.png"),
+  image2 : loadImage("assets/level1-2.png"),
   }
   
   level2Button = {
@@ -58,6 +60,7 @@ function setup() {
   width : 150,
   height : 80,
   image : loadImage("assets/level2.png"),
+  image2 : loadImage("assets/level2-2.png"),
   }
 
   player = {
@@ -98,8 +101,8 @@ function setup() {
   enemy2Level2 = {
   x : width/2 ,
   y : height / 6,
-  dx : random(4,5),
-  dy : random(4,5),
+  dx : random(3,5),
+  dy : random(3,5),
   radius : 25,
   }
   
@@ -171,6 +174,8 @@ function endLevel (){
 function checkCursorMenu(){
 	if ((mouseX > playButton.x - (playButton.width/2)) && (mouseX < playButton.x + (playButton.width/2)) && (mouseY > playButton.y - (playButton.height/2)) && (mouseY < playButton.y + (playButton.height/2))){
     cursor("pointer");
+    imageMode(CENTER)
+    image(playButton.image2, playButton.x, playButton.y, playButton.width, playButton.height);
   }
 
   else {
@@ -181,10 +186,14 @@ function checkCursorMenu(){
 function checkCursorLevels(){
 	if ((mouseX > level1Button.x - (level1Button.width/2)) && (mouseX < level1Button.x + (level1Button.width/2)) && (mouseY > level1Button.y - (level1Button.height/2)) && (mouseY < level1Button.y + (level1Button.height/2))){
     cursor("pointer");
+    imageMode(CENTER);
+    image(level1Button.image2, level1Button.x, level1Button.y, level1Button.width, level1Button.height);
   }
 
   else if ((mouseX > level2Button.x - (level2Button.width/2)) && (mouseX < level2Button.x + (level2Button.width/2)) && (mouseY > level2Button.y - (level2Button.height/2)) && (mouseY < level2Button.y + (level2Button.height/2))){
-  	cursor("pointer");
+    cursor("pointer");
+    imageMode(CENTER);
+    image(level2Button.image2, level2Button.x, level2Button.y, level2Button.width, level2Button.height);
   }
 
   else {
