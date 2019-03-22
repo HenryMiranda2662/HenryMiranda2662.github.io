@@ -14,6 +14,7 @@ let state;
 let playButton;
 let level1Button;
 let level2Button;
+let star;
 let player;
 let enemy1Level1;
 let enemy2Level1;
@@ -21,6 +22,7 @@ let enemy3Level1;
 let enemy1Level2;
 let enemy2Level2;
 let enemy3Level2;
+let txt;
 
 function preload() {
   soundFormats("mp3");
@@ -40,6 +42,10 @@ function setup() {
 
   state = "menu";
 
+  score = 0;
+
+  txt = "You Finished the Game";
+
   playButton = {
   x : width/2,
   y : height/1.5,
@@ -47,6 +53,15 @@ function setup() {
   height : 75,
   image : loadImage("assets/playbutton.png"),
   image2 : loadImage ("assets/playbutton2.png"),
+  }
+
+  menuButton = {
+  x : 250,
+  y : 210,
+  width : 150,
+  height : 75,
+  image : loadImage("assets/menu.png"),
+  image2: loadImage("assets/menu2.png"),
   }
 
   level1Button = {
@@ -73,10 +88,17 @@ function setup() {
   radius : 30,
   }
 
+  star = {
+  x : 490,
+  y : height/1.5 ,
+  width : 20,
+  height : 20,
+  }
+
   enemy1Level1 = {
   x : 100,
   y : height / 2,
-  dy : 4,
+  dy : 17,
   radius : 25,
   }
   
@@ -90,7 +112,7 @@ function setup() {
   enemy3Level1 = {
   x : 400,
   y : height / 2,
-  dy : 17,
+  dy : 5,
   radius : 25,
   }
   
@@ -143,7 +165,9 @@ function draw() {
     itHitLevel1();
     enemyBallsLevel1();  
     noCursor();
-    endLevel();
+    rectPoints();
+    collectPoints();
+    changeLevels();
   }
 
   if (state === "level2"){
@@ -153,12 +177,36 @@ function draw() {
     itHitLevel2();
     enemyBallsLevel2();
     noCursor();
-    endLevel();
+    rectPoints();
+    collectPoints();
+    changeLevels();
   }
+
+  if (state === "endScreen"){
+    background(170);
+    writeText();
+    displayEndScreen();
+    checkCursorEndScreen();
+  }
+}
+
+function writeText(){
+  textSize(40);
+  fill(0, 102, 153);
+  text(txt, 35, 130);
+}
+
+function displayEndScreen(){
+  rectMode(CENTER);
+  rect(menuButton.x, menuButton.y, menuButton.width, menuButton.height);
+  imageMode(CENTER);
+  image(menuButton.image, menuButton.x, menuButton.y, menuButton.width, menuButton.height);
 }
 
 function resetPositions() {
   player.x = width / 13;
+
+  score = 0
 
   enemy1Level2.x = 100;
   enemy2Level2.x = width / 2;
@@ -169,9 +217,26 @@ function resetPositions() {
   enemy3Level2.y = height / 6;
 }
 
-function endLevel (){
-  if (player.x >= 469){
-    state = "menu"
+function rectPoints() {
+  fill(200, 50, 200);
+  rectMode(CENTER)
+	rect(star.x, star.y, star.width, star.height);
+}
+
+function collectPoints(){
+  if ((player.x + player.radius) >= (star.x - star.width/2) ){
+  	score += 1;
+  }
+}
+
+function changeLevels(){
+  if ((score === 1) && (state === "level1")){
+    player.x = width/13;
+  	state = "level2";
+  }
+
+  if ((score === 2) && (state === "level2")){
+  	state = "endScreen";
   }
 }
 
@@ -180,6 +245,18 @@ function checkCursorMenu(){
     cursor("pointer");
     imageMode(CENTER)
     image(playButton.image2, playButton.x, playButton.y, playButton.width, playButton.height);
+  }
+
+  else {
+    cursor(ARROW);
+  }
+}
+
+function checkCursorEndScreen(){
+	if ((mouseX > menuButton.x - (menuButton.width/2)) && (mouseX < menuButton.x + (menuButton.width/2)) && (mouseY > menuButton.y - (menuButton.height/2)) && (mouseY < menuButton.y + (menuButton.height/2))){
+    cursor("pointer");
+    imageMode(CENTER)
+    image(menuButton.image2, menuButton.x, menuButton.y, menuButton.width, menuButton.height);
   }
 
   else {
@@ -240,6 +317,12 @@ function mousePressed() {
   if (state === "chooseLevel") {
     if (clickedOnButtonLevel2 (mouseX, mouseY) ) {
       state = "level2";
+    }
+  }
+
+  if (state === "endScreen") {
+    if (clickedOnButtonMenu (mouseX, mouseY) ) {
+      state = "menu";
     }
   }
 }
@@ -398,4 +481,8 @@ function clickedOnButtonLevel1 (x, y) {
 
 function clickedOnButtonLevel2(x, y) {
   return x >= level2Button.x - level2Button.width/2 && x <= level2Button.x + level2Button.width/2 && y >= level2Button.y - level2Button.height/2 && y <= level2Button.y + level2Button.height/2;
+}  
+
+function clickedOnButtonMenu(x, y) {
+  return x >= menuButton.x - menuButton.width/2 && x <= menuButton.x + menuButton.width/2 && y >= menuButton.y - menuButton.height/2 && y <= menuButton.y + menuButton.height/2;
 }  
