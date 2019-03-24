@@ -120,14 +120,14 @@ function setup() {
   x : 100,
   y : height / 6,
 	dx : random(4,5),
-  dy : random(4,5),
+  dy : random(3,5),
   radius : 25
   }
   
   enemy2Level2 = {
   x : width/2 ,
   y : height / 6,
-  dx : random(3,5),
+  dx : random(4,5),
   dy : random(3,5),
   radius : 25,
   }
@@ -136,7 +136,7 @@ function setup() {
   x : 400,
   y : height / 6,
   dx : random(4,5),  
-  dy : random(4,5),
+  dy : random(3,5),
   radius : 25,
   }
 }
