@@ -26,7 +26,7 @@ let txt;
 
 function preload() {
   soundFormats("mp3");
-  mySound = loadSound("assets/sound.mp3");
+  mySound = loadSound("assets/WOW.mp3");
 }
 
 function setup() {
@@ -35,10 +35,11 @@ function setup() {
   backgroundImage = loadImage("assets/bckimg.png");
   beachImage = loadImage ("assets/beach.png");
   nightImage = loadImage ("assets/nightcity.png");
-  titleImage = loadImage ("assets/title.png")
+  titleImage = loadImage ("assets/title.png");
   
-  mySound.setVolume(0.1); 
+  mySound.setVolume(0.2); 
   mySound.play(); 
+  
 
   state = "menu";
 
@@ -219,12 +220,13 @@ function resetPositions() {
 
 function rectPoints() {
   fill(200, 50, 200);
-  rectMode(CENTER)
-	rect(star.x, star.y, star.width, star.height);
+  translate(p5.Vector.fromAngle(millis() / 90, 20));
+  rectMode(CENTER);
+  rect(star.x, star.y, star.width, star.height);
 }
 
 function collectPoints(){
-  if ((player.x + player.radius) >= (star.x - star.width/2) ){
+  if ((player.x + player.radius) >= (star.x - (star.width + 5) )){
   	score += 1;
   }
 }

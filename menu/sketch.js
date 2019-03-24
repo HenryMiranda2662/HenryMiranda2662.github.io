@@ -20,7 +20,7 @@ let enemy3Level2;
 
 function preload() {
   soundFormats("mp3");
-  mySound = loadSound("assets/sound.mp3");
+  mySound = loadSound("assets/WOW.mp3");
 }
 
 function setup() {
