@@ -41,7 +41,7 @@ function setup() {
   titleImage = loadImage ("assets/title.png");
 
   //Set volume of sound, as well as plays it
-  mySound.setVolume(0.2); 
+  mySound.setVolume(0.4); 
   mySound.play(); 
   
   state = "menu";//Sets the first state as menu
