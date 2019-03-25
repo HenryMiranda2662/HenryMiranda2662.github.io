@@ -151,10 +151,10 @@ function setup() {
 function draw() {
   // This state will draw the first page the user will see
   if (state === "menu") {
-    imageMode(CORNERS)
+    imageMode(CORNERS);
     background(backgroundImage);
-    imageMode(CENTER) // Centers the x and y coordinates of the image from the upper-left corner
-    image(titleImage, 250, 100, 438, 86)
+    imageMode(CENTER); // Centers the x and y coordinates of the image from the upper-left corner
+    image(titleImage, 250, 100, 438, 86);
     displayMenu();
     resetPositions();
     checkCursorMenu();
@@ -169,7 +169,7 @@ function draw() {
 
   if (state === "level1"){
     //First level
-    imageMode(CORNERS)
+    imageMode(CORNERS);
     background(beachImage);  
     playerBall ();
     itHitLevel1();
@@ -182,7 +182,7 @@ function draw() {
 
   if (state === "level2"){
     //Second Level
-    imageMode(CORNERS)
+    imageMode(CORNERS);
     background(nightImage);  
     playerBall ();
     itHitLevel2();
@@ -220,7 +220,7 @@ function resetPositions() {
   // Called during "menu" state, resests variables to their original values
   player.x = 31;
 
-  score = 0
+  score = 0;
 
   enemy1Level2.x = 100;
   enemy2Level2.x = width / 2;
@@ -263,7 +263,7 @@ function checkCursorMenu(){
   // and the play button will light-up (this is due to a change of image with a lighter colour) 
 	if ((mouseX > playButton.x - (playButton.width/2)) && (mouseX < playButton.x + (playButton.width/2)) && (mouseY > playButton.y - (playButton.height/2)) && (mouseY < playButton.y + (playButton.height/2))){
     cursor("pointer");
-    imageMode(CENTER)
+    imageMode(CENTER);
     image(playButton.image2, playButton.x, playButton.y, playButton.width, playButton.height);
   }
 
@@ -276,7 +276,7 @@ function checkCursorEndScreen(){
   //Similar to the "menu", the mouse and button will change if you hover over the button
 	if ((mouseX > menuButton.x - (menuButton.width/2)) && (mouseX < menuButton.x + (menuButton.width/2)) && (mouseY > menuButton.y - (menuButton.height/2)) && (mouseY < menuButton.y + (menuButton.height/2))){
     cursor("pointer");
-    imageMode(CENTER)
+    imageMode(CENTER);
     image(menuButton.image2, menuButton.x, menuButton.y, menuButton.width, menuButton.height);
   }
 
@@ -321,7 +321,7 @@ function displayMenu() {
   // Creates a button during the first screen "menu"
   rectMode(CENTER);
   rect(playButton.x, playButton.y, playButton.width, playButton.height);
-  imageMode(CENTER)
+  imageMode(CENTER);
   image(playButton.image, playButton.x, playButton.y, playButton.width, playButton.height);
 }
 
@@ -364,15 +364,15 @@ function itHitLevel1() {
   collitionDistance3 = (player.radius + enemy3Level1.radius);
   
   if (distanceAwayFromCenter1  <= collitionDistance1 ||distanceAwayFromCenter2 <= collitionDistance1 || distanceAwayFromCenter3  <= collitionDistance1)  {
-    state = "menu"
+    state = "menu";
   }
 
   if (distanceAwayFromCenter1  <= collitionDistance2 ||distanceAwayFromCenter2 <= collitionDistance2 || distanceAwayFromCenter3  <= collitionDistance2)  {
-    state = "menu"
+    state = "menu";
   }
 
   if (distanceAwayFromCenter1  <= collitionDistance3 ||distanceAwayFromCenter2 <= collitionDistance3 || distanceAwayFromCenter3  <= collitionDistance3)  {
-    state = "menu"
+    state = "menu";
   }
 }
 
@@ -384,8 +384,8 @@ function playerBall () {
 
 function createPlayerBall(){
   //Creates an ellipse 
-  fill(5, 255, 57)
-  ellipse(player.x, player.y, player.radius*2)
+  fill(5, 255, 57);
+  ellipse(player.x, player.y, player.radius*2);
 }
 
 function movePlayerBall(){
@@ -401,7 +401,7 @@ function movePlayerBall(){
  
 function enemyBallsLevel1() {
   // creates all 3 enemies of level 1
-  fill(9, 150, 250)
+  fill(9, 150, 250);
   enemyBall1Level1();
   enemyBall2Level1();
   enemyBall3Level1();
@@ -410,7 +410,7 @@ function enemyBallsLevel1() {
 function enemyBall1Level1() {
   // Changes the y-coordinates of enemy, but it will bounce once it hits a wall
   ellipse(enemy1Level1.x, enemy1Level1.y, enemy1Level1.radius * 2);
-  enemy1Level1.y += enemy1Level1.dy                             
+  enemy1Level1.y += enemy1Level1.dy;                             
   
   if (enemy1Level1.y + enemy1Level1.radius >= height || enemy1Level1.y - enemy1Level1.radius <= 0) {
     enemy1Level1.dy = -1 * enemy1Level1.dy;                        
@@ -420,7 +420,7 @@ function enemyBall1Level1() {
 function enemyBall2Level1() {
   // Changes the y-coordinates of enemy, but it will bounce once it hits a wall
   ellipse(enemy2Level1.x, enemy2Level1.y, enemy2Level1.radius * 2);
-  enemy2Level1.y += enemy2Level1.dy
+  enemy2Level1.y += enemy2Level1.dy;
 
   if (enemy2Level1.y + enemy2Level1.radius >= height || enemy2Level1.y - enemy2Level1.radius <= 0) {
     enemy2Level1.dy = -1 * enemy2Level1.dy;
@@ -430,7 +430,7 @@ function enemyBall2Level1() {
 function enemyBall3Level1() {
   // Changes the y-coordinates of enemy, but it will bounce once it hits a wall
   ellipse(enemy3Level1.x, enemy3Level1.y, enemy3Level1.radius * 2);
-  enemy3Level1.y += enemy3Level1.dy
+  enemy3Level1.y += enemy3Level1.dy;
 
   if (enemy3Level1.y + enemy3Level1.radius >= height || enemy3Level1.y - enemy3Level1.radius <= 0) {
     enemy3Level1.dy = -1 * enemy3Level1.dy;
@@ -448,8 +448,8 @@ function enemyBallsLevel2() {
 function enemyBall1Level2() {
   // Changes the x and y-coordinates of enemy, but it will bounce once it hits a wall
   ellipse(enemy1Level2.x, enemy1Level2.y, enemy1Level2.radius * 2);
-  enemy1Level2.x += enemy1Level2.dx
-  enemy1Level2.y += enemy1Level2.dy  
+  enemy1Level2.x += enemy1Level2.dx;
+  enemy1Level2.y += enemy1Level2.dy;  
 
   if (enemy1Level2.x + enemy1Level2.radius >= width || enemy1Level2.x - enemy1Level2.radius <= 0) {
     enemy1Level2.dx = -1 * enemy1Level2.dx; 
@@ -463,8 +463,8 @@ function enemyBall1Level2() {
 function enemyBall2Level2() {
   // Changes the x and y-coordinates of enemy, but it will bounce once it hits a wall
   ellipse(enemy2Level2.x, enemy2Level2.y, enemy2Level2.radius * 2);
-  enemy2Level2.x += enemy2Level2.dx
-  enemy2Level2.y += enemy2Level2.dy    
+  enemy2Level2.x += enemy2Level2.dx;
+  enemy2Level2.y += enemy2Level2.dy;    
   if (enemy2Level2.x + enemy2Level2.radius >= width || enemy2Level2.x - enemy2Level2.radius <= 0) {
     enemy2Level2.dx = -1 * enemy2Level2.dx; 
   } 
@@ -477,8 +477,8 @@ function enemyBall2Level2() {
 function enemyBall3Level2() {
   // Changes the x and y-coordinates of enemy, but it will bounce once it hits a wall
   ellipse(enemy3Level2.x, enemy3Level2.y, enemy3Level2.radius * 2);
-  enemy3Level2.x += enemy3Level2.dx
-  enemy3Level2.y += enemy3Level2.dy    
+  enemy3Level2.x += enemy3Level2.dx;
+  enemy3Level2.y += enemy3Level2.dy;    
   if (enemy3Level2.x + enemy3Level2.radius >= width || enemy3Level2.x - enemy3Level2.radius <= 0) {
     enemy3Level2.dx = -1 * enemy3Level2.dx; 
   } 
@@ -500,15 +500,15 @@ function itHitLevel2() {
   collitionDistance3 = (player.radius + enemy3Level2.radius);
   
   if (distanceAwayFromCenter1  <= collitionDistance1 ||distanceAwayFromCenter2 <= collitionDistance1 || distanceAwayFromCenter3  <= collitionDistance1)  {
-    state = "menu"
+    state = "menu";
   }
 
   if (distanceAwayFromCenter1  <= collitionDistance2 ||distanceAwayFromCenter2 <= collitionDistance2 || distanceAwayFromCenter3  <= collitionDistance2)  {
-    state = "menu"
+    state = "menu";
   }
 
   if (distanceAwayFromCenter1  <= collitionDistance3 ||distanceAwayFromCenter2 <= collitionDistance3 || distanceAwayFromCenter3  <= collitionDistance3)  {
-    state = "menu"
+    state = "menu";
   }
 }
 
