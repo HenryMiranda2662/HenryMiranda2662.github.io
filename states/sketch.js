@@ -42,7 +42,8 @@ function setup() {
 
   //Set volume of sound, as well as plays it
   mySound.setVolume(0.4); 
-  mySound.play(); 
+  mySound.loop();
+
   
   state = "menu";//Sets the first state as menu
 
