@@ -96,7 +96,7 @@ function setup() {
   }
 
   points = {// objects that need to be collected
-  x : 490,
+  x : 480,
   y : height/1.5 ,
   width : 20,
   height : 20,
@@ -234,7 +234,7 @@ function resetPositions() {
 function rectPoints() {
   // Creates a rectangle on the right-side of the screen
   fill(200, 50, 200);
-  translate(p5.Vector.fromAngle(millis() / 90, 20));// Rotates the rectangle, with an axis 20 pixels away
+  translate(p5.Vector.fromAngle(millis() / 90, 19));// Rotates the rectangle, with an axis 20 pixels away
   rectMode(CENTER);
   rect(points.x, points.y, points.width, points.height);
 }
