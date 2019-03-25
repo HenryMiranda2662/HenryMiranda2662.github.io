@@ -90,7 +90,7 @@ function setup() {
   }
 
   player = {
-  x : width/13,
+  x : 31,
   y : height / 1.5,
   radius : 30,
   }
@@ -218,7 +218,7 @@ function displayEndScreen(){
 
 function resetPositions() {
   // Called during "menu" state, resests variables to their original values
-  player.x = width / 13;
+  player.x = 31;
 
   score = 0
 
