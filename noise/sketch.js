@@ -9,11 +9,12 @@ let time;
 let rectWidth;
 let myRectangle;
 let rects = [];
-let numberOfRects
+
 
 
 function setup() {
   createCanvas(windowWidth, windowHeight); 
+  numberOfRects = width;
   time = 0;
   let numberOfRects = width;
   rectWidth = width / numberOfRects;
@@ -25,6 +26,11 @@ function setup() {
 function draw() {
   background(220);
   fill(0);
+
+  
+
+
+  
   for (let i = 0; i < numberOfRects; i ++){
   rect(rects[i].x, rects[i].y, rects[i]. width, rects[i].height );
   }
