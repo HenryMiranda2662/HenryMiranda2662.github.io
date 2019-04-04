@@ -1,14 +1,9 @@
-// Project Title
-// Your Name
-// Date
+// Grid-based assignment (2D array) 
+// Henry Miranda
+// April 19th, 2019
 //
 // Extra for Experts:
-// - describe what you did to take this project "above and beyond"
-
-let x,y;
-let squareSize;
-let state;
-let speed;
+// 
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
