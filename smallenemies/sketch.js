@@ -106,21 +106,21 @@ function setup() {
   x : 100,
   y : height / 2,
   dy : 17,
-  radius : 25,
+  radius : 14,
   }
   
   enemy2Level1 = {
   x : width/2 ,
   y : height / 2,
   dy : 9,
-  radius : 25,
+  radius : 14,
   }
   
   enemy3Level1 = {
   x : 400,
   y : height / 2,
   dy : 5,
-  radius : 25,
+  radius : 14,
   }
   
   enemy1Level2 = {
@@ -128,7 +128,7 @@ function setup() {
   y : height / 6,
 	dx : random(4,5),
   dy : random(3,5),
-  radius : 25
+  radius : 14,
   }
   
   enemy2Level2 = {
@@ -136,7 +136,7 @@ function setup() {
   y : height / 6,
   dx : random(4,5),
   dy : random(3,5),
-  radius : 25,
+  radius : 14,
   }
   
   enemy3Level2 = {
@@ -144,7 +144,7 @@ function setup() {
   y : height / 6,
   dx : random(4,5),  
   dy : random(3,5),
-  radius : 25,
+  radius : 14,
   }
 }
 

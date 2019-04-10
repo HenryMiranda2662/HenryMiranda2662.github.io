@@ -51,6 +51,8 @@ function setup() {
 
   txt = "You Finished the Game";// text that will be used later
 
+  slowDown = 1.6;
+
   // Different objects that I will use during the game, such as player, enemies and different buttons
   // Each object has its won differnt attributes (x-value, y-value, width, height, etc)
   playButton = {
@@ -105,45 +107,45 @@ function setup() {
   enemy1Level1 = {
   x : 100,
   y : height / 2,
-  dy : 17,
+  dy : 17/ slowDown,
   radius : 25,
   }
   
   enemy2Level1 = {
   x : width/2 ,
   y : height / 2,
-  dy : 9,
+  dy : 9/ slowDown,
   radius : 25,
   }
   
   enemy3Level1 = {
   x : 400,
   y : height / 2,
-  dy : 5,
+  dy : 5/ slowDown,
   radius : 25,
   }
   
   enemy1Level2 = {
   x : 100,
   y : height / 6,
-	dx : random(4,5),
-  dy : random(3,5),
+	dx : random(4,5)/ slowDown,
+  dy : random(3,5)/ slowDown,
   radius : 25
   }
   
   enemy2Level2 = {
   x : width/2 ,
   y : height / 6,
-  dx : random(4,5),
-  dy : random(3,5),
+  dx : random(4,5)/ slowDown,
+  dy : random(3,5)/ slowDown,
   radius : 25,
   }
   
   enemy3Level2 = {
   x : 400,
   y : height / 6,
-  dx : random(4,5),  
-  dy : random(3,5),
+  dx : random(4,5)/ slowDown,  
+  dy : random(3,5)/ slowDown,
   radius : 25,
   }
 }

@@ -105,14 +105,14 @@ function setup() {
   enemy1Level1 = {
   x : 100,
   y : height / 2,
-  dy : 17,
+  dy : 9,
   radius : 25,
   }
   
   enemy2Level1 = {
   x : width/2 ,
   y : height / 2,
-  dy : 9,
+  dy : 21,
   radius : 25,
   }
   
@@ -360,20 +360,12 @@ function itHitLevel1() {
   distanceAwayFromCenter3 = int(dist(player.x, player.y, enemy3Level1.x, enemy3Level1.y));
   
   collitionDistance1 = (player.radius + enemy1Level1.radius);
-  collitionDistance2 = (player.radius + enemy2Level1.radius);
-  collitionDistance3 = (player.radius + enemy3Level1.radius);
   
-  if (distanceAwayFromCenter1  <= collitionDistance1 ||distanceAwayFromCenter2 <= collitionDistance1 || distanceAwayFromCenter3  <= collitionDistance1)  {
+  
+  if (distanceAwayFromCenter1  <= collitionDistance1 || distanceAwayFromCenter3  <= collitionDistance1)  {
     state = "menu";
   }
 
-  if (distanceAwayFromCenter1  <= collitionDistance2 ||distanceAwayFromCenter2 <= collitionDistance2 || distanceAwayFromCenter3  <= collitionDistance2)  {
-    state = "menu";
-  }
-
-  if (distanceAwayFromCenter1  <= collitionDistance3 ||distanceAwayFromCenter2 <= collitionDistance3 || distanceAwayFromCenter3  <= collitionDistance3)  {
-    state = "menu";
-  }
 }
 
 function playerBall () {
@@ -384,7 +376,7 @@ function playerBall () {
 
 function createPlayerBall(){
   //Creates an ellipse 
-  fill(5, 255, 57);
+  fill(105, 105, 7);
   ellipse(player.x, player.y, player.radius*2);
 }
 
@@ -496,18 +488,9 @@ function itHitLevel2() {
   distanceAwayFromCenter3 = int(dist(player.x, player.y, enemy3Level2.x, enemy3Level2.y));
   
   collitionDistance1 = (player.radius + enemy1Level2.radius);
-  collitionDistance2 = (player.radius + enemy2Level2.radius);
-  collitionDistance3 = (player.radius + enemy3Level2.radius);
   
-  if (distanceAwayFromCenter1  <= collitionDistance1 ||distanceAwayFromCenter2 <= collitionDistance1 || distanceAwayFromCenter3  <= collitionDistance1)  {
-    state = "menu";
-  }
-
-  if (distanceAwayFromCenter1  <= collitionDistance2 ||distanceAwayFromCenter2 <= collitionDistance2 || distanceAwayFromCenter3  <= collitionDistance2)  {
-    state = "menu";
-  }
-
-  if (distanceAwayFromCenter1  <= collitionDistance3 ||distanceAwayFromCenter2 <= collitionDistance3 || distanceAwayFromCenter3  <= collitionDistance3)  {
+  
+  if (distanceAwayFromCenter1  <= collitionDistance1 || distanceAwayFromCenter3  <= collitionDistance1)  {
     state = "menu";
   }
 }
