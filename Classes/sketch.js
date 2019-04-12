@@ -36,21 +36,23 @@ class Walker{
   }
 }
 
-let andrew;
-let kenny;
+let theWalkers = [];
+
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
-  andrew = new Walker(width/2, height/2, "purple", 8);
-  kenny = new Walker(100, 100, "black", 6);
+  for (let i=0; i<50; i++){
+    let someWalkers = new Walker(width/2, height/2, color(random(255),random(255),random(255)), 5);
+    theWalkers.push(someWalkers);
+  }
 }
 
 function draw() {
-  andrew.move();
-  andrew.display();
+  for (let i=0; i<theWalkers.length; i++){
+    theWalkers[i].move();
+    theWalkers[i].display();
 
-
-  kenny.move();
-  kenny.display();
+  }
+  
  
 }
