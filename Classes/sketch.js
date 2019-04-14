@@ -51,8 +51,5 @@ function draw() {
   for (let i=0; i<theWalkers.length; i++){
     theWalkers[i].move();
     theWalkers[i].display();
-
   }
-  
- 
 }
