@@ -430,21 +430,22 @@ function mousePressed() {
 function checkGridPower(){
   let xcoord = floor((mouseX - xOffset) / cellSize);
   let ycoord = floor((mouseY - yOffset) / cellSize);
+  if (state === "grid"){
+    if (xcoord === 0 && ycoord === 0) {
+      power = "uno";
+    }
 
-  if (xcoord === 0 && ycoord === 0) {
-    power = "uno";
-  }
+    if (xcoord === 1 && ycoord === 0) {
+      power = "dos";
+    }
 
-  if (xcoord === 1 && ycoord === 0) {
-    power = "dos";
-  }
+    if (xcoord === 0 && ycoord === 1) {
+      power = "tres";
+    }
 
-  if (xcoord === 0 && ycoord === 1) {
-    power = "tres";
-  }
-
-  if (xcoord === 1 && ycoord === 1) {
-    power = "cuatro";
+    if (xcoord === 1 && ycoord === 1) {
+      power = "cuatro";
+    } 
   }
 }
 
@@ -521,8 +522,6 @@ function enemyBallsLevel1Small(){
   enemyBall3Level1Small();
 
 }
-
-
 
 function enemyBall1Level1() {
   // Changes the y-coordinates of enemy, but it will bounce once it hits a wall
@@ -632,10 +631,12 @@ function clickedOnButton(x, y) {
 }
 
 function clickedOnButtonAbility(x, y) {
-  return x >= abilityButton.x &&
-    x <= abilityButton.x + abilityButton.width &&
-    y >= abilityButton.y &&
-    y <= abilityButton.y + abilityButton.height;
+  if (state === "grid"){
+    return x >= abilityButton.x &&
+     x <= abilityButton.x + abilityButton.width &&
+      y >= abilityButton.y &&
+      y <= abilityButton.y + abilityButton.height;
+  }
 }
 
 function clickedOnButtonLevel1 (x, y) {
