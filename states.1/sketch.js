@@ -151,17 +151,29 @@ function draw() {
   if (state === "level1") {
     level1Screen();
 
-    if (power === "uno" && keyIsPressed === true) {
-      background("black")
+    if (power === "uno" && key === "p") {
+      //level1ScreenSpeed();
+      //level1ScreenSlowdown();
+      level1ScreenSmall();
+      
     }
-    if (power === "dos" && keyIsPressed === true) {
-      background("red")
+    if (power === "dos" && key === "p") {
+      //level1ScreenSpeed();
+      //level1ScreenSlowdown();
+      level1ScreenSmall();
+      
     }
-    if (power === "tres" && keyIsPressed === true) {
-      background("blue")
+    if (power === "tres" && key === "p") {
+      //level1ScreenSpeed();
+      //level1ScreenSlowdown();
+      level1ScreenSmall();
+      
     }
-    if (power === "cuatro" && keyIsPressed === true) {
-      background("green")
+    if (power === "cuatro" && key === "p") {
+      //level1ScreenSpeed();
+      //level1ScreenSlowdown();
+      level1ScreenSmall();
+      
     }
   }
 
@@ -213,9 +225,49 @@ function level1Screen(){
   //First level
   imageMode(CORNERS);
   background(beachImage);  
-  playerBall ();
+  createPlayerBall();
+  movePlayerBall();
   itHitLevel1();
   enemyBallsLevel1();  
+  noCursor();
+  rectPoints();
+  collectPoints();
+  changeLevels();
+}
+
+function level1ScreenSpeed(){
+  imageMode(CORNERS);
+  background(beachImage);  
+  createPlayerBall();
+  movePlayerBallSpeed();
+  itHitLevel1();
+  enemyBallsLevel1();  
+  noCursor();
+  rectPoints();
+  collectPoints();
+  changeLevels();
+}
+
+function level1ScreenSlowdown(){
+  imageMode(CORNERS);
+  background(beachImage);  
+  createPlayerBall();
+  movePlayerBall();
+  itHitLevel1();
+  enemyBallsLevel1SS();
+  noCursor();
+  rectPoints();
+  collectPoints();
+  changeLevels();
+}
+
+function level1ScreenSmall(){
+  imageMode(CORNERS);
+  background(beachImage);  
+  createPlayerBall();
+  movePlayerBall();
+  itHitLevel1();
+  enemyBallsLevel1Small();
   noCursor();
   rectPoints();
   collectPoints();
@@ -254,7 +306,7 @@ function resetPositions() {
 function rectPoints() {
   // Creates a rectangle on the right-side of the screen
   fill(200, 50, 200);
-  translate(p5.Vector.fromAngle(millis() / 90, 19));// Rotates the rectangle, with an axis 20 pixels away
+  //translate(p5.Vector.fromAngle(millis() / 90, 19));// Rotates the rectangle, with an axis 20 pixels away
   // rectMode(CENTER);
   rect(points.x, points.y, points.width, points.height);
 }
@@ -419,12 +471,6 @@ function itHitLevel1() {
   }
 }
 
-function playerBall () {
-  // Holds function for the player
-  createPlayerBall();
-  movePlayerBall();
-}
-
 function createPlayerBall(){
   //Creates an ellipse 
   fill(5, 255, 57);
@@ -441,6 +487,17 @@ function movePlayerBall(){
     player.x -= 4;
   }
 }
+
+function movePlayerBallSpeed(){
+  //Moves player's x-coordidate, But only if the player is within the screen boundaries
+  if (keyIsDown(RIGHT_ARROW) && (player.x + player.radius <= width)) {
+    player.x += 6;
+  }
+  
+  if (keyIsDown(LEFT_ARROW) && (player.x - player.radius > 0)) {
+    player.x -= 6;
+  }
+}
  
 function enemyBallsLevel1() {
   // creates all 3 enemies of level 1
@@ -449,6 +506,23 @@ function enemyBallsLevel1() {
   enemyBall2Level1();
   enemyBall3Level1();
 }
+
+function enemyBallsLevel1SS(){
+  fill(9, 150, 250);
+  enemyBall1Level1SS();
+  enemyBall2Level1SS();
+  enemyBall3Level1SS();
+}
+
+function enemyBallsLevel1Small(){
+  fill(9, 150, 250);
+  enemyBall1Level1Small();
+  enemyBall2Level1Small();
+  enemyBall3Level1Small();
+
+}
+
+
 
 function enemyBall1Level1() {
   // Changes the y-coordinates of enemy, but it will bounce once it hits a wall
@@ -473,6 +547,78 @@ function enemyBall2Level1() {
 function enemyBall3Level1() {
   // Changes the y-coordinates of enemy, but it will bounce once it hits a wall
   ellipse(enemy3Level1.x, enemy3Level1.y, enemy3Level1.radius * 2);
+  enemy3Level1.y += enemy3Level1.dy;
+
+  if (enemy3Level1.y + enemy3Level1.radius >= height || enemy3Level1.y - enemy3Level1.radius <= 0) {
+    enemy3Level1.dy = -1 * enemy3Level1.dy;
+  }
+}
+
+function enemyBall1Level1SS() {
+  // Changes the y-coordinates of enemy, but it will bounce once it hits a wall
+  enemy1Level1.dy = 4;
+
+  ellipse(enemy1Level1.x, enemy1Level1.y, enemy1Level1.radius * 2);
+  enemy1Level1.y += enemy1Level1.dy;                             
+  
+  if (enemy1Level1.y + enemy1Level1.radius >= height || enemy1Level1.y - enemy1Level1.radius <= 0) {
+    enemy1Level1.dy = -1 * enemy1Level1.dy;                        
+  }
+}
+
+function enemyBall2Level1SS() {
+  // Changes the y-coordinates of enemy, but it will bounce once it hits a wall
+  enemy2Level1.dy = 4;
+
+  ellipse(enemy2Level1.x, enemy2Level1.y, enemy2Level1.radius * 2);
+  enemy2Level1.y += enemy2Level1.dy;
+
+  if (enemy2Level1.y + enemy2Level1.radius >= height || enemy2Level1.y - enemy2Level1.radius <= 0) {
+    enemy2Level1.dy = -1 * enemy2Level1.dy;
+  }
+}
+
+function enemyBall3Level1SS() {
+  // Changes the y-coordinates of enemy, but it will bounce once it hits a wall
+  enemy3Level1.dy = 4;
+
+  ellipse(enemy3Level1.x, enemy3Level1.y, enemy3Level1.radius * 2);
+  enemy3Level1.y += enemy3Level1.dy;
+
+  if (enemy3Level1.y + enemy3Level1.radius >= height || enemy3Level1.y - enemy3Level1.radius <= 0) {
+    enemy3Level1.dy = -1 * enemy3Level1.dy;
+  }
+}
+
+function enemyBall1Level1Small() {
+  // Changes the y-coordinates of enemy, but it will bounce once it hits a wall
+  enemy1Level1.dy = 4;
+
+  ellipse(enemy1Level1.x, enemy1Level1.y, enemy1Level1.radius);
+  enemy1Level1.y += enemy1Level1.dy;                             
+  
+  if (enemy1Level1.y + enemy1Level1.radius >= height || enemy1Level1.y - enemy1Level1.radius <= 0) {
+    enemy1Level1.dy = -1 * enemy1Level1.dy;                        
+  }
+}
+
+function enemyBall2Level1Small() {
+  // Changes the y-coordinates of enemy, but it will bounce once it hits a wall
+  enemy2Level1.dy = 4;
+
+  ellipse(enemy2Level1.x, enemy2Level1.y, enemy2Level1.radius);
+  enemy2Level1.y += enemy2Level1.dy;
+
+  if (enemy2Level1.y + enemy2Level1.radius >= height || enemy2Level1.y - enemy2Level1.radius <= 0) {
+    enemy2Level1.dy = -1 * enemy2Level1.dy;
+  }
+}
+
+function enemyBall3Level1Small() {
+  // Changes the y-coordinates of enemy, but it will bounce once it hits a wall
+  enemy3Level1.dy = 4;
+
+  ellipse(enemy3Level1.x, enemy3Level1.y, enemy3Level1.radius);
   enemy3Level1.y += enemy3Level1.dy;
 
   if (enemy3Level1.y + enemy3Level1.radius >= height || enemy3Level1.y - enemy3Level1.radius <= 0) {
