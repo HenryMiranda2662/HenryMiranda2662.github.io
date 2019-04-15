@@ -152,15 +152,15 @@ function draw() {
     level1Screen();
 
     if (power === "uno" && key === "p") {
-      //level1ScreenSpeed();
+      level1ScreenSpeed();
       //level1ScreenSlowdown();
-      level1ScreenSmall();
+      //level1ScreenSmall();
       
     }
     if (power === "dos" && key === "p") {
       //level1ScreenSpeed();
-      //level1ScreenSlowdown();
-      level1ScreenSmall();
+      level1ScreenSlowdown();
+      //level1ScreenSmall();
       
     }
     if (power === "tres" && key === "p") {
