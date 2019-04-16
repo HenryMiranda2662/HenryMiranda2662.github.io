@@ -31,6 +31,8 @@ let yOffset;
 function preload() {
   soundFormats("mp3");
   mySound = loadSound("assets/WOW.mp3");
+  //load images 
+
 }
 
 function setup() {
@@ -186,6 +188,7 @@ function displayGrid() {
       rect(x * cellSize, y * cellSize, cellSize, cellSize);
     }
   }
+/// add images (x,y)
   pop();
 
   displayGridButton();
