@@ -150,35 +150,27 @@ function draw() {
 
   if (state === "level1") {
     level1Screen();
-
-    if (power === "uno" && key === "p") {
-      level1ScreenSpeed();
-      //level1ScreenSlowdown();
-      //level1ScreenSmall();
-      
-    }
-    if (power === "dos" && key === "p") {
-      //level1ScreenSpeed();
-      level1ScreenSlowdown();
-      //level1ScreenSmall();
-      
-    }
-    if (power === "tres" && key === "p") {
-      //level1ScreenSpeed();
-      //level1ScreenSlowdown();
-      level1ScreenSmall();
-      
-    }
-    if (power === "cuatro" && key === "p") {
-      //level1ScreenSpeed();
-      //level1ScreenSlowdown();
-      level1ScreenSmall();
-      
-    }
   }
 
   if (state === "endScreen"){
     gameOver();
+  }
+}
+
+function keyPressed(){
+  if (state === "level1") {
+    if (power === "uno" && key === "p") {
+      level1ScreenSpeed();
+    }
+    if (power === "dos" && key === "p") {
+      level1ScreenSlowdown();
+    }
+    if (power === "tres" && key === "p") {
+      level1ScreenSmall();
+    }
+    if (power === "cuatro" && key === "p") {
+      level1ScreenSmall();
+    } 
   }
 }
 
@@ -299,8 +291,19 @@ function displayEndScreen(){
 function resetPositions() {
   // Called during "menu" state, resests variables to their original values
   player.x = 31;
-
   score = 0;
+  enemy1Level1.y = height/2;
+  enemy2Level1.y = height/2;
+  enemy3Level1.y = height/2;
+
+  enemy1Level1.dy = 17;
+  enemy2Level1.dy = 9;
+  enemy3Level1.dy = 5;
+
+  enemy1Level1.radius = 25;
+  enemy2Level1.radius = 25;
+  enemy3Level1.radius = 25;
+
 }
 
 function rectPoints() {
@@ -456,18 +459,8 @@ function itHitLevel1() {
   distanceAwayFromCenter3 = int(dist(player.x, player.y, enemy3Level1.x, enemy3Level1.y));
   
   collitionDistance1 = (player.radius + enemy1Level1.radius);
-  collitionDistance2 = (player.radius + enemy2Level1.radius);
-  collitionDistance3 = (player.radius + enemy3Level1.radius);
   
   if (distanceAwayFromCenter1  <= collitionDistance1 ||distanceAwayFromCenter2 <= collitionDistance1 || distanceAwayFromCenter3  <= collitionDistance1)  {
-    state = "menu";
-  }
-
-  if (distanceAwayFromCenter1  <= collitionDistance2 ||distanceAwayFromCenter2 <= collitionDistance2 || distanceAwayFromCenter3  <= collitionDistance2)  {
-    state = "menu";
-  }
-
-  if (distanceAwayFromCenter1  <= collitionDistance3 ||distanceAwayFromCenter2 <= collitionDistance3 || distanceAwayFromCenter3  <= collitionDistance3)  {
     state = "menu";
   }
 }
