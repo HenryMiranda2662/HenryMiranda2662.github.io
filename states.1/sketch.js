@@ -133,7 +133,6 @@ function setup() {
 
 }
   
-
 function draw() {
   // This state will draw the first page the user will see
   if (state === "menu") {
@@ -160,6 +159,7 @@ function draw() {
 function keyPressed(){
   if (state === "level1") {
     if (power === "uno" && key === "p") {
+      
       level1ScreenSpeed();
     }
     if (power === "dos" && key === "p") {
@@ -230,7 +230,7 @@ function level1Screen(){
 function level1ScreenSpeed(){
   imageMode(CORNERS);
   background(beachImage);  
-  createPlayerBall();
+  createPlayerBallSpeed();
   movePlayerBallSpeed();
   itHitLevel1();
   enemyBallsLevel1();  
@@ -243,7 +243,7 @@ function level1ScreenSpeed(){
 function level1ScreenSlowdown(){
   imageMode(CORNERS);
   background(beachImage);  
-  createPlayerBall();
+  createPlayerBallSpeed();
   movePlayerBall();
   itHitLevel1();
   enemyBallsLevel1SS();
@@ -482,14 +482,20 @@ function movePlayerBall(){
   }
 }
 
+function createPlayerBallSpeed(){
+  //Creates an ellipse 
+  fill("black");
+  ellipse(player.x, player.y, player.radius*2);
+}
+
 function movePlayerBallSpeed(){
   //Moves player's x-coordidate, But only if the player is within the screen boundaries
   if (keyIsDown(RIGHT_ARROW) && (player.x + player.radius <= width)) {
-    player.x += 6;
+    player.x += 8;
   }
   
   if (keyIsDown(LEFT_ARROW) && (player.x - player.radius > 0)) {
-    player.x -= 6;
+    player.x -= 8;
   }
 }
  
