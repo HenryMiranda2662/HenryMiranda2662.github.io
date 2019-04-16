@@ -148,29 +148,22 @@ function draw() {
   }
 
   if (state === "level1") {
-    level1Screen();
+    if (power === "uno" ) {
+      level1ScreenSpeed();
+    }
+    if (power === "dos" ) {
+      level1ScreenSlowdown();
+    }
+    if (power === "tres" ) {
+      level1ScreenSmall();
+    }
+    if (power === "cuatro") {
+      level1Screen();
+    }
   }
 
   if (state === "endScreen"){
     gameOver();
-  }
-}
-
-function keyPressed(){
-  if (state === "level1") {
-    if (power === "uno" && key === "p") {
-      
-      level1ScreenSpeed();
-    }
-    if (power === "dos" && key === "p") {
-      level1ScreenSlowdown();
-    }
-    if (power === "tres" && key === "p") {
-      level1ScreenSmall();
-    }
-    if (power === "cuatro" && key === "p") {
-      level1ScreenSmall();
-    } 
   }
 }
 
@@ -243,7 +236,7 @@ function level1ScreenSpeed(){
 function level1ScreenSlowdown(){
   imageMode(CORNERS);
   background(beachImage);  
-  createPlayerBallSpeed();
+  createPlayerBall();
   movePlayerBall();
   itHitLevel1();
   enemyBallsLevel1SS();
