@@ -153,14 +153,12 @@ function draw() {
   if (state === "grid") {
     displayGrid();
 
-    push();
-    translate(xOffset,yOffset);
-    imageMode(CORNERS);
-    image(fastAbility, 0, 0, cellPictureWidth, cellPictureHeight);
-    image(fastAbility, 0, 1*cellSize, cellPictureWidth, cellPictureHeight);
-    image(fastAbility, 1*cellSize, 0, cellPictureWidth, cellPictureHeight);
-    image(fastAbility, 1*cellSize, 1*cellSize, cellPictureWidth, cellPictureHeight);
-    pop();
+    // push();
+    // translate(xOffset,yOffset);
+    // imageMode(CORNERS);
+   
+    // pop();
+    
   
   }
 
@@ -199,11 +197,16 @@ function displayGrid() {
   push();
   translate(xOffset, yOffset);
   background(0)
+  fill(255);
   for (let y = 0; y < gridSize; y++) {
     for (let x = 0; x < gridSize; x++) {
       rect(x * cellSize, y * cellSize, cellSize, cellSize);
     }
   }
+  image(fastAbility, 0, 0, cellPictureWidth, cellPictureHeight);
+  image(smallAbility, 0, 1*cellSize, cellPictureWidth, cellPictureHeight);
+  image(slowAbility, 1*cellSize, 0, cellPictureWidth, cellPictureHeight);
+  image(normalAbility, 1*cellSize + 10 , 1*cellSize + 10, cellPictureWidth - 10, cellPictureHeight - 10);
   pop();
 
   displayGridButton();
