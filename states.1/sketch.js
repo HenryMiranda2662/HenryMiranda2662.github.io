@@ -31,7 +31,11 @@ let yOffset;
 function preload() {
   soundFormats("mp3");
   mySound = loadSound("assets/WOW.mp3");
-  //load images 
+
+  fastAbility = loadImage("assets/fast.png");
+  slowAbility = loadImage("assets/slow.png");
+  smallAbility = loadImage("assets/small.png");
+  normalAbility = loadImage("assets/normal.png");
 
 }
 
@@ -135,6 +139,8 @@ function setup() {
   yOffset = 100;
   power = "cero"
   
+  cellPictureWidth = cellSize;
+  cellPictureHeight = cellSize;
 
 }
   
@@ -146,6 +152,16 @@ function draw() {
 
   if (state === "grid") {
     displayGrid();
+
+    push();
+    translate(xOffset,yOffset);
+    imageMode(CORNERS);
+    image(fastAbility, 0, 0, cellPictureWidth, cellPictureHeight);
+    image(fastAbility, 0, 1*cellSize, cellPictureWidth, cellPictureHeight);
+    image(fastAbility, 1*cellSize, 0, cellPictureWidth, cellPictureHeight);
+    image(fastAbility, 1*cellSize, 1*cellSize, cellPictureWidth, cellPictureHeight);
+    pop();
+  
   }
 
   if (state === "chooseLevel") {
@@ -188,7 +204,6 @@ function displayGrid() {
       rect(x * cellSize, y * cellSize, cellSize, cellSize);
     }
   }
-/// add images (x,y)
   pop();
 
   displayGridButton();
@@ -291,6 +306,9 @@ function resetPositions() {
   // Called during "menu" state, resests variables to their original values
   player.x = 31;
   score = 0;
+
+  power = "cero"
+
   enemy1Level1.y = height/2;
   enemy2Level1.y = height/2;
   enemy3Level1.y = height/2;
@@ -315,7 +333,7 @@ function rectPoints() {
 
 function collectPoints(){
   // if the player ball goes with in certain distance of the rectangle (points) the score goes up by one
-  if ((player.x + player.radius) >= (points.x - (points.width + 5) )){
+  if ((player.x + player.radius) >= (points.x + 10)){
   	score += 1;
   }
 }
