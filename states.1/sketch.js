@@ -19,6 +19,7 @@ let enemy1Level1;
 let enemy2Level1;
 let enemy3Level1;
 let txt;
+let txtGrid;
 
 let abilityButton;
 
@@ -58,6 +59,7 @@ function setup() {
   score = 0;//Sets the score to 0 at the beginning of game
 
   txt = "You Finished the Game";// text that will be used later
+  txtGrid = "Select Your Ability"
 
   // Different objects that I will use during the game, such as player, enemies and different buttons
   // Each object has its won differnt attributes (x-value, y-value, width, height, etc)
@@ -136,7 +138,7 @@ function setup() {
     
   cellSize = 150;
   xOffset = 50;
-  yOffset = 100;
+  yOffset = 130;
   power = "cero"
   
   cellPictureWidth = cellSize;
@@ -151,14 +153,7 @@ function draw() {
   }
 
   if (state === "grid") {
-    displayGrid();
-
-    // push();
-    // translate(xOffset,yOffset);
-    // imageMode(CORNERS);
-   
-    // pop();
-    
+    displayGrid();  
   
   }
 
@@ -187,7 +182,6 @@ function draw() {
 }
 
 function displayGridButton() {
-  //rect(abilityButton.x, abilityButton.y, abilityButton.width , abilityButton.height);
   imageMode(CORNER);
   image(abilityButton.image, abilityButton.x, abilityButton.y, abilityButton.width , abilityButton.height)
 }
@@ -196,7 +190,7 @@ function displayGrid() {
   
   push();
   translate(xOffset, yOffset);
-  background(0)
+  background(125, 75, 130)
   fill(255);
   for (let y = 0; y < gridSize; y++) {
     for (let x = 0; x < gridSize; x++) {
@@ -211,6 +205,7 @@ function displayGrid() {
 
   displayGridButton();
   checkCursorAbility();
+  
 }
 
 function menuScreen(){
@@ -298,9 +293,17 @@ function writeText(){
   text(txt, 35, 130);// "txt" is the variable which holds the string, followed by x and y coordinates
 }
 
+function writeTextGrid(){
+  // This function will write something on the scree, the text is already pre-determinate 
+  textSize(40);
+  fill(0, 102, 153);
+  text(txtGrid, 35, 130);// "txt" is the variable which holds the string, followed by x and y coordinates
+}
+
+
+
 function displayEndScreen(){
-  // rectMode(CENTER);
-  //rect(menuButton.x, menuButton.y, menuButton.width, menuButton.height);//Draws a rectangle
+
   imageMode(CENTER);
   image(menuButton.image, menuButton.x, menuButton.y, menuButton.width, menuButton.height);// Super-imposes a picture over that rectangle
 }
@@ -329,8 +332,6 @@ function resetPositions() {
 function rectPoints() {
   // Creates a rectangle on the right-side of the screen
   fill(200, 50, 200);
-  //translate(p5.Vector.fromAngle(millis() / 90, 19));// Rotates the rectangle, with an axis 20 pixels away
-  // rectMode(CENTER);
   rect(points.x, points.y, points.width, points.height);
 }
 
@@ -352,7 +353,11 @@ function changeLevels(){
 function checkCursorMenu(){
   // During "menu", if the mouse hovers over the play button, the mouse will change from an arrow to a pointer
   // and the play button will light-up (this is due to a change of image with a lighter colour) 
-	if ((mouseX > playButton.x - (playButton.width/2)) && (mouseX < playButton.x + (playButton.width/2)) && (mouseY > playButton.y - (playButton.height/2)) && (mouseY < playButton.y + (playButton.height/2))){
+  if ((mouseX > playButton.x - (playButton.width/2)) &&
+     (mouseX < playButton.x + (playButton.width/2)) && 
+     (mouseY > playButton.y - (playButton.height/2)) && 
+     (mouseY < playButton.y + (playButton.height/2))){
+
     cursor("pointer");
     imageMode(CENTER);
     image(playButton.image2, playButton.x, playButton.y, playButton.width, playButton.height);
@@ -365,7 +370,11 @@ function checkCursorMenu(){
 
 function checkCursorEndScreen(){
   //Similar to the "menu", the mouse and button will change if you hover over the button
-	if ((mouseX > menuButton.x - (menuButton.width/2)) && (mouseX < menuButton.x + (menuButton.width/2)) && (mouseY > menuButton.y - (menuButton.height/2)) && (mouseY < menuButton.y + (menuButton.height/2))){
+  if ((mouseX > menuButton.x - (menuButton.width/2)) && 
+      (mouseX < menuButton.x + (menuButton.width/2)) && 
+      (mouseY > menuButton.y - (menuButton.height/2)) && 
+      (mouseY < menuButton.y + (menuButton.height/2))){
+
     cursor("pointer");
     imageMode(CENTER);
     image(menuButton.image2, menuButton.x, menuButton.y, menuButton.width, menuButton.height);
@@ -378,7 +387,10 @@ function checkCursorEndScreen(){
 
 function checkCursorLevels(){
   //Similar to the "menu", the mouse and button will change if you hover over the button
-	if ((mouseX > level1Button.x - (level1Button.width/2)) && (mouseX < level1Button.x + (level1Button.width/2)) && (mouseY > level1Button.y - (level1Button.height/2)) && (mouseY < level1Button.y + (level1Button.height/2))){
+  if ((mouseX > level1Button.x - (level1Button.width/2)) && 
+      (mouseX < level1Button.x + (level1Button.width/2)) && 
+      (mouseY > level1Button.y - (level1Button.height/2)) && 
+      (mouseY < level1Button.y + (level1Button.height/2))){
     cursor("pointer");
     imageMode(CENTER);
     image(level1Button.image2, level1Button.x, level1Button.y, level1Button.width, level1Button.height);
@@ -391,7 +403,10 @@ function checkCursorLevels(){
 
 function checkCursorAbility(){
   //Similar to the "menu", the mouse and button will change if you hover over the button
-	if ((mouseX > abilityButton.x ) && (mouseX < abilityButton.x + abilityButton.width) && (mouseY > abilityButton.y ) && (mouseY < abilityButton.y + abilityButton.height)){
+  if ((mouseX > abilityButton.x ) && 
+      (mouseX < abilityButton.x + abilityButton.width) && 
+      (mouseY > abilityButton.y ) && 
+      (mouseY < abilityButton.y + abilityButton.height)){
     cursor("pointer");
     imageMode(CORNER);
     image(abilityButton.image2, abilityButton.x, abilityButton.y, abilityButton.width , abilityButton.height)
@@ -402,10 +417,9 @@ function checkCursorAbility(){
   } 
 }
 
+
 function chooseLevel() {
   // Creates two buttons which will allow you to choose the level during state "chooseLevel"
-  // rectMode(CENTER);
-  //rect(level1Button.x, level1Button.y, level1Button.width, level1Button.height);
 	imageMode(CENTER);
   image(level1Button.image, level1Button.x, level1Button.y, level1Button.width, level1Button.height);
   
@@ -413,8 +427,6 @@ function chooseLevel() {
 
 function displayMenu() {
   // Creates a button during the first screen "menu"
-  // rectMode(CENTER);
-  //rect(playButton.x, playButton.y, playButton.width, playButton.height);
   imageMode(CENTER);
   image(playButton.image, playButton.x, playButton.y, playButton.width, playButton.height);
 }
@@ -480,7 +492,9 @@ function itHitLevel1() {
   
   collitionDistance1 = (player.radius + enemy1Level1.radius);
   
-  if (distanceAwayFromCenter1  <= collitionDistance1 ||distanceAwayFromCenter2 <= collitionDistance1 || distanceAwayFromCenter3  <= collitionDistance1)  {
+  if (distanceAwayFromCenter1  <= collitionDistance1 ||
+      distanceAwayFromCenter2 <= collitionDistance1 || 
+      distanceAwayFromCenter3  <= collitionDistance1)  {
     state = "menu";
   }
 }
@@ -504,18 +518,18 @@ function movePlayerBall(){
 
 function createPlayerBallSpeed(){
   //Creates an ellipse 
-  fill("black");
+  fill(5, 255, 57);
   ellipse(player.x, player.y, player.radius*2);
 }
 
 function movePlayerBallSpeed(){
   //Moves player's x-coordidate, But only if the player is within the screen boundaries
   if (keyIsDown(RIGHT_ARROW) && (player.x + player.radius <= width)) {
-    player.x += 8;
+    player.x += 7;
   }
   
   if (keyIsDown(LEFT_ARROW) && (player.x - player.radius > 0)) {
-    player.x -= 8;
+    player.x -= 7;
   }
 }
  
@@ -643,7 +657,10 @@ function enemyBall3Level1Small() {
 
 function clickedOnButton(x, y) {
   // Checks if user clickes on the play button, if so changes state to "choseLevel"
-  return x >= playButton.x - playButton.width/2 && x <= playButton.x + playButton.width/2 && y >= playButton.y - playButton.height/2 && y <= playButton.y + playButton.height/2;
+  return x >= playButton.x - playButton.width/2 && 
+         x <= playButton.x + playButton.width/2 && 
+         y >= playButton.y - playButton.height/2 && 
+         y <= playButton.y + playButton.height/2;
 }
 
 function clickedOnButtonAbility(x, y) {
@@ -657,10 +674,16 @@ function clickedOnButtonAbility(x, y) {
 
 function clickedOnButtonLevel1 (x, y) {
   // Checks if user clickes on the Level 1 button, if so changes state to "Level1"
-  return x >= level1Button.x - level1Button.width/2 && x <= level1Button.x + level1Button.width/2 && y >= level1Button.y - level1Button.height/2 && y <= level1Button.y + level1Button.height/2;
+  return x >= level1Button.x - level1Button.width/2 && 
+         x <= level1Button.x + level1Button.width/2 && 
+         y >= level1Button.y - level1Button.height/2 && 
+         y <= level1Button.y + level1Button.height/2;
 }
 
 function clickedOnButtonMenu(x, y) {
   // Checks if user clickes on the menu button, if so changes state to "menu"
-  return x >= menuButton.x - menuButton.width/2 && x <= menuButton.x + menuButton.width/2 && y >= menuButton.y - menuButton.height/2 && y <= menuButton.y + menuButton.height/2;
+  return x >= menuButton.x - menuButton.width/2 && 
+         x <= menuButton.x + menuButton.width/2 && 
+         y >= menuButton.y - menuButton.height/2 && 
+         y <= menuButton.y + menuButton.height/2;
 }  
