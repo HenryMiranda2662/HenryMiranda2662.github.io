@@ -10,9 +10,14 @@ let backgroundImage;
 let mySound;
 let beachImage;
 let titleImage;
+let fastAbility;
+let slowAbility;
+let smallAbility;
+let normalAbility
 let state;
 let playButton;
 let level1Button;
+let abilityButton;
 let points;
 let player;
 let enemy1Level1;
@@ -20,39 +25,36 @@ let enemy2Level1;
 let enemy3Level1;
 let txt;
 let txtGrid;
-
-let abilityButton;
-
 let gridSize = 2;
 let cellSize;
 let xOffset;
 let yOffset;
+let power;
+let cellPictureWidth;
+let cellPictureHeight;
 
 //Pre-load sound so it begings before the actual code, also changes its name
 function preload() {
   soundFormats("mp3");
   mySound = loadSound("assets/WOW.mp3");
-
-  fastAbility = loadImage("assets/fast.png");
-  slowAbility = loadImage("assets/slow.png");
-  smallAbility = loadImage("assets/small.png");
-  normalAbility = loadImage("assets/normal.png");
-
 }
 
 function setup() {
   createCanvas(500, 500);
 
-  //Different images which I will use later as background
+  //Different images which I will use later 
   backgroundImage = loadImage("assets/bckimg.png");
   beachImage = loadImage ("assets/beach.png");
-  
   titleImage = loadImage ("assets/title.png");
+  
+  fastAbility = loadImage("assets/fast.png");
+  slowAbility = loadImage("assets/slow.png");
+  smallAbility = loadImage("assets/small.png");
+  normalAbility = loadImage("assets/normal.png");
 
   //Set volume of sound, as well as plays it
   mySound.setVolume(0.4); 
   mySound.loop();
-
   
   state = "menu";//Sets the first state as menu
 
@@ -61,35 +63,16 @@ function setup() {
   txt = "You Finished the Game";// text that will be used later
   txtGrid = "Select Your Ability"
 
+  cellSize = 150; // Cell size for the grid I'll use
+  xOffset = 50;
+  yOffset = 130;
+  power = "NoPower" //Variable which will change which power will be used
+  
+  cellPictureWidth = cellSize;
+  cellPictureHeight = cellSize;
+
   // Different objects that I will use during the game, such as player, enemies and different buttons
   // Each object has its won differnt attributes (x-value, y-value, width, height, etc)
-  playButton = {
-  x : width/2,
-  y : height/1.5,
-  width : 240,
-  height : 75,
-  image : loadImage("assets/playbutton.png"),   // Two images, which will switch back and forth when you  
-  image2 : loadImage ("assets/playbutton2.png"),// hover the mouse over them
-  }
-
-  menuButton = {
-  x : 250,
-  y : 210,
-  width : 150,
-  height : 75,
-  image : loadImage("assets/menu.png"),
-  image2: loadImage("assets/menu2.png"),
-  }
-
-  level1Button = {
-  x : width/3,
-  y : height/2,
-  width : 150,
-  height : 80,
-  image : loadImage("assets/level1.png"),
-  image2 : loadImage("assets/level1-2.png"),
-  }
-  
   player = {
   x : 31,
   y : height / 1.5,
@@ -127,6 +110,33 @@ function setup() {
   radius : 25,
   }
 
+  playButton = {
+  x : width/2,
+  y : height/1.5,
+  width : 240,
+  height : 75,
+  image : loadImage("assets/playbutton.png"),   // Two images, which will switch back and forth when you  
+  image2 : loadImage ("assets/playbutton2.png"),// hover the mouse over them
+  }
+  
+  menuButton = {
+  x : 250,
+  y : 210,
+  width : 150,
+  height : 75,
+  image : loadImage("assets/menu.png"),
+  image2: loadImage("assets/menu2.png"),
+  }
+  
+  level1Button = {
+  x : width/3,
+  y : height/2,
+  width : 150,
+  height : 80,
+  image : loadImage("assets/level1.png"),
+  image2 : loadImage("assets/level1-2.png"),
+  }
+    
   abilityButton = {
   x : 365,
   y : 250,
@@ -135,26 +145,21 @@ function setup() {
   image : loadImage("assets/go.png"),
   image2 : loadImage("assets/go2.png")
   }
-    
-  cellSize = 150;
-  xOffset = 50;
-  yOffset = 130;
-  power = "cero"
-  
-  cellPictureWidth = cellSize;
-  cellPictureHeight = cellSize;
-
 }
   
 function draw() {
-  // This state will draw the first page the user will see
+  //Will Draw according to state
+  checkStates();
+}
+
+function checkStates(){
+  // Will check the state at which we currently are and diplay accordingly
   if (state === "menu") {
     menuScreen();
   }
 
   if (state === "grid") {
     displayGrid();  
-  
   }
 
   if (state === "chooseLevel") {
@@ -162,18 +167,7 @@ function draw() {
   }
 
   if (state === "level1") {
-    if (power === "uno" ) {
-      level1ScreenSpeed();
-    }
-    if (power === "dos" ) {
-      level1ScreenSlowdown();
-    }
-    if (power === "tres" ) {
-      level1ScreenSmall();
-    }
-    if (power === "cuatro") {
-      level1Screen();
-    }
+    checkPowerScreen();
   }
 
   if (state === "endScreen"){
@@ -181,13 +175,18 @@ function draw() {
   }
 }
 
-function displayGridButton() {
-  imageMode(CORNER);
-  image(abilityButton.image, abilityButton.x, abilityButton.y, abilityButton.width , abilityButton.height)
+function menuScreen(){
+  //Every functoin needed to display the menu at the start
+  imageMode(CORNERS);
+  background(backgroundImage);
+  imageMode(CENTER); // Centers the x and y coordinates of the image from the upper-left corner
+  image(titleImage, 250, 100, 438, 86);
+  displayMenu();
+  resetPositions();
+  checkCursorMenu();
 }
 
 function displayGrid() {
-  
   push();
   translate(xOffset, yOffset);
   background(125, 75, 130)
@@ -205,17 +204,7 @@ function displayGrid() {
 
   displayGridButton();
   checkCursorAbility();
-  
-}
-
-function menuScreen(){
-  imageMode(CORNERS);
-  background(backgroundImage);
-  imageMode(CENTER); // Centers the x and y coordinates of the image from the upper-left corner
-  image(titleImage, 250, 100, 438, 86);
-  displayMenu();
-  resetPositions();
-  checkCursorMenu();
+  writeTextGrid();
 }
 
 function choseLevelScreen(){
@@ -223,6 +212,49 @@ function choseLevelScreen(){
   background(187, 164, 234);
   chooseLevel();  
   checkCursorLevels();
+}
+
+function checkPowerScreen() {
+  if (power === "fastAbility" ) {
+    level1ScreenSpeed();
+  }
+  if (power === "slowDownAbility" ) {
+    level1ScreenSlowdown();
+  }
+  if (power === "smallEnemiesAbility" ) {
+    level1ScreenSmall();
+  }
+  if (power === "normalGameplay") {
+    level1Screen();
+  }
+}
+
+function gameOver(){
+  // After finishing level 2, user will see this screen
+  background(170);
+  writeText();
+  displayEndScreen();
+  checkCursorEndScreen();
+}
+
+function resetPositions() {
+  // Called during "menu" state, resests variables to their original values
+  player.x = 31;
+  score = 0;
+
+  power = "NoPower"
+
+  enemy1Level1.y = height/2;
+  enemy2Level1.y = height/2;
+  enemy3Level1.y = height/2;
+
+  enemy1Level1.dy = 17;
+  enemy2Level1.dy = 9;
+  enemy3Level1.dy = 5;
+
+  enemy1Level1.radius = 25;
+  enemy2Level1.radius = 25;
+  enemy3Level1.radius = 25;
 }
 
 function level1Screen(){
@@ -239,94 +271,74 @@ function level1Screen(){
   changeLevels();
 }
 
-function level1ScreenSpeed(){
-  imageMode(CORNERS);
-  background(beachImage);  
-  createPlayerBallSpeed();
-  movePlayerBallSpeed();
-  itHitLevel1();
-  enemyBallsLevel1();  
-  noCursor();
-  rectPoints();
-  collectPoints();
-  changeLevels();
+function itHitLevel1() {
+  // Checks distance between the player and enemies, if too close, you'll lose and go back to menu
+  distanceAwayFromCenter1 = int(dist(player.x, player.y, enemy1Level1.x, enemy1Level1.y));                   
+  distanceAwayFromCenter2 = int(dist(player.x, player.y, enemy2Level1.x, enemy2Level1.y));
+  distanceAwayFromCenter3 = int(dist(player.x, player.y, enemy3Level1.x, enemy3Level1.y));
+  
+  collitionDistance1 = (player.radius + enemy1Level1.radius);
+  
+  if (distanceAwayFromCenter1  <= collitionDistance1 ||
+      distanceAwayFromCenter2 <= collitionDistance1 || 
+      distanceAwayFromCenter3  <= collitionDistance1)  {
+    state = "menu";
+  }
 }
 
-function level1ScreenSlowdown(){
-  imageMode(CORNERS);
-  background(beachImage);  
-  createPlayerBall();
-  movePlayerBall();
-  itHitLevel1();
-  enemyBallsLevel1SD();
-  noCursor();
-  rectPoints();
-  collectPoints();
-  changeLevels();
+function createPlayerBall(){
+  //Creates an ellipse 
+  fill(5, 255, 57);
+  ellipse(player.x, player.y, player.radius*2);
 }
 
-function level1ScreenSmall(){
-  imageMode(CORNERS);
-  background(beachImage);  
-  createPlayerBall();
-  movePlayerBall();
-  itHitLevel1();
-  enemyBallsLevel1Small();
-  noCursor();
-  rectPoints();
-  collectPoints();
-  changeLevels();
+function movePlayerBall(){
+  //Moves player's x-coordidate, But only if the player is within the screen boundaries
+  if (keyIsDown(RIGHT_ARROW) && (player.x + player.radius <= width)) {
+    player.x += 4;
+  }
+  
+  if (keyIsDown(LEFT_ARROW) && (player.x - player.radius > 0)) {
+    player.x -= 4;
+  }
 }
 
-function gameOver(){
-  // After finishing level 2, user will see this screen
-  background(170);
-  writeText();
-  displayEndScreen();
-  checkCursorEndScreen();
+function enemyBallsLevel1() {
+  // creates all 3 enemies of level 1
+  fill(9, 150, 250);
+  enemyBall1Level1();
+  enemyBall2Level1();
+  enemyBall3Level1();
 }
 
-function writeText(){
-  // This function will write something on the scree, the text is already pre-determinate 
-  textSize(40);
-  fill(0, 102, 153);
-  text(txt, 35, 130);// "txt" is the variable which holds the string, followed by x and y coordinates
+function enemyBall1Level1() {
+  // Changes the y-coordinates of enemy, but it will bounce once it hits a wall
+  ellipse(enemy1Level1.x, enemy1Level1.y, enemy1Level1.radius * 2);
+  enemy1Level1.y += enemy1Level1.dy;                             
+  
+  if (enemy1Level1.y + enemy1Level1.radius >= height || enemy1Level1.y - enemy1Level1.radius <= 0) {
+    enemy1Level1.dy = -1 * enemy1Level1.dy;                        
+  }
 }
 
-function writeTextGrid(){
-  // This function will write something on the scree, the text is already pre-determinate 
-  textSize(40);
-  fill(0, 102, 153);
-  text(txtGrid, 35, 130);// "txt" is the variable which holds the string, followed by x and y coordinates
+function enemyBall2Level1() {
+  // Changes the y-coordinates of enemy, but it will bounce once it hits a wall
+  ellipse(enemy2Level1.x, enemy2Level1.y, enemy2Level1.radius * 2);
+  enemy2Level1.y += enemy2Level1.dy;
+
+  if (enemy2Level1.y + enemy2Level1.radius >= height || enemy2Level1.y - enemy2Level1.radius <= 0) {
+    enemy2Level1.dy = -1 * enemy2Level1.dy;
+  }
 }
 
+function enemyBall3Level1() {
+  // Changes the y-coordinates of enemy, but it will bounce once it hits a wall
+  ellipse(enemy3Level1.x, enemy3Level1.y, enemy3Level1.radius * 2);
+  enemy3Level1.y += enemy3Level1.dy;
 
-
-function displayEndScreen(){
-
-  imageMode(CENTER);
-  image(menuButton.image, menuButton.x, menuButton.y, menuButton.width, menuButton.height);// Super-imposes a picture over that rectangle
-}
-
-function resetPositions() {
-  // Called during "menu" state, resests variables to their original values
-  player.x = 31;
-  score = 0;
-
-  power = "cero"
-
-  enemy1Level1.y = height/2;
-  enemy2Level1.y = height/2;
-  enemy3Level1.y = height/2;
-
-  enemy1Level1.dy = 17;
-  enemy2Level1.dy = 9;
-  enemy3Level1.dy = 5;
-
-  enemy1Level1.radius = 25;
-  enemy2Level1.radius = 25;
-  enemy3Level1.radius = 25;
-
+  if (enemy3Level1.y + enemy3Level1.radius >= height || enemy3Level1.y - enemy3Level1.radius <= 0) {
+    enemy3Level1.dy = -1 * enemy3Level1.dy;
+  }
 }
 
 function rectPoints() {
@@ -348,6 +360,220 @@ function changeLevels(){
     player.x = width/13;
   	state = "endScreen";
   }
+}
+
+function level1ScreenSpeed(){
+  imageMode(CORNERS);
+  background(beachImage);  
+  createPlayerBallSpeed();
+  movePlayerBallSpeed();
+  itHitLevel1();
+  enemyBallsLevel1();  
+  noCursor();
+  rectPoints();
+  collectPoints();
+  changeLevels();
+}
+
+function createPlayerBallSpeed(){
+  //Creates an ellipse 
+  fill(5, 255, 57);
+  ellipse(player.x, player.y, player.radius*2);
+}
+
+function movePlayerBallSpeed(){
+  //Moves player's x-coordidate, But only if the player is within the screen boundaries
+  if (keyIsDown(RIGHT_ARROW) && (player.x + player.radius <= width)) {
+    player.x += 7;
+  }
+  
+  if (keyIsDown(LEFT_ARROW) && (player.x - player.radius > 0)) {
+    player.x -= 7;
+  }
+}
+
+function level1ScreenSlowdown(){
+  imageMode(CORNERS);
+  background(beachImage);  
+  createPlayerBall();
+  movePlayerBall();
+  itHitLevel1();
+  enemyBallsLevel1SlowDown();
+  noCursor();
+  rectPoints();
+  collectPoints();
+  changeLevels();
+}
+
+function enemyBallsLevel1SlowDown(){
+  fill(9, 150, 250);
+  enemyBall1Level1SlowDown();
+  enemyBall2Level1SlowDown();
+  enemyBall3Level1SlowDown();
+}
+
+function enemyBall1Level1SlowDown() {
+  // Changes the y-coordinates of enemy, but it will bounce once it hits a wall
+  enemy1Level1.dy = enemy1Level1.newdy;
+
+  ellipse(enemy1Level1.x, enemy1Level1.y, enemy1Level1.radius * 2);
+  enemy1Level1.y += enemy1Level1.newdy;                             
+  
+  if (enemy1Level1.y + enemy1Level1.radius >= height || enemy1Level1.y - enemy1Level1.radius <= 0) {
+    enemy1Level1.newdy = -1 * enemy1Level1.newdy;                        
+  }
+}
+
+function enemyBall2Level1SlowDown() {
+  // Changes the y-coordinates of enemy, but it will bounce once it hits a wall
+  enemy2Level1.dy = enemy2Level1.newdy;
+
+  ellipse(enemy2Level1.x, enemy2Level1.y, enemy2Level1.radius * 2);
+  enemy2Level1.y += enemy2Level1.newdy;
+
+  if (enemy2Level1.y + enemy2Level1.radius >= height || enemy2Level1.y - enemy2Level1.radius <= 0) {
+    enemy2Level1.newdy = -1 * enemy2Level1.newdy;
+  }
+}
+
+function enemyBall3Level1SlowDown() {
+  // Changes the y-coordinates of enemy, but it will bounce once it hits a wall
+  enemy3Level1.dy = enemy3Level1.newdy;
+
+  ellipse(enemy3Level1.x, enemy3Level1.y, enemy3Level1.radius * 2);
+  enemy3Level1.y += enemy3Level1.newdy;
+
+  if (enemy3Level1.y + enemy3Level1.radius >= height || enemy3Level1.y - enemy3Level1.radius <= 0) {
+    enemy3Level1.newdy = -1 * enemy3Level1.newdy;
+  }
+}
+
+function level1ScreenSmall(){
+  imageMode(CORNERS);
+  background(beachImage);  
+  createPlayerBall();
+  movePlayerBall();
+  itHitLevel1();
+  enemyBallsLevel1Small();
+  noCursor();
+  rectPoints();
+  collectPoints();
+  changeLevels();
+}
+
+function enemyBallsLevel1Small(){
+  fill(9, 150, 250);
+  enemyBall1Level1Small();
+  enemyBall2Level1Small();
+  enemyBall3Level1Small();
+
+}
+
+function enemyBall1Level1Small() {
+  // Changes the y-coordinates of enemy, but it will bounce once it hits a wall
+  
+  ellipse(enemy1Level1.x, enemy1Level1.y, enemy1Level1.radius);
+  enemy1Level1.y += enemy1Level1.dy;                             
+  
+  if (enemy1Level1.y + enemy1Level1.radius >= height || enemy1Level1.y - enemy1Level1.radius <= 0) {
+    enemy1Level1.dy = -1 * enemy1Level1.dy;                        
+  }
+}
+
+function enemyBall2Level1Small() {
+  // Changes the y-coordinates of enemy, but it will bounce once it hits a wall
+  
+  ellipse(enemy2Level1.x, enemy2Level1.y, enemy2Level1.radius);
+  enemy2Level1.y += enemy2Level1.dy;
+
+  if (enemy2Level1.y + enemy2Level1.radius >= height || enemy2Level1.y - enemy2Level1.radius <= 0) {
+    enemy2Level1.dy = -1 * enemy2Level1.dy;
+  }
+}
+
+function enemyBall3Level1Small() {
+  // Changes the y-coordinates of enemy, but it will bounce once it hits a wall
+  
+  ellipse(enemy3Level1.x, enemy3Level1.y, enemy3Level1.radius);
+  enemy3Level1.y += enemy3Level1.dy;
+
+  if (enemy3Level1.y + enemy3Level1.radius >= height || enemy3Level1.y - enemy3Level1.radius <= 0) {
+    enemy3Level1.dy = -1 * enemy3Level1.dy;
+  }
+}
+
+function mousePressed() {
+  //Checks the state, and also if the mouse has clicked a button during that state,
+  // if so, it changes the state to a differnt, corresponding state
+  checkGridPower();
+  if (state === "menu") {
+    if (clickedOnButton(mouseX, mouseY)) {
+      state = "grid";
+    }
+  }
+  
+  if (state === "grid") {
+    if (clickedOnButtonAbility (mouseX, mouseY) ) {
+      state = "chooseLevel";
+    }
+  }
+
+  if (state === "chooseLevel") {
+    if (clickedOnButtonLevel1 (mouseX, mouseY) ) {
+      state = "level1";
+    }
+  }
+
+  if (state === "endScreen") {
+    if (clickedOnButtonMenu (mouseX, mouseY) ) {
+      state = "menu";
+    }
+  }
+}
+
+function checkGridPower(){
+  let xcoord = floor((mouseX - xOffset) / cellSize);
+  let ycoord = floor((mouseY - yOffset) / cellSize);
+  if (state === "grid"){
+    if (xcoord === 0 && ycoord === 0) {
+      power = "fastAbility";
+    }
+
+    if (xcoord === 1 && ycoord === 0) {
+      power = "slowDownAbility";
+    }
+
+    if (xcoord === 0 && ycoord === 1) {
+      power = "smallEnemiesAbility";
+    }
+
+    if (xcoord === 1 && ycoord === 1) {
+      power = "normalGameplay";
+    } 
+  }
+}
+
+function chooseLevel() {
+  // Creates two buttons which will allow you to choose the level during state "chooseLevel"
+	imageMode(CENTER);
+  image(level1Button.image, level1Button.x, level1Button.y, level1Button.width, level1Button.height);
+  
+}
+
+function displayMenu() {
+  // Creates a button during the first screen "menu"
+  imageMode(CENTER);
+  image(playButton.image, playButton.x, playButton.y, playButton.width, playButton.height);
+}
+
+function displayEndScreen(){
+  imageMode(CENTER);
+  image(menuButton.image, menuButton.x, menuButton.y, menuButton.width, menuButton.height);// Super-imposes a picture over that rectangle
+}
+
+function displayGridButton() {
+  imageMode(CORNER);
+  image(abilityButton.image, abilityButton.x, abilityButton.y, abilityButton.width , abilityButton.height)
 }
 
 function checkCursorMenu(){
@@ -417,242 +643,18 @@ function checkCursorAbility(){
   } 
 }
 
-
-function chooseLevel() {
-  // Creates two buttons which will allow you to choose the level during state "chooseLevel"
-	imageMode(CENTER);
-  image(level1Button.image, level1Button.x, level1Button.y, level1Button.width, level1Button.height);
-  
+function writeText(){
+  // This function will write something on the scree, the text is already pre-determinate 
+  textSize(40);
+  fill(0, 102, 153);
+  text(txt, 35, 130);// "txt" is the variable which holds the string, followed by x and y coordinates
 }
 
-function displayMenu() {
-  // Creates a button during the first screen "menu"
-  imageMode(CENTER);
-  image(playButton.image, playButton.x, playButton.y, playButton.width, playButton.height);
-}
-
-function mousePressed() {
-  //Checks the state, and also if the mouse has clicked a button during that state,
-  // if so, it changes the state to a differnt, corresponding state
-
-  checkGridPower();
-
-  if (state === "menu") {
-    if (clickedOnButton(mouseX, mouseY)) {
-      state = "grid";
-    }
-  }
-  
-  if (state === "grid") {
-    if (clickedOnButtonAbility (mouseX, mouseY) ) {
-      state = "chooseLevel";
-    }
-  }
-
-  if (state === "chooseLevel") {
-    if (clickedOnButtonLevel1 (mouseX, mouseY) ) {
-      state = "level1";
-    }
-  }
-
-  if (state === "endScreen") {
-    if (clickedOnButtonMenu (mouseX, mouseY) ) {
-      state = "menu";
-    }
-  }
-}
-
-function checkGridPower(){
-  let xcoord = floor((mouseX - xOffset) / cellSize);
-  let ycoord = floor((mouseY - yOffset) / cellSize);
-  if (state === "grid"){
-    if (xcoord === 0 && ycoord === 0) {
-      power = "uno";
-    }
-
-    if (xcoord === 1 && ycoord === 0) {
-      power = "dos";
-    }
-
-    if (xcoord === 0 && ycoord === 1) {
-      power = "tres";
-    }
-
-    if (xcoord === 1 && ycoord === 1) {
-      power = "cuatro";
-    } 
-  }
-}
-
-function itHitLevel1() {
-  // Checks distance between the player and enemies, if too close, you'll lose and go back to menu
-  distanceAwayFromCenter1 = int(dist(player.x, player.y, enemy1Level1.x, enemy1Level1.y));                   
-  distanceAwayFromCenter2 = int(dist(player.x, player.y, enemy2Level1.x, enemy2Level1.y));
-  distanceAwayFromCenter3 = int(dist(player.x, player.y, enemy3Level1.x, enemy3Level1.y));
-  
-  collitionDistance1 = (player.radius + enemy1Level1.radius);
-  
-  if (distanceAwayFromCenter1  <= collitionDistance1 ||
-      distanceAwayFromCenter2 <= collitionDistance1 || 
-      distanceAwayFromCenter3  <= collitionDistance1)  {
-    state = "menu";
-  }
-}
-
-function createPlayerBall(){
-  //Creates an ellipse 
-  fill(5, 255, 57);
-  ellipse(player.x, player.y, player.radius*2);
-}
-
-function movePlayerBall(){
-  //Moves player's x-coordidate, But only if the player is within the screen boundaries
-  if (keyIsDown(RIGHT_ARROW) && (player.x + player.radius <= width)) {
-    player.x += 4;
-  }
-  
-  if (keyIsDown(LEFT_ARROW) && (player.x - player.radius > 0)) {
-    player.x -= 4;
-  }
-}
-
-function createPlayerBallSpeed(){
-  //Creates an ellipse 
-  fill(5, 255, 57);
-  ellipse(player.x, player.y, player.radius*2);
-}
-
-function movePlayerBallSpeed(){
-  //Moves player's x-coordidate, But only if the player is within the screen boundaries
-  if (keyIsDown(RIGHT_ARROW) && (player.x + player.radius <= width)) {
-    player.x += 7;
-  }
-  
-  if (keyIsDown(LEFT_ARROW) && (player.x - player.radius > 0)) {
-    player.x -= 7;
-  }
-}
- 
-function enemyBallsLevel1() {
-  // creates all 3 enemies of level 1
-  fill(9, 150, 250);
-  enemyBall1Level1();
-  enemyBall2Level1();
-  enemyBall3Level1();
-}
-
-function enemyBallsLevel1SD(){
-  fill(9, 150, 250);
-  enemyBall1Level1SS();
-  enemyBall2Level1SS();
-  enemyBall3Level1SS();
-}
-
-function enemyBallsLevel1Small(){
-  fill(9, 150, 250);
-  enemyBall1Level1Small();
-  enemyBall2Level1Small();
-  enemyBall3Level1Small();
-
-}
-
-function enemyBall1Level1() {
-  // Changes the y-coordinates of enemy, but it will bounce once it hits a wall
-  ellipse(enemy1Level1.x, enemy1Level1.y, enemy1Level1.radius * 2);
-  enemy1Level1.y += enemy1Level1.dy;                             
-  
-  if (enemy1Level1.y + enemy1Level1.radius >= height || enemy1Level1.y - enemy1Level1.radius <= 0) {
-    enemy1Level1.dy = -1 * enemy1Level1.dy;                        
-  }
-}
-
-function enemyBall2Level1() {
-  // Changes the y-coordinates of enemy, but it will bounce once it hits a wall
-  ellipse(enemy2Level1.x, enemy2Level1.y, enemy2Level1.radius * 2);
-  enemy2Level1.y += enemy2Level1.dy;
-
-  if (enemy2Level1.y + enemy2Level1.radius >= height || enemy2Level1.y - enemy2Level1.radius <= 0) {
-    enemy2Level1.dy = -1 * enemy2Level1.dy;
-  }
-}
-
-function enemyBall3Level1() {
-  // Changes the y-coordinates of enemy, but it will bounce once it hits a wall
-  ellipse(enemy3Level1.x, enemy3Level1.y, enemy3Level1.radius * 2);
-  enemy3Level1.y += enemy3Level1.dy;
-
-  if (enemy3Level1.y + enemy3Level1.radius >= height || enemy3Level1.y - enemy3Level1.radius <= 0) {
-    enemy3Level1.dy = -1 * enemy3Level1.dy;
-  }
-}
-
-function enemyBall1Level1SS() {
-  // Changes the y-coordinates of enemy, but it will bounce once it hits a wall
-  enemy1Level1.dy = enemy1Level1.newdy;
-
-  ellipse(enemy1Level1.x, enemy1Level1.y, enemy1Level1.radius * 2);
-  enemy1Level1.y += enemy1Level1.newdy;                             
-  
-  if (enemy1Level1.y + enemy1Level1.radius >= height || enemy1Level1.y - enemy1Level1.radius <= 0) {
-    enemy1Level1.newdy = -1 * enemy1Level1.newdy;                        
-  }
-}
-
-function enemyBall2Level1SS() {
-  // Changes the y-coordinates of enemy, but it will bounce once it hits a wall
-  enemy2Level1.dy = enemy2Level1.newdy;
-
-  ellipse(enemy2Level1.x, enemy2Level1.y, enemy2Level1.radius * 2);
-  enemy2Level1.y += enemy2Level1.newdy;
-
-  if (enemy2Level1.y + enemy2Level1.radius >= height || enemy2Level1.y - enemy2Level1.radius <= 0) {
-    enemy2Level1.newdy = -1 * enemy2Level1.newdy;
-  }
-}
-
-function enemyBall3Level1SS() {
-  // Changes the y-coordinates of enemy, but it will bounce once it hits a wall
-  enemy3Level1.dy = enemy3Level1.newdy;
-
-  ellipse(enemy3Level1.x, enemy3Level1.y, enemy3Level1.radius * 2);
-  enemy3Level1.y += enemy3Level1.newdy;
-
-  if (enemy3Level1.y + enemy3Level1.radius >= height || enemy3Level1.y - enemy3Level1.radius <= 0) {
-    enemy3Level1.newdy = -1 * enemy3Level1.newdy;
-  }
-}
-
-function enemyBall1Level1Small() {
-  // Changes the y-coordinates of enemy, but it will bounce once it hits a wall
-  
-  ellipse(enemy1Level1.x, enemy1Level1.y, enemy1Level1.radius);
-  enemy1Level1.y += enemy1Level1.dy;                             
-  
-  if (enemy1Level1.y + enemy1Level1.radius >= height || enemy1Level1.y - enemy1Level1.radius <= 0) {
-    enemy1Level1.dy = -1 * enemy1Level1.dy;                        
-  }
-}
-
-function enemyBall2Level1Small() {
-  // Changes the y-coordinates of enemy, but it will bounce once it hits a wall
-  
-  ellipse(enemy2Level1.x, enemy2Level1.y, enemy2Level1.radius);
-  enemy2Level1.y += enemy2Level1.dy;
-
-  if (enemy2Level1.y + enemy2Level1.radius >= height || enemy2Level1.y - enemy2Level1.radius <= 0) {
-    enemy2Level1.dy = -1 * enemy2Level1.dy;
-  }
-}
-
-function enemyBall3Level1Small() {
-  // Changes the y-coordinates of enemy, but it will bounce once it hits a wall
-  
-  ellipse(enemy3Level1.x, enemy3Level1.y, enemy3Level1.radius);
-  enemy3Level1.y += enemy3Level1.dy;
-
-  if (enemy3Level1.y + enemy3Level1.radius >= height || enemy3Level1.y - enemy3Level1.radius <= 0) {
-    enemy3Level1.dy = -1 * enemy3Level1.dy;
-  }
+function writeTextGrid(){
+  // This function will write something on the scree, the text is already pre-determinate 
+  textSize(40);
+  fill(0);
+  text(txtGrid, 35, 100);// "txt" is the variable which holds the string, followed by x and y coordinates
 }
 
 function clickedOnButton(x, y) {
