@@ -176,7 +176,7 @@ function checkStates(){
 }
 
 function menuScreen(){
-  //Every functoin needed to display the menu at the start
+  //Every function needed to display the menu at the start
   imageMode(CORNERS);
   background(backgroundImage);
   imageMode(CENTER); // Centers the x and y coordinates of the image from the upper-left corner
@@ -188,19 +188,20 @@ function menuScreen(){
 
 function displayGrid() {
   push();
-  translate(xOffset, yOffset);
+  translate(xOffset, yOffset);// Changes where the origin of the grid is
   background(125, 75, 130)
   fill(255);
-  for (let y = 0; y < gridSize; y++) {
+  for (let y = 0; y < gridSize; y++) {//2d array to create an array
     for (let x = 0; x < gridSize; x++) {
       rect(x * cellSize, y * cellSize, cellSize, cellSize);
     }
   }
+  //Pictures inside of the grid
   image(fastAbility, 0, 0, cellPictureWidth, cellPictureHeight);
   image(smallAbility, 0, 1*cellSize, cellPictureWidth, cellPictureHeight);
   image(slowAbility, 1*cellSize, 0, cellPictureWidth, cellPictureHeight);
   image(normalAbility, 1*cellSize + 10 , 1*cellSize + 10, cellPictureWidth - 10, cellPictureHeight - 10);
-  pop();
+  pop();// Stop translating, and get canvas back to normal
 
   displayGridButton();
   checkCursorAbility();
@@ -215,6 +216,7 @@ function choseLevelScreen(){
 }
 
 function checkPowerScreen() {
+  //Depending on which power the user chooses, it displays the according screen
   if (power === "fastAbility" ) {
     level1ScreenSpeed();
   }
@@ -230,7 +232,7 @@ function checkPowerScreen() {
 }
 
 function gameOver(){
-  // After finishing level 2, user will see this screen
+  // After finishing, user will see this screen
   background(170);
   writeText();
   displayEndScreen();
@@ -349,7 +351,7 @@ function rectPoints() {
 
 function collectPoints(){
   // if the player ball goes with in certain distance of the rectangle (points) the score goes up by one
-  if ((player.x + player.radius) >= (points.x + 10)){
+  if ((player.x + player.radius) >= (points.x + 6)){
   	score += 1;
   }
 }
@@ -363,11 +365,12 @@ function changeLevels(){
 }
 
 function level1ScreenSpeed(){
+  //Similar to the Level 1 screen, it contains elements necessary
   imageMode(CORNERS);
   background(beachImage);  
   createPlayerBallSpeed();
-  movePlayerBallSpeed();
-  itHitLevel1();
+  movePlayerBallSpeed();// Different from normal screen
+  itHitLevel1();// Different from normal screen
   enemyBallsLevel1();  
   noCursor();
   rectPoints();
@@ -383,6 +386,7 @@ function createPlayerBallSpeed(){
 
 function movePlayerBallSpeed(){
   //Moves player's x-coordidate, But only if the player is within the screen boundaries
+  //But it moves it farther, making the ball move faster
   if (keyIsDown(RIGHT_ARROW) && (player.x + player.radius <= width)) {
     player.x += 7;
   }
@@ -393,12 +397,13 @@ function movePlayerBallSpeed(){
 }
 
 function level1ScreenSlowdown(){
+  //Similar to the Level 1 screen, it contains elements necessary
   imageMode(CORNERS);
   background(beachImage);  
   createPlayerBall();
   movePlayerBall();
   itHitLevel1();
-  enemyBallsLevel1SlowDown();
+  enemyBallsLevel1SlowDown();// Changed from normal screen
   noCursor();
   rectPoints();
   collectPoints();
@@ -414,6 +419,7 @@ function enemyBallsLevel1SlowDown(){
 
 function enemyBall1Level1SlowDown() {
   // Changes the y-coordinates of enemy, but it will bounce once it hits a wall
+  //It also changes the dy to a new dy which slows down the enemy balls
   enemy1Level1.dy = enemy1Level1.newdy;
 
   ellipse(enemy1Level1.x, enemy1Level1.y, enemy1Level1.radius * 2);
@@ -426,6 +432,7 @@ function enemyBall1Level1SlowDown() {
 
 function enemyBall2Level1SlowDown() {
   // Changes the y-coordinates of enemy, but it will bounce once it hits a wall
+  //It also changes the dy to a new dy which slows down the enemy balls
   enemy2Level1.dy = enemy2Level1.newdy;
 
   ellipse(enemy2Level1.x, enemy2Level1.y, enemy2Level1.radius * 2);
@@ -438,6 +445,7 @@ function enemyBall2Level1SlowDown() {
 
 function enemyBall3Level1SlowDown() {
   // Changes the y-coordinates of enemy, but it will bounce once it hits a wall
+  //It also changes the dy to a new dy which slows down the enemy balls
   enemy3Level1.dy = enemy3Level1.newdy;
 
   ellipse(enemy3Level1.x, enemy3Level1.y, enemy3Level1.radius * 2);
@@ -449,12 +457,13 @@ function enemyBall3Level1SlowDown() {
 }
 
 function level1ScreenSmall(){
+  //Similar to the Level 1 screen, it contains elements necessary
   imageMode(CORNERS);
   background(beachImage);  
   createPlayerBall();
   movePlayerBall();
   itHitLevel1();
-  enemyBallsLevel1Small();
+  enemyBallsLevel1Small();// change from original
   noCursor();
   rectPoints();
   collectPoints();
@@ -471,7 +480,7 @@ function enemyBallsLevel1Small(){
 
 function enemyBall1Level1Small() {
   // Changes the y-coordinates of enemy, but it will bounce once it hits a wall
-  
+  // it doesn't multiply the radius by two, thus making the enemy balls smaller
   ellipse(enemy1Level1.x, enemy1Level1.y, enemy1Level1.radius);
   enemy1Level1.y += enemy1Level1.dy;                             
   
@@ -482,7 +491,7 @@ function enemyBall1Level1Small() {
 
 function enemyBall2Level1Small() {
   // Changes the y-coordinates of enemy, but it will bounce once it hits a wall
-  
+  // it doesn't multiply the radius by two, thus making the enemy balls smaller
   ellipse(enemy2Level1.x, enemy2Level1.y, enemy2Level1.radius);
   enemy2Level1.y += enemy2Level1.dy;
 
@@ -493,7 +502,7 @@ function enemyBall2Level1Small() {
 
 function enemyBall3Level1Small() {
   // Changes the y-coordinates of enemy, but it will bounce once it hits a wall
-  
+  // it doesn't multiply the radius by two, thus making the enemy balls smaller
   ellipse(enemy3Level1.x, enemy3Level1.y, enemy3Level1.radius);
   enemy3Level1.y += enemy3Level1.dy;
 
@@ -532,10 +541,10 @@ function mousePressed() {
 }
 
 function checkGridPower(){
-  let xcoord = floor((mouseX - xOffset) / cellSize);
+  let xcoord = floor((mouseX - xOffset) / cellSize);// makes coordinates on the grid
   let ycoord = floor((mouseY - yOffset) / cellSize);
   if (state === "grid"){
-    if (xcoord === 0 && ycoord === 0) {
+    if (xcoord === 0 && ycoord === 0) {// Checks on which cell the user clicks, and changes the variable
       power = "fastAbility";
     }
 
@@ -654,7 +663,7 @@ function writeTextGrid(){
   // This function will write something on the scree, the text is already pre-determinate 
   textSize(40);
   fill(0);
-  text(txtGrid, 35, 100);// "txt" is the variable which holds the string, followed by x and y coordinates
+  text(txtGrid, 35, 100);// "txtGrid" is the variable which holds the string, followed by x and y coordinates
 }
 
 function clickedOnButton(x, y) {
@@ -666,6 +675,7 @@ function clickedOnButton(x, y) {
 }
 
 function clickedOnButtonAbility(x, y) {
+  // Checks if user clicks on button then, changes state
   if (state === "grid"){
     return x >= abilityButton.x &&
      x <= abilityButton.x + abilityButton.width &&
