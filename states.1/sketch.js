@@ -1,9 +1,9 @@
-// States
+// Grid Assingment
 // Henry Miranda Bastidas
-// March 25th, 2019
+// April 19th, 2019
 //
 // Extra for Experts:
-// Included translate on an object
+// Change of cursor, add pictures inside of grid
 
 //Global Variables that I will use during the code
 let backgroundImage;
