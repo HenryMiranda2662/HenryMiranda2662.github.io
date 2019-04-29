@@ -92,6 +92,7 @@ function setup() {
   dy : 17,
   newdy : 5,
   radius : 25,
+  newRadius : 25/2,
   }
   
   enemy2Level1 = {
@@ -100,6 +101,7 @@ function setup() {
   dy : 9,
   newdy : 5,
   radius : 25,
+  newRadius : 25/2 ,
   }
   
   enemy3Level1 = {
@@ -108,6 +110,7 @@ function setup() {
   dy : 5,
   newdy : 5,
   radius : 25,
+  newRadius : 25/2 ,
   }
 
   playButton = {
@@ -477,6 +480,22 @@ function enemyBallsLevel1Small(){
   enemyBall3Level1Small();
 
 }
+
+function itHitLevel1() {
+  // Checks distance between the player and enemies, if too close, you'll lose and go back to menu
+  distanceAwayFromCenter1 = int(dist(player.x, player.y, enemy1Level1.x, enemy1Level1.y));                   
+  distanceAwayFromCenter2 = int(dist(player.x, player.y, enemy2Level1.x, enemy2Level1.y));
+  distanceAwayFromCenter3 = int(dist(player.x, player.y, enemy3Level1.x, enemy3Level1.y));
+  
+  collitionDistance1 = (player.radius + enemy1Level1.newRadius);
+  
+  if (distanceAwayFromCenter1  <= collitionDistance1 ||
+      distanceAwayFromCenter2 <= collitionDistance1 || 
+      distanceAwayFromCenter3  <= collitionDistance1)  {
+    state = "menu";
+  }
+}
+
 
 function enemyBall1Level1Small() {
   // Changes the y-coordinates of enemy, but it will bounce once it hits a wall
