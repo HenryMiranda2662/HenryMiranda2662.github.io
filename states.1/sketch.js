@@ -132,7 +132,7 @@ function setup() {
   }
   
   level1Button = {
-  x : width/3,
+  x : width/2,
   y : height/2,
   width : 150,
   height : 80,
