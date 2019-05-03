@@ -9,7 +9,7 @@ class EnemyBall {
   constructor(x, y, dxSomeSpeed, dySomeSpeed) {
     this.x = x;
     this.y = y;
-    this.color = "red";
+    this.color = [255, 15, 30];
     this.radius = 25;
     this.dx = dxSomeSpeed;
     this.dy = dySomeSpeed;
@@ -35,6 +35,40 @@ class EnemyBall {
   }
 }
 
+class PlayerBall {
+  contructor(x, y, dxSomeSpeed, dySomeSpeed){
+    this.x = x;
+    this.y = y;
+    this.color = [5, 255, 57];
+    this.radius = 30;
+    this.dx = dxSomeSpeed;
+    this.dy = dySomeSpeed;
+  }
+  display(){
+    fill(this.color);
+    noStroke();
+    ellipse(this.x, this.y, this.radius * 2);
+  }
+  move() {
+    if (keyIsDown(RIGHT_ARROW) && (player.x + player.radius <= width)) {
+      player.x += 4;
+    }
+    
+    if (keyIsDown(LEFT_ARROW) && (player.x - player.radius > 0)) {
+      player.x -= 4;
+    }
+    if (keyIsDown(DOWN_ARROW) && (player.y + player.radius <= height)) {
+      player.y += 4;
+    }
+    
+    if (keyIsDown(UP_ARROW) && (player.y - player.radius > 0)) {
+      player.y -= 4;
+    }
+  }
+}
+
+let playerBall;
+let playerBall_2;
 let enemyball1Level1;
 let enemyball2Level1;
 let enemyball3Level1;
@@ -67,7 +101,6 @@ function setup() {
     height: 75,
   }
   
-  
 
   enemyball1Level1 = new EnemyBall(100, height/2, 0, 17);
   enemyball2Level1 = new EnemyBall(width / 2, height/2, 0, 9);
@@ -91,28 +124,62 @@ function draw() {
   }
   if (state === "Level1") {
     enemyBallLevel1();
+    playerBall();
   }
   if (state === "Level2") {
     enemyBallLevel2();
+    playerBall();
   }
   if (state === "Level3") {
     enemyBallLevel3();
+    playerBall();
   }
 }
 
-  function enemyBallLevel1() {
-    enemyball1Level1.move();
-    enemyball2Level1.move();
-    enemyball3Level1.move();
+function playerBall () {
+  
+  createPlayerBall();
+  movePlayerBall();
+}
 
-    background("white")
+function createPlayerBall(){
+  
+  fill(5, 255, 57);
+  ellipse(player.x, player.y, player.radius*2);
+}
 
-    enemyball1Level1.display();
-    enemyball2Level1.display();
-    enemyball3Level1.display();
+function movePlayerBall(){
+
+  if (keyIsDown(RIGHT_ARROW) && (player.x + player.radius <= width)) {
+    player.x += 4;
   }
+  
+  if (keyIsDown(LEFT_ARROW) && (player.x - player.radius > 0)) {
+    player.x -= 4;
+  }
+  if (keyIsDown(DOWN_ARROW) && (player.y + player.radius <= height)) {
+    player.y += 4;
+  }
+  
+  if (keyIsDown(UP_ARROW) && (player.y - player.radius > 0)) {
+    player.y -= 4;
+  }
+}
 
-  function enemyBallLevel2() {
+
+function enemyBallLevel1() {
+  enemyball1Level1.move();
+  enemyball2Level1.move();
+  enemyball3Level1.move();
+
+  background("white")
+
+  enemyball1Level1.display();
+  enemyball2Level1.display();
+  enemyball3Level1.display();
+}
+
+function enemyBallLevel2() {
     enemyball1Level2.move();
     enemyball2Level2.move();
     enemyball3Level2.move();
