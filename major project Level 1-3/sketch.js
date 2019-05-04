@@ -36,7 +36,7 @@ class EnemyBall {
 }
 
 class PlayerBall {
-  contructor(x, y, dxSomeSpeed, dySomeSpeed){
+  constructor(x, y, dxSomeSpeed, dySomeSpeed){
     this.x = x;
     this.y = y;
     this.color = [5, 255, 57];
@@ -50,19 +50,19 @@ class PlayerBall {
     ellipse(this.x, this.y, this.radius * 2);
   }
   move() {
-    if (keyIsDown(RIGHT_ARROW) && (player.x + player.radius <= width)) {
-      player.x += 4;
+    if (keyIsDown(RIGHT_ARROW) && (this.x + this.radius <= width)) {
+      this.x += this.dx;
     }
     
-    if (keyIsDown(LEFT_ARROW) && (player.x - player.radius > 0)) {
-      player.x -= 4;
+    if (keyIsDown(LEFT_ARROW) && (this.x - this.radius > 0)) {
+      this.x -= this.dx;
     }
-    if (keyIsDown(DOWN_ARROW) && (player.y + player.radius <= height)) {
-      player.y += 4;
+    if (keyIsDown(DOWN_ARROW) && (this.y + this.radius <= height)) {
+      this.y += this.dy;
     }
     
-    if (keyIsDown(UP_ARROW) && (player.y - player.radius > 0)) {
-      player.y -= 4;
+    if (keyIsDown(UP_ARROW) && (this.y - this.radius > 0)) {
+      this.y -= this.dy;
     }
   }
 }
@@ -100,7 +100,9 @@ function setup() {
     width: 113,
     height: 75,
   }
-  
+
+  player1 = new PlayerBall(31, height / 1.5, 4, 0);
+  player2 = new PlayerBall(31, height/1.5, 4, 4);
 
   enemyball1Level1 = new EnemyBall(100, height/2, 0, 17);
   enemyball2Level1 = new EnemyBall(width / 2, height/2, 0, 9);
@@ -123,86 +125,67 @@ function draw() {
     rect(level3Button.x, level3Button.y, level3Button.width, level3Button.height);
   }
   if (state === "Level1") {
-    enemyBallLevel1();
-    playerBall();
+    Level1BallMovement();
+    background("white");
+    Level1BallDisplay();
+    
   }
   if (state === "Level2") {
-    enemyBallLevel2();
-    playerBall();
+    Level2BallMovement();
+    background("white");
+    Level2BallDisplay();
   }
   if (state === "Level3") {
-    enemyBallLevel3();
-    playerBall();
-  }
-}
-
-function playerBall () {
-  
-  createPlayerBall();
-  movePlayerBall();
-}
-
-function createPlayerBall(){
-  
-  fill(5, 255, 57);
-  ellipse(player.x, player.y, player.radius*2);
-}
-
-function movePlayerBall(){
-
-  if (keyIsDown(RIGHT_ARROW) && (player.x + player.radius <= width)) {
-    player.x += 4;
-  }
-  
-  if (keyIsDown(LEFT_ARROW) && (player.x - player.radius > 0)) {
-    player.x -= 4;
-  }
-  if (keyIsDown(DOWN_ARROW) && (player.y + player.radius <= height)) {
-    player.y += 4;
-  }
-  
-  if (keyIsDown(UP_ARROW) && (player.y - player.radius > 0)) {
-    player.y -= 4;
+    Level3BallMovement();
+    background("white");
+    Level3BallDisplay();
   }
 }
 
 
-function enemyBallLevel1() {
+function Level1BallMovement() {
   enemyball1Level1.move();
   enemyball2Level1.move();
   enemyball3Level1.move();
+  player1.move();
+}
 
-  background("white")
-
+function Level1BallDisplay(){
   enemyball1Level1.display();
   enemyball2Level1.display();
   enemyball3Level1.display();
-}
-
-function enemyBallLevel2() {
-    enemyball1Level2.move();
-    enemyball2Level2.move();
-    enemyball3Level2.move();
-
-    background("white");
-
-    enemyball1Level2.display();
-    enemyball2Level2.display();
-    enemyball3Level2.display();
-}
-
-function enemyBallLevel3(){
-    enemyball1Level3.move();
-    enemyball2Level3.move();
-    enemyball3Level3.move();
-
-    background("white");
-
-    enemyball1Level3.display();
-    enemyball2Level3.display();
-    enemyball3Level3.display();
+  player1.display();
 
 }
+
+function Level2BallMovement() {
+  enemyball1Level2.move();
+  enemyball2Level2.move();
+  enemyball3Level2.move();
+  player1.move();
+}
+
+function Level2BallDisplay(){
+  enemyball1Level2.display();
+  enemyball2Level2.display();
+  enemyball3Level2.display();
+  player1.display();
+}
+
+function Level3BallMovement() {
+  enemyball1Level3.move();
+  enemyball2Level3.move();
+  enemyball3Level3.move();
+  player2.move();
+}
+
+function Level3BallDisplay(){
+  enemyball1Level3.display();
+  enemyball2Level3.display();
+  enemyball3Level3.display();
+  player2.display();
+}
+
 
 function clickedOnButtonL1(x, y) {
   return x >= level1Button.x &&
