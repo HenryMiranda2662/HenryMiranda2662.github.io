@@ -127,6 +127,7 @@ function draw() {
     Level4BallMovement();
     background("white");
     Level4BallDisplay();
+    itHitLevel4();
     
   }
   if (state === "Level5") {
@@ -190,6 +191,40 @@ function Level3BallDisplay(){
   enemyball3Level3.display();
   player2.display();
 }
+
+function itHitLevel4() {
+  // Just like the other level, it checks the distance between the player, and the enemies, if they're too close
+  // you lose and go back to the "menu"
+  distanceAwayFromCenter1 = int(dist(player2.x, player2.y, enemyball1Level4.x, enemyball1Level4.y));                   
+  distanceAwayFromCenter2 = int(dist(player2.x, player2.y, enemyball2Level4.x, enemyball2Level4.y));
+  distanceAwayFromCenter3 = int(dist(player2.x, player2.y, enemyball3Level4.x, enemyball3Level4.y));
+  
+  collitionDistance1 = (player1.radius + enemyball1Level4.radius);
+  
+  if (distanceAwayFromCenter1  <= collitionDistance1 ||
+      distanceAwayFromCenter2 <= collitionDistance1 || 
+      distanceAwayFromCenter3  <= collitionDistance1)  {
+    state = "menu";
+  }
+}
+
+function itHitLevel5() {
+  // Just like the other level, it checks the distance between the player, and the enemies, if they're too close
+  // you lose and go back to the "menu"
+  distanceAwayFromCenter1 = int(dist(player1.x, player1.y, enemyball1Level2.x, enemyball1Level2.y));                   
+  distanceAwayFromCenter2 = int(dist(player1.x, player1.y, enemyball2Level2.x, enemyball2Level2.y));
+  distanceAwayFromCenter3 = int(dist(player1.x, player1.y, enemyball3Level2.x, enemyball3Level2.y));
+  
+  collitionDistance1 = (player1.radius + enemyball1Level2.radius);
+  
+  if (distanceAwayFromCenter1  <= collitionDistance1 ||
+      distanceAwayFromCenter2 <= collitionDistance1 || 
+      distanceAwayFromCenter3  <= collitionDistance1)  {
+    state = "menu";
+  }
+}
+
+
 
 
 function clickedOnButtonL1(x, y) {
