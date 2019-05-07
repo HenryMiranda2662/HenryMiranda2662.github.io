@@ -371,9 +371,9 @@ function level1ScreenSpeed(){
   //Similar to the Level 1 screen, it contains elements necessary
   imageMode(CORNERS);
   background(beachImage);  
-  createPlayerBallSpeed();
+  createPlayerBallSpeed();// Different from normal screen
   movePlayerBallSpeed();// Different from normal screen
-  itHitLevel1();// Different from normal screen
+  itHitLevel1();
   enemyBallsLevel1();  
   noCursor();
   rectPoints();

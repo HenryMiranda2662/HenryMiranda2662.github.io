@@ -120,72 +120,145 @@ function setup() {
 function draw() {
   if (state === "menu") {
     background(80, 170, 200);
+    fill("white");
     rect(level1Button.x, level1Button.y, level1Button.width, level1Button.height);
     rect(level2Button.x, level2Button.y, level2Button.width, level2Button.height);
     rect(level3Button.x, level3Button.y, level3Button.width, level3Button.height);
+
+    restartPositions();
+
   }
+
   if (state === "Level1") {
-    Level1BallMovement();
+    level1BallMovement();
     background("white");
-    Level1BallDisplay();
-    
+    level1BallDisplay();
+    itHitLevel1();  
   }
+
   if (state === "Level2") {
-    Level2BallMovement();
+    level2BallMovement();
     background("white");
-    Level2BallDisplay();
+    level2BallDisplay();
+    itHitLevel2();
   }
+
   if (state === "Level3") {
-    Level3BallMovement();
+    level3BallMovement();
     background("white");
-    Level3BallDisplay();
+    level3BallDisplay();
+    itHitLevel3();
   }
 }
 
+function restartPositions() {
+  player1.x = 31;
+  player2.x = 31;
+  player2.y = height/1.5;
 
-function Level1BallMovement() {
+  enemyball1Level2.x = 100;
+  enemyball1Level2.y = height/2;
+  enemyball2Level2.x = width/2;
+  enemyball2Level2.y = height/2;
+  enemyball3Level2.x = 400;
+  enemyball3Level2.y = height/2;
+
+  enemyball1Level3.x = width/2;
+  enemyball2Level3.x = width/2;
+  enemyball3Level3.x = width/2;
+}
+
+
+function level1BallMovement() {
   enemyball1Level1.move();
   enemyball2Level1.move();
-  enemyball3Level1.move();
-  player1.move();
+  enemyball3Level1.move(); 
+  player1.move(); 
 }
 
-function Level1BallDisplay(){
+function level1BallDisplay(){
   enemyball1Level1.display();
   enemyball2Level1.display();
   enemyball3Level1.display();
   player1.display();
-
 }
 
-function Level2BallMovement() {
+
+function level2BallMovement() {
   enemyball1Level2.move();
   enemyball2Level2.move();
   enemyball3Level2.move();
   player1.move();
 }
 
-function Level2BallDisplay(){
+function level2BallDisplay(){
   enemyball1Level2.display();
   enemyball2Level2.display();
   enemyball3Level2.display();
   player1.display();
 }
 
-function Level3BallMovement() {
+function level3BallMovement() {
   enemyball1Level3.move();
   enemyball2Level3.move();
   enemyball3Level3.move();
   player2.move();
 }
 
-function Level3BallDisplay(){
+function level3BallDisplay(){
   enemyball1Level3.display();
   enemyball2Level3.display();
   enemyball3Level3.display();
   player2.display();
 }
 
+function itHitLevel1() {
+  // Just like the other level, it checks the distance between the player, and the enemies, if they're too close
+  // you lose and go back to the "menu"
+  distanceAwayFromCenter1 = int(dist(player1.x, player1.y, enemyball1Level1.x, enemyball1Level1.y));                   
+  distanceAwayFromCenter2 = int(dist(player1.x, player1.y, enemyball2Level1.x, enemyball2Level1.y));
+  distanceAwayFromCenter3 = int(dist(player1.x, player1.y, enemyball3Level1.x, enemyball3Level1.y));
+  
+  collitionDistance1 = (player1.radius + enemyball1Level1.radius);
+  
+  if (distanceAwayFromCenter1  <= collitionDistance1 ||
+      distanceAwayFromCenter2 <= collitionDistance1 || 
+      distanceAwayFromCenter3  <= collitionDistance1)  {
+    state = "menu";
+  }
+}
+
+function itHitLevel2() {
+  // Just like the other level, it checks the distance between the player, and the enemies, if they're too close
+  // you lose and go back to the "menu"
+  distanceAwayFromCenter1 = int(dist(player1.x, player1.y, enemyball1Level2.x, enemyball1Level2.y));                   
+  distanceAwayFromCenter2 = int(dist(player1.x, player1.y, enemyball2Level2.x, enemyball2Level2.y));
+  distanceAwayFromCenter3 = int(dist(player1.x, player1.y, enemyball3Level2.x, enemyball3Level2.y));
+  
+  collitionDistance1 = (player1.radius + enemyball1Level2.radius);
+  
+  if (distanceAwayFromCenter1  <= collitionDistance1 ||
+      distanceAwayFromCenter2 <= collitionDistance1 || 
+      distanceAwayFromCenter3  <= collitionDistance1)  {
+    state = "menu";
+  }
+}
+
+function itHitLevel3() {
+  // Just like the other level, it checks the distance between the player, and the enemies, if they're too close
+  // you lose and go back to the "menu"
+  distanceAwayFromCenter1 = int(dist(player2.x, player2.y, enemyball1Level3.x, enemyball1Level3.y));                   
+  distanceAwayFromCenter2 = int(dist(player2.x, player2.y, enemyball2Level3.x, enemyball2Level3.y));
+  distanceAwayFromCenter3 = int(dist(player2.x, player2.y, enemyball3Level3.x, enemyball3Level3.y));
+  
+  collitionDistance1 = (player1.radius + enemyball1Level1.radius);
+  
+  if (distanceAwayFromCenter1  <= collitionDistance1 ||
+      distanceAwayFromCenter2 <= collitionDistance1 || 
+      distanceAwayFromCenter3  <= collitionDistance1)  {
+    state = "menu";
+  }
+}
 
 function clickedOnButtonL1(x, y) {
   return x >= level1Button.x &&
