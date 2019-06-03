@@ -75,15 +75,15 @@ let player2;
 function setup() {
   createCanvas(500, 500);
 
-  ball1 = new Ball(25, 270, 12, 0);
-  ball2 = new Ball(75, 270, 12, 0);
-  ball3 = new Ball(125, 270, 12, 0);
-  ball4 = new Ball(175, 270, 12, 0);
-  ball5 = new Ball(225, 270, 12, 0);
-  ball6 = new Ball(275, 270, 12, 0);
-  ball7 = new Ball(325, 270, 12, 0);
-  ball8 = new Ball(375, 270, 12, 0);
-  ball9 = new Ball(425, 270, 12, 0);
+  ball1 = new Ball(25, 270, 1, 0);
+  ball2 = new Ball(75, 270, -1, 0);
+  ball3 = new Ball(125, 270, 1, 0);
+  ball4 = new Ball(175, 270, -1, 0);
+  ball5 = new Ball(225, 270, 1, 0);
+  ball6 = new Ball(275, 270, -1, 0);
+  ball7 = new Ball(325, 270, 1, 0);
+  ball8 = new Ball(375, 270, -1, 0);
+  ball9 = new Ball(425, 270, 1, 0);
   
   ball10 = new Ball(width/2, height/2, 0, 9);
   
